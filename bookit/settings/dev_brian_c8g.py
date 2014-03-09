@@ -5,7 +5,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bookit_dev',
-        'USER': 'core_user',
+        'USER': 'bookit',
         'PASSWORD': get_env_variable('BOOKIT_DB_PASS'),
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'OPTIONS': {'init_command': 'SET storage_engine=MYISAM'},

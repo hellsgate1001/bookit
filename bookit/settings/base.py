@@ -39,6 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # django / python apps
+    'south',
+
     # Project apps
     'bookit',
     'account',

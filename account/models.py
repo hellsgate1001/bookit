@@ -12,4 +12,4 @@ class UserProfile(AbstractUser):
 
     def __unicode__(self):
         return ('%(username)s (%(email)s)' %
-            {'username': self.username, 'email', self.email})
+            {'username': self.username, 'email': self.email})
