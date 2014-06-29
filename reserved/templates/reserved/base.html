@@ -18,7 +18,6 @@
 
     {% block headjs %}
     <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
-    <script src="{% static 'js/reserved/main.js' %}"></script>
     {% endblock %}
 {% endblock %}
 
@@ -51,8 +50,7 @@
 {% endblock %}
 
 {% block footerjs %}
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
-
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+    <script src="{% static 'reserved/js/vendor/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'reserved/js/vendor/jquery.clickout.js' %}"></script>
+    <script src="{% static 'reserved/js/main.js' %}"></script>
 {% endblock %}

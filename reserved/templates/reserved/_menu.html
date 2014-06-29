@@ -13,6 +13,7 @@
 				<li><a href="{% url 'userena_profile_detail' user.username %}">Profile</a></li>
 				<li class="divider"></li>
 			{% endif %}
+			<li><a href="{% url 'userena_profile_list' %}">Accounts</a></li>
 			<li><a href="{% url 'reserved_companies' %}">Companies</a></li>
 			<li><a href="{% url 'userena_signout' %}">Logout</a></li>
 		{% endif %}
