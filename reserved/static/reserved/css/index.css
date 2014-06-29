@@ -212,90 +212,98 @@ header .bar {
   width: 70%;
   margin: 1em auto;
   box-shadow: 0 3px 1px rgba(0, 0, 0, 0.02); }
-  /* line 32, ../scss/userena.scss */
-  .accounts form .accounts form #box-nav li a {
+  /* line 38, ../scss/userena.scss */
+  .accounts form #box-nav li a {
     display: inline-block;
     width: 100%;
     text-decoration: none;
     line-height: 3em;
     background: #FFF; }
-  /* line 40, ../scss/userena.scss */
-  .accounts form .accounts form input[type="submit"] {
+    /* line 45, ../scss/userena.scss */
+    .accounts form #box-nav li a:hover {
+      background: #E2E2E2;
+      color: #333;
+      transition: all .5s ease; }
+  /* line 52, ../scss/userena.scss */
+  .accounts form input[type="submit"] {
     border: none;
     margin: 3%;
     padding: 1em 2em;
     border-radius: 2px;
     background: #abe2ab;
     display: inline-block; }
-  /* line 49, ../scss/userena.scss */
-  .accounts form .accounts form p input[type="file"] {
+  /* line 61, ../scss/userena.scss */
+  .accounts form p input[type="file"] {
     width: 65%;
     display: inline-block;
     font-size: 14px;
     line-height: 2em; }
-  /* line 56, ../scss/userena.scss */
-  .accounts form .accounts form span.helptext {
-    display: block;
-    /* border-bottom: solid 1px #EEE; */
-    padding: 1em 3% 0em 31.5%;
+  /* line 68, ../scss/userena.scss */
+  .accounts form span.helptext {
+    padding: 1em 3% 0em 29.5%;
     margin: 0 0 2em;
-    color: #AAA; }
-  /* line 64, ../scss/userena.scss */
-  .accounts form .accounts form ul#box-nav li a:hover {
-    background: #E2E2E2;
-    color: #333;
-    transition: all .5s ease; }
-  /* line 70, ../scss/userena.scss */
-  .accounts form .accounts form ul.errorlist li {
+    color: #AAA;
+    display: block; }
+  /* line 76, ../scss/userena.scss */
+  .accounts form ul.errorlist li {
     margin: 1em 0;
     background: #3D3D3D;
     display: inline-block;
     padding: .4em .8em;
     color: white;
     border-radius: 2px; }
-  /* line 79, ../scss/userena.scss */
-  .accounts form .accounts form ul.errorlist {
+  /* line 85, ../scss/userena.scss */
+  .accounts form ul.errorlist {
     margin: 0 1em 0 0;
     padding: 1% 3% 0%; }
-  /* line 88, ../scss/userena.scss */
+  /* line 90, ../scss/userena.scss */
   .accounts form legend {
     font-size: 3em;
     padding: 1% 3%;
     font-weight: 100;
     color: #AAA; }
   /* line 97, ../scss/userena.scss */
+  .accounts form fieldset p {
+    line-height: 1.6em;
+    padding: 1em 0;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top; }
+  /* line 107, ../scss/userena.scss */
   .accounts form p label {
-    width: 25%;
+    vertical-align: top;
+    width: 21%;
     font-weight: normal;
+    display: inline-block;
     font-size: 1.2em;
     margin: 0 3%; }
-  /* line 104, ../scss/userena.scss */
+  /* line 116, ../scss/userena.scss */
   .accounts form p input {
-    width: 65%;
+    width: 67%;
     border: none;
     background: #DDD;
     font-size: 1.4em;
     border-radius: 4px;
     padding: .5em 1em;
     line-height: 1em; }
-  /* line 115, ../scss/userena.scss */
+  /* line 126, ../scss/userena.scss */
   .accounts form p .checkbox {
     margin: 1em 0em 01em 32%; }
-    /* line 117, ../scss/userena.scss */
+    /* line 128, ../scss/userena.scss */
     .accounts form p .checkbox input {
       width: initial; }
 
-/* line 125, ../scss/userena.scss */
+/* line 136, ../scss/userena.scss */
 p.forgot-password {
   display: inline-block; }
 
-/* line 130, ../scss/userena.scss */
+/* line 141, ../scss/userena.scss */
 ul#box-nav {
   margin: 0;
   padding: 0;
   white-space: nowrap;
   overflow: hidden; }
-  /* line 136, ../scss/userena.scss */
+  /* line 147, ../scss/userena.scss */
   ul#box-nav li {
     display: inline-block;
     width: 24.7%;
@@ -305,26 +313,32 @@ ul#box-nav {
     border-bottom: solid 1px;
     text-align: center;
     /* padding: 1em 0; */ }
+    /* line 157, ../scss/userena.scss */
+    ul#box-nav li a {
+      text-decoration: none;
+      color: #333;
+      font-size: 1.2em;
+      line-height: 1.8em; }
 
-/* line 149, ../scss/userena.scss */
+/* line 167, ../scss/userena.scss */
 img.mugshot {
   width: 140px;
   margin: 4%;
   background: rgba(0, 0, 0, 0.08);
   padding: 20px; }
 
-/* line 156, ../scss/userena.scss */
+/* line 174, ../scss/userena.scss */
 #details dl dt {
   display: inline-block;
   width: 20%;
   /* background: #ddd; */ }
 
-/* line 162, ../scss/userena.scss */
+/* line 180, ../scss/userena.scss */
 #details dl dd {
   display: inline-block;
   width: 78%; }
 
-/* line 167, ../scss/userena.scss */
+/* line 185, ../scss/userena.scss */
 div#details {
   /* border: solid 1px; */
   width: 50%;
@@ -332,15 +346,15 @@ div#details {
   font-size: 18px;
   line-height: 2em; }
 
-/* line 175, ../scss/userena.scss */
+/* line 193, ../scss/userena.scss */
 div.clear {
   clear: both; }
 
-/* line 179, ../scss/userena.scss */
+/* line 197, ../scss/userena.scss */
 div.navbar.navbar-inverse.navbar-fixed-top {
   height: 100px; }
 
-/* line 184, ../scss/userena.scss */
+/* line 202, ../scss/userena.scss */
 .navbar ul.main.menu li:nth-child(1) {
   border-top: none; }
 
@@ -406,9 +420,10 @@ body {
   body .page-container {
     margin-left: 15%;
     display: inline-block;
-    width: 70%; }
+    width: 70%;
+    min-height: 750px; }
 
-/* line 36, ../scss/base.scss */
+/* line 37, ../scss/base.scss */
 .hero {
   color: white;
   min-height: 450px;
@@ -417,27 +432,27 @@ body {
   background-size: cover;
   padding: 200px 0 0;
   position: relative; }
-  /* line 45, ../scss/base.scss */
+  /* line 46, ../scss/base.scss */
   .hero.mini {
     min-height: 60px;
     padding: 0;
     height: 200px; }
-    /* line 50, ../scss/base.scss */
+    /* line 51, ../scss/base.scss */
     .hero.mini .icon {
       height: 140px;
       margin: 30px 0;
       width: 25%; }
-    /* line 56, ../scss/base.scss */
+    /* line 57, ../scss/base.scss */
     .hero.mini h1.brand {
       font-size: 6em;
       width: 75%;
       margin-top: 30px; }
-    /* line 62, ../scss/base.scss */
+    /* line 63, ../scss/base.scss */
     .hero.mini h2 {
       width: 74.5%;
       margin-top: .5em;
       font-size: 1.8em; }
-  /* line 69, ../scss/base.scss */
+  /* line 70, ../scss/base.scss */
   .hero .icon {
     width: 35%;
     height: 300px;
@@ -446,7 +461,7 @@ body {
     background: url("/static/img/icons/marker.svg") no-repeat;
     background-size: 100% 123%;
     background-position: 199%; }
-  /* line 79, ../scss/base.scss */
+  /* line 80, ../scss/base.scss */
   .hero h1.brand {
     display: inline-block;
     font-size: 11em;
@@ -457,7 +472,7 @@ body {
     margin: -12px 0px 0 0;
     position: relative;
     z-index: 2; }
-  /* line 91, ../scss/base.scss */
+  /* line 92, ../scss/base.scss */
   .hero h2 {
     width: 63.4%;
     font-size: 2.15em;
@@ -468,41 +483,42 @@ body {
     position: relative;
     z-index: 2;
     text-shadow: none; }
-    /* line 102, ../scss/base.scss */
+    /* line 103, ../scss/base.scss */
     .hero h2 span {
       font-size: .8em;
       margin-left: .6em; }
-  /* line 108, ../scss/base.scss */
+  /* line 109, ../scss/base.scss */
   .hero .slice.core.signup a {
-    color: white; }
+    color: white;
+    border-color: white; }
 
-/* line 114, ../scss/base.scss */
+/* line 116, ../scss/base.scss */
 .dials {
   display: inline-block;
   width: 76%;
   margin: 6% 12% 1%; }
-  /* line 119, ../scss/base.scss */
+  /* line 121, ../scss/base.scss */
   .dials .dial {
     display: inline-block;
     width: 33%;
     text-align: center;
     margin-bottom: 3em; }
-    /* line 125, ../scss/base.scss */
+    /* line 127, ../scss/base.scss */
     .dials .dial h3 {
       margin: .8em 0 .0em 0;
       font-size: 38px;
       font-weight: 200;
       text-transform: uppercase; }
-    /* line 134, ../scss/base.scss */
+    /* line 136, ../scss/base.scss */
     .dials .dial .knob canvas {
       border: solid 2px;
       border-radius: 50%; }
-    /* line 139, ../scss/base.scss */
+    /* line 141, ../scss/base.scss */
     .dials .dial .knob .input-knob {
       font-family: lato !important;
       font-size: 42px !important; }
 
-/* line 148, ../scss/base.scss */
+/* line 150, ../scss/base.scss */
 .overlay:before {
   content: '';
   display: block;
@@ -513,7 +529,7 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.44); }
 
-/* line 159, ../scss/base.scss */
+/* line 161, ../scss/base.scss */
 .overlay {
   background: url("/static/img/022.jpg");
   width: 100%;
@@ -606,12 +622,14 @@ section.slice {
       text-shadow: none;
       text-transform: uppercase;
       box-shadow: none;
-      background: rgba(0, 0, 0, 0.01); }
-  /* line 71, ../scss/index.scss */
+      background: rgba(0, 0, 0, 0.01);
+      position: relative;
+      z-index: 3; }
+  /* line 72, ../scss/index.scss */
   section.slice.pricing {
     background: url("/static/img/2.jpg");
     background-size: cover; }
-    /* line 76, ../scss/index.scss */
+    /* line 77, ../scss/index.scss */
     section.slice.pricing .items .price {
       width: 33%;
       display: inline-block;
@@ -620,19 +638,19 @@ section.slice {
       margin: 0 0 2em;
       box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.19);
       padding: 0 0 4em; }
-      /* line 85, ../scss/index.scss */
+      /* line 86, ../scss/index.scss */
       section.slice.pricing .items .price ul li {
         font-size: 1em;
         font-weight: 200;
         margin: 0 2em .1em;
         list-style-type: initial;
         line-height: 1.8; }
-      /* line 93, ../scss/index.scss */
+      /* line 94, ../scss/index.scss */
       section.slice.pricing .items .price p.cost {
         font-size: 2.3em;
         margin: 1em .5em;
         text-align: center; }
-      /* line 99, ../scss/index.scss */
+      /* line 100, ../scss/index.scss */
       section.slice.pricing .items .price p {
         display: block;
         margin: 10px 1em 2em 1em;
@@ -640,7 +658,7 @@ section.slice {
         width: 89%;
         font-size: 1.2em;
         color: #333; }
-      /* line 108, ../scss/index.scss */
+      /* line 109, ../scss/index.scss */
       section.slice.pricing .items .price h4 {
         border: solid 7px;
         width: 5em;
@@ -654,28 +672,28 @@ section.slice {
         color: black;
         text-shadow: 0 -1px 1px rgba(255, 255, 255, 0.58);
         background: rgba(252, 252, 252, 0.77); }
-        /* line 122, ../scss/index.scss */
+        /* line 123, ../scss/index.scss */
         section.slice.pricing .items .price h4.free {
           border-color: #80bb88; }
-        /* line 126, ../scss/index.scss */
+        /* line 127, ../scss/index.scss */
         section.slice.pricing .items .price h4.small {
           border-color: #BDB561; }
-        /* line 130, ../scss/index.scss */
+        /* line 131, ../scss/index.scss */
         section.slice.pricing .items .price h4.simple {
           border-color: #80AABB; }
-        /* line 134, ../scss/index.scss */
+        /* line 135, ../scss/index.scss */
         section.slice.pricing .items .price h4.standard {
           border-color: #8F2A2A; }
-        /* line 138, ../scss/index.scss */
+        /* line 139, ../scss/index.scss */
         section.slice.pricing .items .price h4.enterprise {
           border-color: #4B4B4B; }
-        /* line 142, ../scss/index.scss */
+        /* line 143, ../scss/index.scss */
         section.slice.pricing .items .price h4.big {
           border-color: #fff; }
-    /* line 150, ../scss/index.scss */
+    /* line 151, ../scss/index.scss */
     section.slice.pricing .price-intersection {
       position: relative; }
-      /* line 153, ../scss/index.scss */
+      /* line 154, ../scss/index.scss */
       section.slice.pricing .price-intersection p {
         color: white;
         width: 100%;
@@ -690,20 +708,20 @@ section.slice {
         background: url("/static/img/icons/marker.png") no-repeat;
         background-size: 200px;
         background-position: center .75em; }
-        /* line 168, ../scss/index.scss */
+        /* line 169, ../scss/index.scss */
         section.slice.pricing .price-intersection p a {
           color: #EFEFEF;
           text-decoration: none;
           border-bottom: dotted 1px; }
-  /* line 177, ../scss/index.scss */
+  /* line 178, ../scss/index.scss */
   section.slice.main {
     padding-top: 3em; }
-  /* line 181, ../scss/index.scss */
+  /* line 182, ../scss/index.scss */
   section.slice .point {
     width: 33%;
     display: inline-block;
     vertical-align: top; }
-    /* line 186, ../scss/index.scss */
+    /* line 187, ../scss/index.scss */
     section.slice .point h3 {
       color: #333;
       margin: 0% 0 10%;
@@ -711,7 +729,7 @@ section.slice {
       font-size: 2.3em;
       text-align: center;
       font-weight: 200; }
-    /* line 195, ../scss/index.scss */
+    /* line 196, ../scss/index.scss */
     section.slice .point .image {
       width: 128px;
       clear: both;
@@ -722,16 +740,16 @@ section.slice {
       border: solid 4px;
       border-radius: 50%;
       background: white; }
-      /* line 197, ../scss/index.scss */
+      /* line 198, ../scss/index.scss */
       section.slice .point .image.water {
         border-color: #95b3ca; }
-      /* line 201, ../scss/index.scss */
+      /* line 202, ../scss/index.scss */
       section.slice .point .image.ribbon {
         border-color: #56687E; }
-      /* line 205, ../scss/index.scss */
+      /* line 206, ../scss/index.scss */
       section.slice .point .image.covered {
         border-color: #BD8383; }
-      /* line 219, ../scss/index.scss */
+      /* line 220, ../scss/index.scss */
       section.slice .point .image .icon {
         margin-top: 30px;
         font-size: 80px;
@@ -742,16 +760,16 @@ section.slice {
         width: 180px;
         background: rgba(255, 255, 255, 0.7);
         box-shadow: 0 7px 0px rgba(0, 0, 0, 0.16); }
-      /* line 231, ../scss/index.scss */
+      /* line 232, ../scss/index.scss */
       section.slice .point .image .icon-bookmark {
         color: #7A2E2E; }
-      /* line 235, ../scss/index.scss */
+      /* line 236, ../scss/index.scss */
       section.slice .point .image .icon-leaf {
         color: #507E50; }
-      /* line 239, ../scss/index.scss */
+      /* line 240, ../scss/index.scss */
       section.slice .point .image .icon-shield {
         color: #424757; }
-    /* line 244, ../scss/index.scss */
+    /* line 245, ../scss/index.scss */
     section.slice .point p {
       font-size: 1em;
       width: 90%;
@@ -759,14 +777,14 @@ section.slice {
       padding: 0;
       line-height: 1.7em;
       font-weight: 200; }
-  /* line 254, ../scss/index.scss */
+  /* line 255, ../scss/index.scss */
   section.slice .shot {
     width: 60%;
     height: 300px;
     display: inline-block;
     background: #333333;
     vertical-align: bottom; }
-  /* line 263, ../scss/index.scss */
+  /* line 264, ../scss/index.scss */
   section.slice h3 {
     padding: 0px 0px 20px 0px;
     font-size: 2.5em;
@@ -774,7 +792,7 @@ section.slice {
     margin-bottom: 1.5em;
     text-transform: uppercase;
     font-weight: 200; }
-  /* line 272, ../scss/index.scss */
+  /* line 273, ../scss/index.scss */
   section.slice p {
     width: 30%;
     display: inline-block;
@@ -784,7 +802,7 @@ section.slice {
     font-size: 1.5em;
     font-weight: 200;
     line-height: 1.6em; }
-  /* line 283, ../scss/index.scss */
+  /* line 284, ../scss/index.scss */
   section.slice p.left {
     margin-left: 0;
     margin-right: 9%; }

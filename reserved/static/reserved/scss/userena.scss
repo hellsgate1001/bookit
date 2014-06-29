@@ -29,15 +29,27 @@
 
 	form {
 
-		.accounts form #box-nav li a {
+		/* border: solid 1px #8D8D8D; */
+		width: 70%;
+		margin: 1em auto;
+		box-shadow: 0 3px 1px rgba(0, 0, 0, 0.02);
+
+
+		#box-nav li a {
 			display: inline-block;
 			width: 100%;
 			text-decoration: none;
 			line-height: 3em;
 			background: #FFF;
+
+			&:hover {
+				background: #E2E2E2;
+				color: #333;
+				transition: all .5s ease;
+			}
 		}
 
-		.accounts form input[type="submit"] {
+		input[type="submit"] {
 			border: none;
 			margin: 3%;
 			padding: 1em 2em;
@@ -46,44 +58,34 @@
 			display: inline-block;
 		}
 
-		.accounts form p input[type="file"] {
-		width: 65%;
-		display: inline-block;
-		font-size: 14px;
-		line-height: 2em;
+		p input[type="file"] {
+			width: 65%;
+			display: inline-block;
+			font-size: 14px;
+			line-height: 2em;
 		}
 
-		.accounts form span.helptext {
-		display: block;
-		/* border-bottom: solid 1px #EEE; */
-		padding: 1em 3% 0em 31.5%;
-		margin: 0 0 2em;
-		color: #AAA;
+		span.helptext {
+			padding: 1em 3% 0em 29.5%;
+			margin: 0 0 2em;
+			color: #AAA;
+			display: block;
 		}
 
-		.accounts form ul#box-nav li a:hover {
-		background: #E2E2E2;
-		color: #333;
-		transition: all .5s ease;
+
+		ul.errorlist li {
+			margin: 1em 0;
+			background: #3D3D3D;
+			display: inline-block;
+			padding: .4em .8em;
+			color: white;
+			border-radius: 2px;
 		}
 
-		.accounts form ul.errorlist li {
-		margin: 1em 0;
-		background: #3D3D3D;
-		display: inline-block;
-		padding: .4em .8em;
-		color: white;
-		border-radius: 2px;
+		ul.errorlist {
+			margin: 0 1em 0 0;
+			padding: 1% 3% 0%;
 		}
-
-		.accounts form ul.errorlist {
-		margin: 0 1em 0 0;
-		padding: 1% 3% 0%;
-		}
-		/* border: solid 1px #8D8D8D; */
-		width: 70%;
-		margin: 1em auto;
-		box-shadow: 0 3px 1px rgba(0, 0, 0, 0.02);
 
 		legend {
 			font-size: 3em;
@@ -92,17 +94,27 @@
 			color: #AAA;
 		}
 
+		fieldset p {
+			line-height: 1.6em;
+			padding: 1em 0;
+			display: inline-block;
+			width: 100%;
+			vertical-align: top;
+		}
+
 		p {
 
 			label {
-				width: 25%;
+				vertical-align:top;
+				width: 21%;
 				font-weight: normal;
+				display: inline-block;
 				font-size: 1.2em;
 				margin: 0 3%;
 			}
 
 			input {
-				width: 65%;
+				width: 67%;
 				border: none;
 				background: #DDD;
 				font-size: 1.4em;
@@ -110,7 +122,6 @@
 				padding: .5em 1em;
 				line-height: 1em;
 			}
-
 
 			.checkbox {
 				margin: 1em 0em 01em 32%;
@@ -142,6 +153,13 @@ ul {
 			border-bottom: solid 1px;
 			text-align: center;
 			/* padding: 1em 0; */
+
+			a {
+				text-decoration: none;
+				color: #333;
+				font-size: 1.2em;
+				line-height: 1.8em;
+			}
 		}
 	}
 }

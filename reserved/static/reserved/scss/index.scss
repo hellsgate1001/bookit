@@ -64,7 +64,8 @@ section.slice {
 			text-transform: uppercase;
 			box-shadow: none;
 			background: rgba(0, 0, 0, 0.01);
-
+			position:relative;
+			z-index: 4;
 		}
 	}
 

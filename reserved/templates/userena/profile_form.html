@@ -2,6 +2,9 @@
 {% load i18n %}
 {% load url from future %}
 
+{% block tagline %}Had a haircut? Nice.{% endblock %}
+{% block tagstrap %}Change your personal details so people admire you more.{% endblock %}
+
 {% block title %}{% trans "Account setup" %}{% endblock %}
 
 {% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account{% endblocktrans %}</h2>{% endblock %}

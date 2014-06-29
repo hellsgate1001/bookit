@@ -2,6 +2,9 @@
 {% load i18n %}
 {% load url from future %}
 
+{% block tagline %}All about you.{% endblock %}
+{% block tagstrap %}You're so lovely, here's an entire page about it.{% endblock %}
+
 {% block title %}{% blocktrans with profile.user.username as username %}{{ username }}'s profile.{% endblocktrans %}{% endblock %}
 {% block content_title %}<h2>{{ profile.user.email }} {% if profile.user.get_full_name %}({{ profile.user.get_full_name }}){% endif %}</h2>{% endblock %}
 

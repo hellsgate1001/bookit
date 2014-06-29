@@ -2,6 +2,9 @@
 {% load i18n %}
 {% load url from future %}
 
+{% block tagline %}Need a new identity?{% endblock %}
+{% block tagstrap %}Use this email to login - so ensure it's real.{% endblock %}
+
 {% block content_title %}<h2>{% blocktrans with user.username as username %}Account{% endblocktrans %}</h2>{% endblock %}
 
 {% block content %}

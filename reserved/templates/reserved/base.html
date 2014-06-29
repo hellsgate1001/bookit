@@ -5,7 +5,7 @@
 {% block head %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title></title>
+    <title>Reserved{% block title %} - {% endblock %}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
@@ -37,8 +37,10 @@
             <div class="hero {% block header_size %}mini{% endblock %}">
                 <div class="overlay"></div>
                 <div class="icon"></div>
-                <h1 class="brand">Reserved.</h1>
-                <h2>Need bookings for your company? Check. <span class="icon-checkmark"></span></h2>
+
+                <h1 class="brand">{% block tagline %}Reserved.{% endblock %}</h1>
+
+                <h2>{% block tagstrap %}Need bookings for your company? Check.{% endblock %} <span class="icon-checkmark"></span></h2>
                 {% block hero_extra %}{% endblock %}
             </div>
         {% endblock %}
