@@ -1,15 +1,16 @@
 {% extends 'reserved/base.html' %}
 
+
+{% block header_size %}large{% endblock %}
+{% block hero_extra %}
+	<section class="slice core signup">
+	    <a href="{% url 'userena_signup' %}" class='signup'>Sign up</a>
+	</section>
+{% endblock %}
+
 {% block container %}
 
 	{{ block.super }}
-
-	{% block hero_extra %}
-		<section class="slice core signup">
-		    <a href="{% url 'userena_signup' %}" class='signup'>Sign up</a>
-		</section>
-	{% endblock %}
-
 
 	<section class="slice core main">
 	{% include 'reserved/sections/_main.html' %}

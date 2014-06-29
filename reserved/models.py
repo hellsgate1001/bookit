@@ -33,3 +33,6 @@ class Company(models.Model):
     name = models.CharField(max_length=255)
     addresses = models.ManyToManyField(Location)
     contact = models.ManyToManyField(UserProfile)
+
+    def __unicode__(self):
+        return "Company: %s" % self.name

@@ -117,28 +117,31 @@ header .bar {
   header .bar .logo {
     width: 100px;
     height: 60px;
+    float: right;
     display: inline-block;
     vertical-align: top;
     background-color: #EEE; }
-    /* line 25, ../scss/header-bar.scss */
+    /* line 26, ../scss/header-bar.scss */
     header .bar .logo .icon {
       background: url("/static/img/icons/marker.svg") no-repeat top;
       width: 100px;
       height: 60px;
       background-size: 61%; }
-  /* line 33, ../scss/header-bar.scss */
+  /* line 34, ../scss/header-bar.scss */
   header .bar h1, header .bar h2 {
     font-size: 2em;
     display: inline-block;
     margin: 0;
     padding: 0;
     vertical-align: top; }
-  /* line 41, ../scss/header-bar.scss */
+  /* line 42, ../scss/header-bar.scss */
   header .bar h1 {
     font-size: 1.6em;
-    margin-left: 20px;
-    line-height: 60px; }
-  /* line 47, ../scss/header-bar.scss */
+    margin-left: 1.9em;
+    line-height: 60px;
+    margin-top: 2px;
+    color: #DDD; }
+  /* line 50, ../scss/header-bar.scss */
   header .bar h2.site {
     position: absolute;
     text-align: center;
@@ -146,7 +149,7 @@ header .bar {
     margin: 0 auto;
     left: 0%;
     line-height: 0em; }
-    /* line 56, ../scss/header-bar.scss */
+    /* line 59, ../scss/header-bar.scss */
     header .bar h2.site .icon {
       display: block;
       color: rgba(0, 0, 0, 0.1);
@@ -156,27 +159,28 @@ header .bar {
       height: auto;
       font-size: 32px;
       line-height: 1em; }
-    /* line 67, ../scss/header-bar.scss */
+    /* line 70, ../scss/header-bar.scss */
     header .bar h2.site .icon:hover {
       color: rgba(0, 0, 0, 0.5); }
-    /* line 71, ../scss/header-bar.scss */
+    /* line 74, ../scss/header-bar.scss */
     header .bar h2.site .location {
       color: rgba(0, 0, 0, 0.23);
       font-size: 16px; }
-      /* line 75, ../scss/header-bar.scss */
+      /* line 78, ../scss/header-bar.scss */
       header .bar h2.site .location:hover {
         color: #333;
         transition: all .7s ease; }
-  /* line 84, ../scss/header-bar.scss */
+  /* line 87, ../scss/header-bar.scss */
   header .bar .nav-icon {
-    float: right;
     font-size: 52px;
     top: 25px;
     position: absolute;
-    right: 25px;
+    left: 25px;
     color: #333;
+    z-index: 3;
+    cursor: pointer;
     text-shadow: 0 1px 0 rgba(27, 27, 27, 0.06); }
-  /* line 94, ../scss/header-bar.scss */
+  /* line 98, ../scss/header-bar.scss */
   header .bar nav ul {
     display: none; }
 
@@ -414,6 +418,26 @@ body {
   padding: 200px 0 0;
   position: relative; }
   /* line 45, ../scss/base.scss */
+  .hero.mini {
+    min-height: 60px;
+    padding: 0;
+    height: 200px; }
+    /* line 50, ../scss/base.scss */
+    .hero.mini .icon {
+      height: 140px;
+      margin: 30px 0;
+      width: 25%; }
+    /* line 56, ../scss/base.scss */
+    .hero.mini h1.brand {
+      font-size: 6em;
+      width: 75%;
+      margin-top: 30px; }
+    /* line 62, ../scss/base.scss */
+    .hero.mini h2 {
+      width: 74.5%;
+      margin-top: .5em;
+      font-size: 1.8em; }
+  /* line 69, ../scss/base.scss */
   .hero .icon {
     width: 35%;
     height: 300px;
@@ -422,7 +446,7 @@ body {
     background: url("/static/img/icons/marker.svg") no-repeat;
     background-size: 100% 123%;
     background-position: 199%; }
-  /* line 55, ../scss/base.scss */
+  /* line 79, ../scss/base.scss */
   .hero h1.brand {
     display: inline-block;
     font-size: 11em;
@@ -433,7 +457,7 @@ body {
     margin: -12px 0px 0 0;
     position: relative;
     z-index: 2; }
-  /* line 67, ../scss/base.scss */
+  /* line 91, ../scss/base.scss */
   .hero h2 {
     width: 63.4%;
     font-size: 2.15em;
@@ -444,38 +468,41 @@ body {
     position: relative;
     z-index: 2;
     text-shadow: none; }
-    /* line 78, ../scss/base.scss */
+    /* line 102, ../scss/base.scss */
     .hero h2 span {
       font-size: .8em;
       margin-left: .6em; }
+  /* line 108, ../scss/base.scss */
+  .hero .slice.core.signup a {
+    color: white; }
 
-/* line 86, ../scss/base.scss */
+/* line 114, ../scss/base.scss */
 .dials {
   display: inline-block;
   width: 76%;
   margin: 6% 12% 1%; }
-  /* line 91, ../scss/base.scss */
+  /* line 119, ../scss/base.scss */
   .dials .dial {
     display: inline-block;
     width: 33%;
     text-align: center;
     margin-bottom: 3em; }
-    /* line 97, ../scss/base.scss */
+    /* line 125, ../scss/base.scss */
     .dials .dial h3 {
       margin: .8em 0 .0em 0;
       font-size: 38px;
       font-weight: 200;
       text-transform: uppercase; }
-    /* line 106, ../scss/base.scss */
+    /* line 134, ../scss/base.scss */
     .dials .dial .knob canvas {
       border: solid 2px;
       border-radius: 50%; }
-    /* line 111, ../scss/base.scss */
+    /* line 139, ../scss/base.scss */
     .dials .dial .knob .input-knob {
       font-family: lato !important;
       font-size: 42px !important; }
 
-/* line 120, ../scss/base.scss */
+/* line 148, ../scss/base.scss */
 .overlay:before {
   content: '';
   display: block;
@@ -486,7 +513,7 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.44); }
 
-/* line 131, ../scss/base.scss */
+/* line 159, ../scss/base.scss */
 .overlay {
   background: url("/static/img/022.jpg");
   width: 100%;
@@ -505,7 +532,10 @@ body .menu {
   height: 100%;
   vertical-align: top;
   position: fixed; }
-  /* line 10, ../scss/menu.scss */
+  /* line 9, ../scss/menu.scss */
+  body .menu.hidden {
+    display: none; }
+  /* line 14, ../scss/menu.scss */
   body .menu li a {
     color: white;
     background: #1F1F1F;
@@ -516,7 +546,8 @@ body .menu {
     text-decoration: none;
     font-size: 1.3em;
     font-weight: 200;
-    border-bottom: solid 1px #000; }
+    border-bottom: solid 1px #000;
+    cursor: pointer; }
 
 /* line 4, ../scss/index.scss */
 .quote {

@@ -32,9 +32,17 @@
     {% endblock %}
 
     <div class="page-container">
+
         {% block hero %}
-            {% include 'reserved/_hero.html' %}
+            <div class="hero {% block header_size %}mini{% endblock %}">
+                <div class="overlay"></div>
+                <div class="icon"></div>
+                <h1 class="brand">Reserved.</h1>
+                <h2>Need bookings for your company? Check. <span class="icon-checkmark"></span></h2>
+                {% block hero_extra %}{% endblock %}
+            </div>
         {% endblock %}
+
         {% block container %}{% endblock %}
     </div>
 

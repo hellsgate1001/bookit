@@ -42,6 +42,30 @@ body {
 	padding: 			200px 0 0;
 	position: 			relative;
 
+	&.mini {
+		min-height: 60px;
+		padding: 0;
+		height: 200px;
+
+		.icon {
+			height: 140px;
+			margin: 30px 0;
+			width: 25%;
+		}
+
+		h1.brand {
+			font-size: 6em;
+			width: 75%;
+			margin-top: 30px;
+		}
+
+		h2 {
+		    width: 74.5%;
+		    margin-top: .5em;
+		    font-size: 1.8em;
+		}
+	}
+
 	.icon {
 		width: 35%;
 		height: 300px;
@@ -79,6 +103,10 @@ body {
 			font-size: .8em;
 			margin-left: .6em;
 		}
+	}
+
+	.slice.core.signup a {
+		color: white;
 	}
 
 }

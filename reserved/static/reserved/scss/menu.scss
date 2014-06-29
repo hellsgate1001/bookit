@@ -6,6 +6,10 @@ body .menu {
 	vertical-align: top;
 	position: fixed;
 
+	&.hidden {
+		display:none;
+	}
+
  	li {
  		a{
 			color: white;
@@ -18,6 +22,7 @@ body .menu {
 			font-size: 1.3em;
 			font-weight: 200;
 			border-bottom: solid 1px #000;
+			cursor: pointer;
 		}
 	}
 }

@@ -2,7 +2,10 @@
 
 {% block container %}
 	{{ block.super }}
+	<ul>
 	{% for company in object_list %}
-		{{ company }}
+		<li>{{ company }}</li>
 	{% endfor %}
+	</ul>
+
 {% endblock %}
