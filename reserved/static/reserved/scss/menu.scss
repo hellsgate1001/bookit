@@ -5,9 +5,12 @@ body .menu {
 	height: 100%;
 	vertical-align: top;
 	position: fixed;
+	transition: all 500ms cubic-bezier(0.490, 0.675, 0.055, 0.785);
+	left: 0;
 
 	&.hidden {
-		display:none;
+		left: -15%;
+		transition: all 500ms cubic-bezier(0.490, 0.675, 0.055, 0.785);
 
 	}
 

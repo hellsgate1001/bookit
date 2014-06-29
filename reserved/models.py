@@ -36,3 +36,21 @@ class Company(models.Model):
 
     def __unicode__(self):
         return "Company: %s" % self.name
+
+
+class Venue(models.Model):
+    name = models.CharField(max_length=255,
+        help_text='Fiendly name of the venue such as <i>O2 Arena</i> ')
+
+    address = models.ForeignKey(Location,
+        help_text='The exact address of the venue.')
+
+    company = models.ForeignKey(Company,
+        help_text='Company in charge of the venue')
+
+    contact = models.ManyToManyField(UserProfile,
+        help_text='People to contact for event coordiation')
+
+
+    def __unicode__(self):
+        return "Venue: %s by %s" % (self.name, self.company)
