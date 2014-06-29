@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+<!-- A dash presents a company with content defining a page to display
+an event's current processes. -->
+
+{% block headjs %}
+	{{ block.super }}
+    <script src="{{ site.url }}/media/js/vendor/jquery-1.11.0.min.js"></script>
+    <script src="{{ site.url }}/media/js/vendor/jquery.knob.js"></script>
+{% endblock %}
+
+	{% block hero %}
+	<div class="hero">
+	    <div class="overlay"></div>
+	    <div class="icon"></div>
+	    <div class="dials">
+	    	<div class="dial">
+				<div class="knob">
+					<input type="text" value="63" data-max="100" class="input-knob">
+				</div>
+				<h3>Events</h3>
+			</div>
+			<div class="dial">
+				<div class="knob">
+					<input type="text" value="1033" data-max="5000" class="input-knob">
+				</div>
+				<h3>Bookings</h3>
+			</div>
+
+			<div class="dial">
+				<div class="knob">
+					<input type="text" value="6493" data-max="9000" class="input-knob">
+				</div>
+				<h3>Clients</h3>
+			</div>
+	    </div>
+	</div>
+		
+	{% endblock %}
+
+{% block container %}
+
+	<script>
+		$(function() {
+		    $(".input-knob").knob({
+		    	fgColor: '#FFF',
+		    	thickness: .11,
+		    	bgColor: 'transparent',
+		    	fontWeight: 200,
+		    	//font: 'lato, Helvetica, sans-serif 54px'
+		    });
+		});
+	</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+
+/*
+Header styles shared for every page.
+If the page is Bookit defined (ie the home page, about etc)...
+The header will display bookit branding.
+
+If the client is in reference, this area contains their name and 
+logo + branding
+*/
+header nav ul li {
+    list-style: none;
+    background: #333;
+    border-bottom: solid 3px #333;
+}
+
+header nav ul li:hover {
+    list-style: none;
+    background: #555;
+    border-bottom: solid 3px red;
+}
+
+header nav ul li a {
+    display: inline-block;
+    width: 200px;
+    line-height: 2em;
+    font-size: 16px;
+    color: #fff;
+}
+
+

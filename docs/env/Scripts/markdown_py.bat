@@ -1,0 +1,1 @@
+@"C:\Users\jay\Documents\GitHub\bookit\docs\env\Scripts\python.exe" "C:\Users\jay\Documents\GitHub\bookit\docs\env\Scripts\markdown_py" %*

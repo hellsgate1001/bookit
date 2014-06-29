@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block container %}
+	{{ block.super }}
+
+	<section class="slice core signup">
+	    <a href="javascript:;" class='signup'>Sign up</a>
+	</section>
+
+	<section class="slice core main">
+	{% include 'sections/_main.html' %}
+	</section>
+
+	<section class="slice core client">
+	{% include 'sections/_client.html' %}
+	</section>
+
+	<section class="slice core location">
+	{% include 'sections/_location.html' %}
+	</section>
+
+	<section class="slice core reports">
+	{% include 'sections/_report.html' %}
+	</section>
+
+	<div class="quote intersection">
+	    <div class="overlay"></div>
+	    <div class="icon"></div>
+	    <p>It's all designed for the user, accessible from any device Reserved is easy, safe and fast.</p>
+	</div>
+
+	<section class="slice core email">
+	{% include 'sections/_email.html' %}
+	</section>
+
+	<section class="slice history core">
+	{% include 'sections/_history.html' %}
+	</section>
+
+	<section class="slice pricing core">
+	{% include 'sections/_pricing.html' %}
+	</section>
+
+{% endblock %}
