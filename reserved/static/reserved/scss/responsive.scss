@@ -1,0 +1,70 @@
+@media all and (max-width: 1600px) {
+	.page-container {
+		.hero {
+
+			padding: 0;
+			padding-top: 100px;
+
+			h1.brand {
+				font-size: 11em;
+			}
+
+			.icon {
+				width: 23%;
+			}
+
+			h2 {
+				float: left;
+				width: 61%;
+				margin-top: 5%;
+				margin-left: 8%;
+				font-size: 2.1em;
+			}
+		}
+	}
+}
+
+@media all and (max-width: 1400px) {
+	.page-container {
+		.hero {
+			padding: 100px;
+
+		}
+
+
+			h1.brand {
+				font-size: 10em;
+			}
+
+			.icon {
+				width: 15%;
+			}
+	}
+}
+
+@media all and (max-width: 1200px) {
+	.page-container {
+		.hero {
+			h1.brand {
+				font-size: 8em;
+				width: 100%;
+				text-align: center;
+				float: none;
+			}
+
+			.icon {
+				width: 100%;
+				float: none;
+				height: 250px;
+				background-position: 50%;
+				background-size: 200px;
+			}
+
+			h2 {
+				width: 100%%;
+				text-align: center;
+				font-size: 2em;
+			}
+		}
+	}
+}

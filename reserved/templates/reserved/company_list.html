@@ -1,0 +1,8 @@
+{% extends 'reserved/base.html' %}
+
+{% block container %}
+	{{ block.super }}
+	{% for company in object_list %}
+		{{ company }}
+	{% endfor %}
+{% endblock %}

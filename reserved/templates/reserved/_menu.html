@@ -1,0 +1,24 @@
+
+<div class="menu">
+ 	<ul>
+    	<li><a href="/">Home</a></li>
+
+		{% if user.is_anonymous %}
+		  <li><a href="{% url 'userena_signup' %}">Signup</a></li>
+		  <li><a href="{% url 'userena_signin' %}">Login</a></li>
+		{% else %}
+			{% if user.is_staff %}
+				<li class='admin'><a href="/admin/">Admin</a></li>
+			{% else %}
+				<li><a href="{% url 'userena_profile_detail' user.username %}">profile</a></li>
+				<li class="divider"></li>
+			{% endif %}
+			<li><a href="{% url 'reserved_companies' %}">Companies</a></li>
+			<li><a href="{% url 'userena_signout' %}">Logout</a></li>
+		{% endif %}
+
+		<li class="divider"></li>
+    	<li><a href="About">About</a></li>
+    	<li><a href="Contact">Contact</a></li>
+    </ul>
+</div>

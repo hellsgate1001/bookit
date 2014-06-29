@@ -1,0 +1,20 @@
+/* line 1, ../scss/menu.scss */
+body .menu {
+  width: 15%;
+  background: #333;
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
+  position: fixed; }
+  /* line 10, ../scss/menu.scss */
+  body .menu li a {
+    color: white;
+    background: #1F1F1F;
+    display: inline-block;
+    width: 70%;
+    padding: 10% 15%;
+    margin-top: 1px;
+    text-decoration: none;
+    font-size: 1.3em;
+    font-weight: 200;
+    border-bottom: solid 1px #000; }

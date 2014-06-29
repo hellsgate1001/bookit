@@ -1,0 +1,49 @@
+{% extends "reserved/_base.html" %}
+{% load staticfiles %}
+{% load compress %}
+
+{% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    {% block headcss %}
+
+    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/3cf17c05d9/Lister/style.css">
+    <link rel="stylesheet" type="css" href="{% static "reserved/css/index.css" %}" />
+
+    {% endblock %}
+
+    {% block headjs %}
+    <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+	<!-- An example of a Reserved event. -->
+	{% block header %}
+		{% include 'reserved/_header.html' %}
+	{% endblock %}
+
+    {% block menu %}
+        {% include 'reserved/_menu.html' %}
+    {% endblock %}
+
+    <div class="page-container">
+        {% block hero %}
+            {% include 'reserved/_hero.html' %}
+        {% endblock %}
+        {% block container %}{% endblock %}
+    </div>
+
+	{% include 'reserved/_footer.html' %}
+{% endblock %}
+
+{% block footerjs %}
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+{% endblock %}

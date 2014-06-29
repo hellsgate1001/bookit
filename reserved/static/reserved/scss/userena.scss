@@ -1,0 +1,186 @@
+
+
+
+.accounts {
+	h2 {
+		text-align: center;
+		margin: .5em auto;
+		position: relative;
+		display: inline-block;
+		width: 100%;
+		font-weight: 100;
+		font-family: 'Open Sans';
+		font-size: 4em;
+	}
+
+	.white-box {
+		width: 90%;
+		margin: 4em auto;
+		margin-top: 1em;
+		background: #eee;
+
+		#box-nav{
+			line-height: 3em;
+			li a {
+				color: #333;
+			}
+		}
+	}
+
+	form {
+
+		.accounts form #box-nav li a {
+			display: inline-block;
+			width: 100%;
+			text-decoration: none;
+			line-height: 3em;
+			background: #FFF;
+		}
+
+		.accounts form input[type="submit"] {
+			border: none;
+			margin: 3%;
+			padding: 1em 2em;
+			border-radius: 2px;
+			background: rgb(171, 226, 171);
+			display: inline-block;
+		}
+
+		.accounts form p input[type="file"] {
+		width: 65%;
+		display: inline-block;
+		font-size: 14px;
+		line-height: 2em;
+		}
+
+		.accounts form span.helptext {
+		display: block;
+		/* border-bottom: solid 1px #EEE; */
+		padding: 1em 3% 0em 31.5%;
+		margin: 0 0 2em;
+		color: #AAA;
+		}
+
+		.accounts form ul#box-nav li a:hover {
+		background: #E2E2E2;
+		color: #333;
+		transition: all .5s ease;
+		}
+
+		.accounts form ul.errorlist li {
+		margin: 1em 0;
+		background: #3D3D3D;
+		display: inline-block;
+		padding: .4em .8em;
+		color: white;
+		border-radius: 2px;
+		}
+
+		.accounts form ul.errorlist {
+		margin: 0 1em 0 0;
+		padding: 1% 3% 0%;
+		}
+		/* border: solid 1px #8D8D8D; */
+		width: 70%;
+		margin: 1em auto;
+		box-shadow: 0 3px 1px rgba(0, 0, 0, 0.02);
+
+		legend {
+			font-size: 3em;
+			padding: 1% 3%;
+			font-weight: 100;
+			color: #AAA;
+		}
+
+		p {
+
+			label {
+				width: 25%;
+				font-weight: normal;
+				font-size: 1.2em;
+				margin: 0 3%;
+			}
+
+			input {
+				width: 65%;
+				border: none;
+				background: #DDD;
+				font-size: 1.4em;
+				border-radius: 4px;
+				padding: .5em 1em;
+				line-height: 1em;
+			}
+
+
+			.checkbox {
+				margin: 1em 0em 01em 32%;
+				input {
+					width: initial;
+				}
+			}
+		}
+	}
+}
+
+p.forgot-password {
+	display: inline-block;
+}
+
+ul {
+	&#box-nav {
+		margin: 0;
+		padding: 0;
+		white-space: nowrap;
+		overflow: hidden;
+
+		li {
+			display: inline-block;
+			width: 24.7%;
+			margin: 0;
+			padding: 0;
+			color: #DDD;
+			border-bottom: solid 1px;
+			text-align: center;
+			/* padding: 1em 0; */
+		}
+	}
+}
+
+img.mugshot {
+width: 140px;
+margin: 4%;
+background: rgba(0, 0, 0, 0.08);
+padding: 20px;
+}
+
+#details dl dt {
+display: inline-block;
+width: 20%;
+/* background: #ddd; */
+}
+
+#details dl dd {
+display: inline-block;
+width: 78%;
+}
+
+div#details {
+/* border: solid 1px; */
+width: 50%;
+display: inline-block;
+font-size: 18px;
+line-height: 2em;
+}
+
+div.clear {
+clear: both;
+}
+
+div.navbar.navbar-inverse.navbar-fixed-top {
+height: 100px;
+}
+
+
+.navbar ul.main.menu li:nth-child(1) {
+border-top: none;
+}

@@ -1,0 +1,48 @@
+{% extends 'reserved/base.html' %}
+
+{% block container %}
+
+	{{ block.super }}
+
+	{% block hero_extra %}
+		<section class="slice core signup">
+		    <a href="{% url 'userena_signup' %}" class='signup'>Sign up</a>
+		</section>
+	{% endblock %}
+
+
+	<section class="slice core main">
+	{% include 'reserved/sections/_main.html' %}
+	</section>
+
+	<section class="slice core client">
+	{% include 'reserved/sections/_client.html' %}
+	</section>
+
+	<section class="slice core location">
+	{% include 'reserved/sections/_location.html' %}
+	</section>
+
+	<section class="slice core reports">
+	{% include 'reserved/sections/_report.html' %}
+	</section>
+
+	<div class="quote intersection">
+	    <div class="overlay"></div>
+	    <div class="icon"></div>
+	    <p>It's all designed for the user, accessible from any device Reserved is easy, safe and fast.</p>
+	</div>
+
+	<section class="slice core email">
+	{% include 'reserved/sections/_email.html' %}
+	</section>
+
+	<section class="slice history core">
+	{% include 'reserved/sections/_history.html' %}
+	</section>
+
+	<section class="slice pricing core">
+	{% include 'reserved/sections/_pricing.html' %}
+	</section>
+
+{% endblock %}
