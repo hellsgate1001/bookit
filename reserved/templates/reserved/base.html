@@ -11,8 +11,10 @@
 
     {% block headcss %}
 
-    <link rel="stylesheet" href="http://i.icomoon.io/public/temp/3cf17c05d9/Lister/style.css">
+    <!-- <link rel="stylesheet" href="http://i.icomoon.io/public/temp/8126d2c6e8/Lister/style.css"> -->
     <link rel="stylesheet" type="css" href="{% static "reserved/css/index.css" %}" />
+    <link rel="stylesheet" type="css" href="{% static "reserved/css/qunit.css" %}" />
+    <link rel="stylesheet" type="css" href="{% static "reserved/fonts/icomoon/style.css" %}" />
 
     {% endblock %}
 
@@ -31,7 +33,12 @@
         {% include 'reserved/_menu.html' %}
     {% endblock %}
 
+
     <div class="page-container">
+        {% block qunit %}
+            <div id="qunit"></div>
+            <div id="qunit-fixture"></div>
+        {% endblock %}
 
         {% block hero %}
             <div class="hero {% block header_size %}mini{% endblock %}">
@@ -54,5 +61,19 @@
 {% block footerjs %}
     <script src="{% static 'reserved/js/vendor/jquery-1.11.0.min.js' %}"></script>
     <script src="{% static 'reserved/js/vendor/jquery.clickout.js' %}"></script>
+    <script src="{% static 'reserved/js/vendor/moment.min.js' %}"></script>
+    <script src="{% static 'reserved/js/vendor/date.js' %}"></script>
+    <script src="{% static 'reserved/js/vendor/crel/crel.min.js' %}"></script>
+    <script src="{% static 'reserved/js/vendor/rivets/dist/rivets.min.js' %}"></script>
+    <script src="{% static 'reserved/js/vendor/jsface/dist/jsface.all.js' %}"></script>
+    <script src="{% static 'reserved/js/vendor/qunit.js' %}"></script>
+
+    <script src="{% static 'reserved/js/components/Application.js' %}"></script>
+    <script src="{% static 'reserved/js/components/CollectionMixin.js' %}"></script>
+    <script src="{% static 'reserved/js/components/Template.js' %}"></script>
+
+    <script src="{% static 'reserved/js/test/template-tests.js' %}"></script>
     <script src="{% static 'reserved/js/main.js' %}"></script>
+
+    {{ block.super }}
 {% endblock %}

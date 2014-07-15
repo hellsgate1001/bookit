@@ -1,0 +1,13 @@
+{% extends 'reserved/base.html' %}
+
+{% block container %}
+	{{ block.super }}
+	<div class="bookings">
+		<h2>New Booking</h2>
+
+		<form class='booking-form'>
+		{{ form }}
+		</form>
+	</div>
+
+{% endblock %}

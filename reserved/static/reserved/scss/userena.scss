@@ -1,7 +1,9 @@
 
+.bookings {
+	border:solid 1px red;
+}
 
-
-.accounts {
+.accounts, .bookings {
 	h2 {
 		text-align: center;
 		margin: .5em auto;

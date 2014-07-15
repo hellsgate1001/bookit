@@ -114,7 +114,6 @@ class Booking(models.Model):
     '''
     name = models.CharField(max_length=255, help_text='Optionally name of the booking entity.')
 
-
     created = models.DateTimeField(auto_now=False, editable=False,
         null=True, blank=True, auto_now_add=True,
         help_text='The Booking creation time.')
@@ -137,8 +136,11 @@ class Booking(models.Model):
     customers =  models.ManyToManyField(Customer,null=True, blank=True,
         help_text='People to contact for event coordiation')
 
-    status = models.CharField(max_length=100,null=True, blank=True)
+    status = models.CharField(max_length=100,null=True, blank=True, default='initial')
 
+    def __unicode__(self):
+        return 'Booking for %s: %s at %s = "%s"' % (self.customers.count(),
+            self.name, self.created, self.status)
 
 class Event(models.Model):
     ''' An Event defines a location for many bookings to occur. Each booking
