@@ -50,8 +50,137 @@
     };
 
     Template = Application.Component(Application.Basic, {
-        constructor: function(selector){
-            this.selector = selector;
+
+        constructor: function(name, selector){
+
+            if( name !== undefined
+                && selector === undefined ) {
+                selector = name;
+                name = null;
+            }
+            this.name(name)
+            this.selector(selector);
+        }
+
+
+        /*
+         The selector defines the DOM sizzle string to define your
+         template object. This element will be used as a base
+         format (or template) for future use.
+
+         A chain method to enable throughput
+         of this variable. If a value is passed, the variable
+         is changed and `this` is returned. Calling the method
+         without passing a value will return the variable.
+         */
+        , selector: function selector(value){
+            if(value !== undefined) {
+                this._selector = value;
+                return this;
+            }
+
+            return this._selector || space.selector;
+        }
+
+        /*
+         A Template can be given a name, allowing you to bake
+         the template request into the main application.
+         Additionally using the name as a future templating
+         variable.
+
+         A chain method to enable throughput
+         of this variable. If a value is passed, the variable
+         is changed and `this` is returned. Calling the method
+         without passing a value will return the variable.
+         */
+        , name: function name(value){
+            if(value !== undefined) {
+                this._name = value;
+                return this;
+            }
+            return this._name || space.name;
+        }
+
+        /*
+         A Template can be given a html, allowing you to
+         use a HTML string rather than a DOM sizzle selector.
+         if no HTML is defined, this is automatically generated
+         from the DOM selector.
+
+         A chain method to enable throughput
+         of this variable. If a value is passed, the variable
+         is changed and `this` is returned. Calling the method
+         without passing a value will return the variable.
+         */
+        , html: function html(value){
+            if(value !== undefined) {
+                this._html = value;
+                return this;
+            }
+            return this._html || space.html;
+        }
+
+        , data: function data(value){
+            if(value !== undefined) {
+                this._data = value;
+                return this;
+            }
+            return this._data || space.data;
+        }
+
+        , target: function target(value){
+            if(value !== undefined) {
+                this._target = value;
+                return this;
+            }
+            return this._target || space.target;
+        }
+
+        , clone: function clone(value){
+            if(value !== undefined) {
+                this._clone = value;
+                return this;
+            }
+            return this._clone || space.clone;
+        }
+
+        , toView: function toView(target, data) {
+            // Get the DOM element to push to.
+            target = target || this.target();
+            data = data || this.data();
+
+            if( this.clone() ) {
+                var html = this.toHTMLString();
+            }
+        }
+
+        , getDOM: function(selector){
+            // Pick a dom element off the screen based upon the
+            // value provided.
+            var $el = $(selector);
+            if( $el.length > 0 ) {
+                return $el[0];
+            }
+        }
+
+        , toHTMLString: function(){
+            // Convert the current HTML or selector
+            // to a copy HTML string and return.
+            if( this.selector() ) {
+                var dom = this.getDOM(this.selector());
+                return dom.outerHTML;
+            } else if( this.html() ) {
+                return $(this.html())[0].outerHTML
+            }
+        }
+
+        // Tne element to push the template
+        , target: function target(value){
+            if(value !== undefined) {
+                this._target = value;
+                return this;
+            }
+            return this._target || space.target;
         }
     });
 
@@ -59,93 +188,4 @@
     Application.prototype.Template = Template;
 
     return;
-
-    /*
-     <div class="templates hidden">
-         <div class="calendar">
-             <div class="month-cell" id='{{ id }}'>
-                 <div class="date">{{ date }}</div>
-             </div>
-         </div>
-     </div>
-    */
-
-    //  Use a DOM template instantly
-    var template = new Template('.calendar .month-cell');
-
-
-    // Define a template based on a DOM template
-    app.template.define('monthCell', '.calendar .month-cell');
-    // Use a defined Template
-    var template = new app.template.monthCell();
-
-
-    // Application.template.calendarCell('month');
-    app.template.define('calendarCell', function(key){
-            // 'calendar .month-cell'
-        return 'calendar .%(key)s-cell'
-    });
-
-    // Application.template.calendarCell('month');
-    app.template.define({
-
-        // master template containers.
-        // littered throughout your DOM.
-        namespace:  'templates'
-
-        // Namespaced DOM entities
-        // should be hidden (using CSS)
-        , hidden:   true
-
-        // the name of your template, to
-        // assign to the Application.template
-        // space.
-        , name:     'calendar'
-
-    }, {
-        day:        '.calendar .dates .day-cell'
-        , week:     '.calendar .dates .week-cell'
-              //    '.calendar .dates .month-cell'
-        , month:    '.calendar .dates .%(key)s-cell'
-        , year:     '.calendar .dates .%(key)s-cell'
-    });
-
-    /*
-    <div class="calendar">
-        <div class="dates">
-            <div class="day-view">
-                <h3>Day view</h3>
-                <!-- A day view is broken in hourly (selected) intervals
-                with each booking listed start and end time. -->
-            </div>
-            <!-- in here will list a period of dates -->
-            <div class="week-view">
-                <h3>Week view</h3>
-                <!-- A stack of of days, divided horizonally by a selected
-                time range. -->
-            </div>
-            <div class="month-view">
-                <h3>Month view</h3>
-                <!-- up to 36 blocks of the selected month.
-                Each month has a number next to the event -->
-            </div>
-            <div class="year-view">
-                <h3>Year view</h3>
-                <!-- Each cell is a month of the selected year, each month
-                has an event with a count. Each count is a booking number -->
-            </div>
-        </div>
-    </div>
-    */
-
-    // Define a simple selector
-    app.template.define('calendar', '.calendar .dates .%(key)s-view');
-                     // 'calendar', '.calendar .dates .month-view'
-    // Use a defined Template
-    var template = new app.template.calendar('day');
-    var template = new app.template.calendar('week');
-    var template = new app.template.calendar('month');
-    var template = new app.template.calendar('year');
-
-
 })($);
