@@ -840,3 +840,51 @@ section.slice {
   section.slice p.left {
     margin-left: 0;
     margin-right: 9%; }
+
+
+
+#map-canvas {
+  height: 400px;
+}
+
+input#pac-input {
+font-size: 1.6em;
+margin-top: 20px;
+padding: 10px 20px;
+color: #666;
+border: none;
+box-shadow: 0 2px 1px rgba(0, 0, 0, 0.32);
+min-width: 35%;
+border-radius: 2px;
+}
+
+#id_address {
+
+  width: 50%;
+}
+
+.cell {
+outline: solid 1px #DDD;
+width: 14%;
+min-height: 80px;
+display: inline-block;
+padding: 1%;
+}
+
+
+.template.hidden {
+  display:none;
+}
+
+.cell .count {
+  width: 20%;
+  text-align: center;
+  display: inline-block;
+}
+
+
+.date .range {
+display: inline-block;
+text-align: right;
+width: 76%;
+}

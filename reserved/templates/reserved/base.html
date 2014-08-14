@@ -35,6 +35,8 @@
 
 
     <div class="page-container">
+
+        {% comment %}
         {% block qunit %}
             <div class="test template">
                 <div class="calendar">
@@ -63,9 +65,10 @@
                     </div>
                 </div>
             </div>
-            <div id="qunit"></div>
-            <div id="qunit-fixture"></div>
+            <!-- <div id="qunit"></div>
+            <div id="qunit-fixture"></div> -->
         {% endblock %}
+        {% endcomment %}
 
         {% block _hero %}
             <div class="hero {% block header_size %}mini{% endblock %}">
@@ -94,6 +97,9 @@
     <script src="{% static 'reserved/js/vendor/rivets/dist/rivets.min.js' %}"></script>
     <script src="{% static 'reserved/js/vendor/jsface/dist/jsface.all.js' %}"></script>
     <script src="{% static 'reserved/js/vendor/qunit.js' %}"></script>
+    <script src="{% static 'reserved/js/vendor/select2-3.5.1/select2.min.js' %}"></script>
+    <link rel="stylesheet" type="css" href="{% static "reserved/js/vendor/select2-3.5.1/select2.css" %}" />
+
 
     <script src="{% static 'reserved/js/components/Application.js' %}"></script>
     <script src="{% static 'reserved/js/components/CollectionMixin.js' %}"></script>

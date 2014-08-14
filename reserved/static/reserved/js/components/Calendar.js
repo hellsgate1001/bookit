@@ -9,7 +9,7 @@
 			// present a view to the interface
 			// pick a view
 			var date = Date.parse(dateString || new Date());
-			var dates = this.dates[range](date);
+			var dates = (this.dates[range])? this.dates[range](date): undefined;
 			$('.calendar .dates .' + range + '-view').removeClass('hidden');
 		}
 		, dates: {
@@ -29,10 +29,11 @@
 					// ntemplate = Application.g().template.calendarCell('month');
 				};
 
-				debugger;
+				// debugger;
 			}
 		}
 	});
+
 	Application.extend(Calendar, [Application.CollectionMixins]);
 	Application.Calendar = Calendar;
 

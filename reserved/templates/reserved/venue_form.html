@@ -1,0 +1,24 @@
+{% extends 'reserved/base.html' %}
+{% load staticfiles %}
+
+{% block container %}
+	{{ block.super }}
+	<!-- classes need to be renamed; after scss compliation tool is implemented -->
+	<div class="Venues bookings">
+		<h2>New Venue</h2>
+
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+ 		<div id="map-canvas"></div>
+
+		<form class='booking-form'>
+		{{ form }}
+		</form>
+	</div>
+
+{% endblock %}
+
+{% block footerjs %}
+{{ block.super }}
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+<script src="{% static 'reserved/js/venue_create.js' %}"></script>
+{% endblock %}

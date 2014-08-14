@@ -12,23 +12,52 @@
 	<div class="range">
 		<p>Pick a date range to view bookings in this event.</p>
 		<ul>
-			<li><a href="">Agenda</a></li>
-			<li><a href="">Day</a></li>
-			<li><a href="">Week</a></li>
-			<li><a href="">Month</a></li>
-			<li><a href="">Year</a></li>
+			<li><a href="javascript:;">Agenda</a></li>
+			<li><a href="javascript:;" data-type='Day'>Day</a></li>
+			<li><a href="javascript:;" data-type='Week'>Week</a></li>
+			<li><a href="javascript:;" data-type='Month'>Month</a></li>
+			<li><a href="javascript:;" data-type='Year'>Year</a></li>
 		</ul>
 		<div class="dates">
 		</div>
 	</div>
 
-	<div class="templates hidden">
+	<div class="template hidden">
 		<div class="calendar">
-			<div class="month-cell" id='{{ id }}'>
-				<div class="date">{{ date }}</div>
+
+			<div class="cell day-cell" id='%(id)s'>
+				<div class="date">
+					<div class="count hour">{ .count }</div>
+					<div class="range day">{ .day }</div>
+				</div>
+				<div class="cell-info">{ .name }</div>
+			</div>
+
+			<div class="cell week-cell" id='%(id)s'>
+				<div class="date">
+					<div class="count week">{ .count }</div>
+					<div class="range month">{ .format }</div>
+				</div>
+				<div class="cell-info">{ .name }</div>
+			</div>
+
+			<div class="cell month-cell" id='%(id)s'>
+				<div class="date">
+					<div class="count day">{ .count }</div>
+					<div class="range month">{ .format }</div>
+				</div>
+				<div class="cell-info">{ .name }</div>
+			</div>
+			<div class="cell year-cell" id='%(id)s'>
+				<div class="date">
+					<div class="count month">{ .count }</div>
+					<div class="range year">{ .format }</div>
+				</div>
+				<div class="cell-info">{ .name }</div>
 			</div>
 		</div>
 	</div>
+
 	<div class="calendar">
 		<div class="dates">
 			<div class="day-view">
@@ -60,7 +89,6 @@
 	{{ block.super }}
 
     <script src="{% static 'reserved/js/components/Calendar.js' %}"></script>
-
     <script src="{% static 'reserved/js/venue_calendar.js' %}"></script>
 
 	<!--

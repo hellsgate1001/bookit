@@ -27,49 +27,44 @@ QUnit.test( "Exists", function( assert ) {
  </div>
 */
 
-QUnit.test( "Test has been setup", function( assert ) {
+QUnit.test( "Test has been setup", function exists_Template( assert ) {
 	var templates = $(this.selector)[0];
 	assert.ok(templates)
 });
 
-QUnit.test( "Can receive HTML", function( assert ) {
-	var html = '<div class="templates hidden"><div class="calendar"><div class="month-cell" id="{{ id }}"><div class="date">{{ date }}</div></div></div></div>';
+QUnit.test( "Can receive HTML", function html_Template( assert ) {
+	var html = '<div/>';
 	var temp = new Template();
 	temp.html(html);
 	assert.equal(temp.html(), html, 'HTML is stored correctly');
-	assert.equal(temp.toHTMLString(), html, 'toHTMLString is fed from HTML');
+	// assert.equal(temp.toHTMLString(), html, 'toHTMLString is fed from HTML');
 });
 
-QUnit.test( "Can receive a selector", function( assert ) {
+QUnit.test( "Can receive a selector", function selector_newSelector_Template( assert ) {
 	var temp = new Template(this.selector);
-	assert.equal(temp.selector(), this.selector, 'Selector passed through constructor');
+	assert.equal(temp.selector(), '.template ' + this.selector, 'Selector passed through constructor');
 
 	// renamed the selector;
 	var newSelector = '.template .new.selector';
 	temp.selector(newSelector)
-	assert.equal(temp.selector(), newSelector, 'change the selector after instansiation');
+	assert.equal(temp.selector(), '.template ' + newSelector, 'change the selector after instansiation');
 
 });
 
-QUnit.test( "Can receive name/selector", function( assert ) {
+QUnit.test( "Can receive name/selector", function name_selector_Template( assert ) {
 	var name = 'templateName';
 	var temp = new Template(name, this.selector);
 
 	assert.equal(temp.name(), name, 'Name passed through constructor');
-	assert.equal(temp.selector(), this.selector, 'Selector passed through constructor');
+	assert.equal(temp.selector(), '.template ' + this.selector, 'Selector passed through constructor');
 
 });
 
-QUnit.test( "toHTMLString", function( assert ) {
-	var actualHTML = $(this.selector)[0].outerHTML
-	var temp = new Template(this.selector);
+QUnit.test( "Can define an Application implement", function define_monthCell_Template( assert ) {
 
-	assert.equal(temp.toHTMLString(), actualHTML, '');
-});
-
-QUnit.test( "Can define a Application implement", function( assert ) {
+	assert.ok( (new Application).template.define, '(new Application).template.define exists')
 	// Define a template based on a DOM template
-	this.app.template.define('monthCell', '.calendar .month-cell');
+	this.app.template.define('monthCell', '.calendar .month-view');
 	//  Use a DOM template instantly
 	var template = new this.app.template.monthCell();
 
@@ -79,7 +74,7 @@ QUnit.test( "Can define a Application implement", function( assert ) {
 	// Application.template.calendarCell('month');
 	this.app.template.define('calendarCell', function(key){
 	        // 'calendar .month-cell'
-	    return 'calendar .%(key)s-cell'
+	    return 'calendar .%(key)s-view'
 	});
 
 	/*
@@ -128,9 +123,46 @@ QUnit.test( "Can define a Application implement", function( assert ) {
 
 });
 
+QUnit.test( "Multi definition loadout", function multi_definition_Template( assert ) {
+	var space = {
+	    name:     'subs'
+	    // The selector for the parent.
+	    // regardless of how many children definitions
+	    // are applied; this should parenatize all.
+	    , selector: '.calendar'
+	}
+
+	var definition = {
+	    day:        /* .calendar */ '.dates .day-cell'
+	    , week:     /* .calendar */ '.dates .week-cell'
+	    , month:    /* .calendar */ '.dates .%(key)s-cell'
+	}
+
+	this.app.template.define(space, definition);
 
 
-QUnit.test( "Advanced loadout", function( assert ) {
+	var templateGroup 	= this.app.template.subs();
+  	assert.equal('day' in this.app.template.subs(), true, 'Correct day object template');
+  	assert.equal('week' in this.app.template.subs(), true, 'Correct week object template');
+  	assert.equal('month' in this.app.template.subs(), true, 'Correct month object template');
+
+	var templateDay 	= this.app.template.subs('day');
+
+  	assert.equal('.template ' +  definition.day, templateDay.selector(), 'Correct day template');
+
+	var templateWeek 	= this.app.template.subs('week');
+
+  	assert.equal('.template ' +  definition.week, templateWeek.selector(), 'Correct week template');
+
+  	var templateMonth 	= this.app.template.subs('month');
+
+  	assert.equal( sprintf( '.template ' + definition.month, {key:'month'}), templateMonth.selector(),
+  		'Correct month templated selector');
+
+});
+
+
+QUnit.test( "Advanced loadout", function space_definition_Template( assert ) {
   	var space = {
 
 	    // master template containers.
@@ -144,24 +176,47 @@ QUnit.test( "Advanced loadout", function( assert ) {
 	    // the name of your template, to
 	    // assign to the Application.template
 	    // space.
-	    , name:     'calendar'
+	    , name:     'dates'
+	    // The selector for the parent.
+	    // regardless of how many children definitions
+	    // are applied; this should parenatize all.
+	    , selector: '.calendar'
 	}
 
 	var definition = {
-	    day:        '.calendar .dates .day-cell'
-	    , week:     '.calendar .dates .week-cell'
-	          //    '.calendar .dates .month-cell'
-	    , month:    '.calendar .dates .%(key)s-cell'
-	    , year:     '.calendar .dates .%(key)s-cell'
+					/*
+					 .calendar is as this should be applied by the parent
+					 selector.
+					 */
+	    day:        /* .calendar */ '.dates .day-cell'
+	    , week:     /* .calendar */ '.dates .week-cell'
+	          //    /* .calendar */ '.dates .month-cell'
+	    , month:    /* .calendar */ '.dates .%(key)s-cell'
+	    , year:     /* .calendar */ '.dates .%(key)s-cell'
 	}
 
+	// This is mostly syntax should; as under the hood; a single
+	// template will be returned for each, using the parental
+	// data space and definitions as reference.
+	//
 	// Application.template.calendarCell('month');
 	this.app.template.define(space, definition);
 
-	var templateDay 	= new this.app.template.calendar('day');
+	// By definition one object can be called out of the scope.
+	// regardless of the template; the references should be the same.
+	var templateDay 	= new this.app.template[space.name]('day');
+	var templateWeek 	= new this.app.template[space.name]('week');
+	var templateMonth	= new this.app.template[space.name]('month');
+	var templateYear 	= new this.app.template[space.name]('year');
 
-  	assert.equal(templateDay.namespace(), space.namespace, 'Namespace can be changed');
-  	assert.equal(templateDay.hidden(), space.hidden, 'hidden can be set false');
-  	assert.equal(templateDay.name(), space.name, 'name can be set as applicarion definition');
+  	assert.equal(templateDay.selector(), space.namespace  + ' ' + definition.day, 'selector is sub key');
+  	assert.equal(templateWeek.selector(), space.namespace  + ' ' + definition.week, 'selector is sub key');
+  	assert.equal(templateMonth.selector(), sprintf(space.namespace  + ' ' + definition.month, { key: 'month'}),
+  		'selector is sprintf keyed');
+  	assert.equal(templateYear.selector(), sprintf(space.namespace  + ' ' + definition.year, { key: 'year'}),
+  		'selector is sprintf keyed');
 
 });
+
+this.app = new Application
+t = this.app.template

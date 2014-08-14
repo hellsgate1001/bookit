@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'guardian',
     'easy_thumbnails',
     'easy_maps',
+    'simple_rest',
 
     'compressor',
     'django_extensions',
