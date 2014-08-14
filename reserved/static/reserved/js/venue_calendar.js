@@ -1,93 +1,122 @@
-var make = { _layer: {} };
 
-calendar = new Application.Calendar(app);
+(function(){
+	var calendar;
+	var app;
+	var make = { _layer: {} };
 
-make.Year = function(day, month, year) {
-    return make.Layer('year', 0, 0, year, 12, 'YYYY')
-};
-
-make.Month = function (day,month, year) {
-    var count = new Date(year, month, day).getDate();
-    return make.Layer('month', day, month, year, count, 'MMM')
-
-};
-
-make.Week = function (day,month, year) {
-    var count = new Date(year, month, day).getDate();
-    return make.Layer('week', day, month, year, 52, 'YYYY')
-
-};
-
-make.Day = function (day, month, year) {
-    return make.Layer('day', day, month, year, 24, 'dddd')
-};
-
-
-make.Layer = function(name, day, month, year, count, format) {
-	$('.calendar .dates>.' + name + '-view').removeClass('hidden');
-
-	if(make._layer[name]) return make._layer[name]
-	calendar.show(name);
-
-    var date = new Date;
-    var day = day || moment(date).day();
-    var month = month || moment(date).month();
-    var year = year || moment(date).year();
-
-   return make._layer[name] = make.Cells(name, count, {
-    	format: moment().format(format)
-    });
-}
-
-make.Cells = function(type, count, data){
-	var $cells= [];
-
-    var _data = {}
-		for (var i = 0; i < count; i++) {
-    	cell = app.template.cells(type);
-
-    	_data['id'] = type + '-' + i
-    	_data['name'] = type + ' cell'
-    	_data['count'] = i + 1
-
-    	for (var prop in data) {
-    		_data[prop] = data[prop]
-    	}
-    	var $cell = cell.toView('.' + type  +'-view', _data)
-    	$cells.push( cell );
-    };
-
-    return $cells
-}
-
-calendar.make = make;
-
-Application.ready(function(){
-    var app = new Application('reserved')
-        ;
-
-    Application.setGlobal(app);
-
-	app.template.define('cells', '.calendar .%(key)s-cell', {
-		id: undefined
-		// , date: undefined
+	Application.ready(function(){
+		setup()
 	});
 
-	var date = new Date;
-	var day = moment(date).day();
-	var month = moment(date).month();
-	var year = moment(date).year();
+	var setup = function(){
+		app = new Application('reserved')
+	    Application.setGlobal(app);
 
-    // Hide all the views.
-	ms = make.Month(0, month, year);
+	    defineTemplates();
 
-	$('.range ul li a').click(function(){
+		calendar = new Application.Calendar(app);
+		calendar.make = make;
+
+		setupUI()
+	}
+
+	var setupUI = function(){
+	    // Hide all the views.
+
+		$('.range ul li a').click(function(){
+			showView( $(this).data('type') );
+			return false;
+		});
+
+		showView(localStorage.lastLayer || 'Month');
+	}
+
+	var getDateParials = function(date) {
+		var date = date || new Date;
+		var day = moment(date).day();
+		var month = moment(date).month();
+		var year = moment(date).year();
+
+		return [day, month, year];
+	}
+
+	var defineTemplates = function(){
+		app.template.define('cells', '.calendar .%(key)s-cell', {
+			id: undefined
+			// , date: undefined
+		});
+	}
+
+	var showView = function(type, date){
 		$('.calendar .dates>div').addClass('hidden');
-		if(!make[ $(this).data('type') ]) {
-			console.warn( $(this).data('type') + ' view does not exist');
+		localStorage.lastLayer = type
+		if(!make[ type ]) {
+			console.warn( type + ' view does not exist');
 			return
-		}
-		make[ $(this).data('type') ](day, year, month);
-		return false;
-	})
-});
+		};
+
+		return make[ type ].apply(make, getDateParials(date) );
+	}
+
+	make.Year = function(day, month, year) {
+	    return make.Layer('year', 0, 0, year, 12)
+	};
+
+	make.Month = function (day, month, year) {
+	    var count = new Date(year, month, 0).getDate();
+	    return make.Layer('month', day, month, year, count)
+
+	};
+
+	make.Week = function (day,month, year) {
+	    return make.Layer('week', day, month, year, 7)
+
+	};
+
+	make.Day = function (day, month, year) {
+	    return make.Layer('day', day, month, year, 24)
+	};
+
+
+	make.Layer = function(name, day, month, year, count) {
+		$('.calendar .dates>.' + name + '-view').removeClass('hidden');
+
+		var nm = name + '-' + day + '-' + month + '-' + year + '-' + count;
+		if(make._layer[nm]) return make._layer[nm];
+		calendar.show(name);
+
+		var date = new Date
+	    var day = day || moment(date).day();
+	    var month = month || moment(date).month();
+	    var year = year || moment(date).year();
+	    var _date = new Date(year, month, day);
+
+
+	   return make._layer[nm] = make.Cells(name, count, {
+	    	datetime: _date
+	    });
+	}
+
+	make.Cells = function(type, count, data){
+		var $cells= [];
+
+	    var _data = {}
+			for (var i = 0; i < count; i++) {
+	    	cell = app.template.cells(type);
+
+	    	_data['id'] = type + '-' + i
+	    	_data['name'] = type + ' cell'
+	    	_data['count'] = i + 1
+	    	_data['count0'] = i
+
+	    	for (var prop in data) {
+	    		_data[prop] = data[prop]
+	    	}
+	    	var $cell = cell.toView('.' + type  +'-view', _data)
+	    	$cells.push( cell );
+	    };
+
+	    return $cells
+	}
+
+})();

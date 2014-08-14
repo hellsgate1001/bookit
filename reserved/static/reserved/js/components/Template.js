@@ -1,3 +1,51 @@
+
+;(function(){
+
+    // Personal scope to keep an eye on reapplying formatters.
+    var implemented = [];
+
+    // http://www.collectionsjs.com/
+    var FormatterMixin = Application.Class({
+
+        formatters: {
+            date: function(value){
+                // recieve many arguments to create a string for the
+                // format.
+                var flattenedString = Array.prototype.slice.call(arguments, 1).join(' ');
+                // Be the string or a default.
+                format = flattenedString.length > 0 ? flattenedString : 'MMM DD, YYYY';
+                return moment(value).format(format);
+            }
+
+            , day: function(number){
+                return moment.weekdays(number)
+            }
+            , month: function(number) {
+                return moment.months(number)
+            }
+        }
+
+        , addFormatters: function(){
+            var name;
+
+            for( name in this.formatters ) {
+               if( this.formatters.hasOwnProperty(name) && implemented.indexOf(name) == -1 ) {
+                    if( rivets.formatters[name] ) {
+                        throw new Error('Formatter already exists: ' + name)
+                    }
+
+                    implemented.push(name);
+                    rivets.formatters[name] = this.formatters[name];
+                }
+            }
+        }
+    });
+
+    Application.mixins.FormatterMixin = FormatterMixin;
+    Application.prototype.mixins.FormatterMixin = FormatterMixin;
+    Application.FormatterMixin = FormatterMixin;
+})();
+
 ;(function($){
 
     // Configurations for a space object.
@@ -579,7 +627,9 @@
     Application.Template = Template;
     Application.prototype.Template = Template;
 
-    ModelTemplate = Application.Component(Application.Template, {
+    ModelTemplate = Application.Component([ Application.Template
+        , Application.mixins.FormatterMixin
+    ], {
         type: 'ModelTemplate'
         , Extends: Template
         , options: {
@@ -631,6 +681,9 @@
             // in the html)
             var model = this.dataToModel(this.options);
 
+            // Call the formatters mixin
+            this.addFormatters();
+
             // configure it.
             rivets.configure(this.options);
 
@@ -660,14 +713,14 @@
 
         /* Overwrites the default node() method. When a new node is created;
         bindings are assigned to the model. */
-
         , toView: function toView(target, data, create) {
             var dom = this.constructor.$super.prototype.toView.apply(this, arguments);
             var view = this.bind(dom, data.options || data);
             return view.els;
         }
+    });
 
-    })
+
 
     Application.Template = ModelTemplate;
     Application.prototype.Template = ModelTemplate;

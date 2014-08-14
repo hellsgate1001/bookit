@@ -13,10 +13,10 @@
 		<p>Pick a date range to view bookings in this event.</p>
 		<ul>
 			<li><a href="javascript:;">Agenda</a></li>
-			<li><a href="javascript:;" data-type='Day'>Day</a></li>
-			<li><a href="javascript:;" data-type='Week'>Week</a></li>
-			<li><a href="javascript:;" data-type='Month'>Month</a></li>
-			<li><a href="javascript:;" data-type='Year'>Year</a></li>
+			<li><a href="javascript:;" data-type='Day'>A Day (as hours)</a></li>
+			<li><a href="javascript:;" data-type='Week'>A Week (as days)</a></li>
+			<li><a href="javascript:;" data-type='Month'>A Month (as days)</a></li>
+			<li><a href="javascript:;" data-type='Year'>A Year (as months)</a></li>
 		</ul>
 		<div class="dates">
 		</div>
@@ -27,33 +27,42 @@
 
 			<div class="cell day-cell" id='%(id)s'>
 				<div class="date">
-					<div class="count hour">{ .count }</div>
-					<div class="range day">{ .day }</div>
+					<div class="count hour">{ .count0 }:00</div>
+					<div class="range day">{ .datetime | date ddd Do }</div>
 				</div>
-				<div class="cell-info">{ .name }</div>
+				<div class="cell-info">
+					<div class="name">{ .name }</div>
+				</div>
 			</div>
 
 			<div class="cell week-cell" id='%(id)s'>
 				<div class="date">
-					<div class="count week">{ .count }</div>
-					<div class="range month">{ .format }</div>
+					<div class="count week">{ .count | day }</div>
+					<div class="range month">week { .datetime | date WW }</div>
 				</div>
-				<div class="cell-info">{ .name }</div>
+				<div class="cell-info">
+					<div class="name">{ .name }</div>
+				</div>
 			</div>
 
 			<div class="cell month-cell" id='%(id)s'>
 				<div class="date">
 					<div class="count day">{ .count }</div>
-					<div class="range month">{ .format }</div>
+					<div class="range month">{ .datetime | date MMM YYYY }</div>
 				</div>
-				<div class="cell-info">{ .name }</div>
+				<div class="cell-info">
+					<div class="name">{ .name }</div>
+				</div>
 			</div>
+
 			<div class="cell year-cell" id='%(id)s'>
 				<div class="date">
-					<div class="count month">{ .count }</div>
-					<div class="range year">{ .format }</div>
+					<div class="count month">{ .count0 | month }</div>
+					<div class="range year">{ .datetime | date YYYY }</div>
 				</div>
-				<div class="cell-info">{ .name }</div>
+				<div class="cell-info">
+					<div class="name">{ .name }</div>
+				</div>
 			</div>
 		</div>
 	</div>
