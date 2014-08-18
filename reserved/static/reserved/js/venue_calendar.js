@@ -16,6 +16,7 @@
 
 		calendar = new Application.Calendar(app);
 		calendar.make = make;
+		app.calendar = calendar;
 		setupUI();
 	}
 
@@ -88,6 +89,15 @@
 
 
 	make.Layer = function(name, day, month, year, count) {
+		var rangeView;
+		if( !make.views ) make.views = {};
+		if( make.views[name] === undefined ) {
+			// Generate a new model view for the calendar cell
+			make.views[name] = new ModelTemplate('.' + name + '-view');
+		}
+
+		rangeView = make.views[name]
+
 		$('.calendar .dates>.' + name + '-view').removeClass('hidden');
 
 		var nm = name + '-' + day + '-' + month + '-' + year + '-' + count;
@@ -100,6 +110,7 @@
 					    	, day || moment(date).day()
 					    );
 
+	   rangeView.data('date', _date).toView();
 
 	   return make._layer[nm] = make.Cells(name, count, {
 	    	datetime: _date

@@ -28,7 +28,7 @@
 			<div class="cell hour-type day-cell" id='%(id)s'>
 				<div class="date">
 					<div class="count hour">{ .count0 }:00</div>
-					<div class="range day">{ .datetime | date ddd Do }</div>
+					<!-- <div class="range day">{ .datetime | date ddd Do }</div> -->
 				</div>
 				<div class="cell-info">
 					<div class="name">{ .name }</div>
@@ -71,7 +71,9 @@
 		<div class="dates">
 			<div class="day-view">
 				<h3>Day view</h3>
-				<div class="date">{ .targetdate }</div>
+				<div class="date">{ .date | date dddd Do MMMM YYYY }
+					<div class="small">(day { .date | date DDD })</div>
+				</div>
 				<!-- A day view is broken in hourly (selected) intervals
 				with each booking listed start and end time. -->
 				<div class="cells-container">

@@ -3,7 +3,7 @@
 {% block container %}
 	<ul class='links'>
 		<li><a href="{% url 'venues_create' %}">New Venue</a></li>
-		<li><a href="{% url 'bookings_create' %}">Calendar</a></li>
+		<li><a href="{% url 'reserved_venues_calendar' %}">Calendar</a></li>
 	</ul>
 	{{ block.super }}
 	<ul class='list'>

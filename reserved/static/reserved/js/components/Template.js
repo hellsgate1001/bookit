@@ -500,9 +500,9 @@
 
                     if( it(selector).is('string') ) {
                         // debugger;
-                        console.log("specialSelector", selector);
+                        // console.log("specialSelector", selector);
                     } else {
-                        console.log("Selector isn't string... ")
+                        // console.log("Selector isn't string... ")
                         selector =  ( (_space) ? _space.selector: undefined) || (self.space? self.space.selector[prop]: selector._selector);
                     }
 
@@ -697,6 +697,7 @@
 
             if(value !== undefined) {
                 this.dataToModel(this._data)
+                return this;
             }
 
             return d;

@@ -10,8 +10,11 @@ var searchBox;
 var markers = [];
 var service;
 var input;
+var places;
 // Value of the geo location if performed.
 var geoPosition;
+var mapData = [];
+var googleResult;
 
 var mapOptions = {
     zoom: 9
@@ -53,9 +56,9 @@ var geoLocation = function(){
 
 
 var placeChangedEventHandler = function() {
-    var places = searchBox.getPlaces();
+    var _places = searchBox.getPlaces();
 
-    if (places.length == 0) {
+    if (_places.length == 0) {
         return;
     }
 
@@ -66,7 +69,8 @@ var placeChangedEventHandler = function() {
     // For each place, get the icon, place name, and location.
     markers = [];
     var bounds = new google.maps.LatLngBounds();
-    for (var i = 0, place; place = places[i]; i++) {
+
+    for (var i = 0, place; place = _places[i]; i++) {
         var image = {
             url: place.icon,
             size: new google.maps.Size(71, 71),
@@ -84,9 +88,21 @@ var placeChangedEventHandler = function() {
         });
 
         markers.push(marker);
-
         bounds.extend(place.geometry.location);
+
+
     }
+
+    places.getDetails(_places[0], function( result, status) {
+        var gr = result;
+        placeMarker(gr.geometry.location, {
+            // icon: gr.icon
+            title: gr.formatted_address
+        });
+        map.setCenter(gr.geometry.location)
+        $('#pac-input').val(gr.name);
+        $('#id_name').val(gr.name  + ', ' + gr.vicinity);
+    });
 
     map.fitBounds(bounds);
 }
@@ -99,9 +115,51 @@ var mapBoundsChangedEventHandler = function() {
     searchBox.setBounds(bounds);
 }
 
+var clickHash = {};
+
+var ch = function(id) {
+
+  if( !clickHash[id] ) {
+      throw new Error('Cannot find clickable: ' + id);
+  }
+
+  var location = clickHash[id];
+
+  places.getDetails(location, function( result, status) {
+      googleResult = result;
+      var gr = googleResult;
+      placeMarker(googleResult.geometry.location, {
+          // icon: gr.icon
+          title: gr.formatted_address
+      });
+      map.setCenter(gr.geometry.location)
+      $('#pac-input').val(gr.name);
+      $('#id_name').val(gr.name  + ', ' + gr.vicinity);
+
+  });
+}
 
 var mapClickEventHandler = function(event) {
-     placeMarker(event.latLng);
+
+    placeMarker(event.latLng);
+    places.search({
+      location:event.latLng
+      , radius: 5
+    }, function(results, status, page){
+        console.log(results);
+        var s = '<div>Pick the closest:</div><ul>'
+        for (var i = results.length - 1; i >= 0; i--) {
+            clickHash[results[i].id]  = results[i];
+            s += sprintf( '<li><a href="javascript: ch(\'%(id)s\');" id="%(place_id)s">%(name)s</a></li>', results[i])
+        };
+        s += '</ul>'
+
+        currentPopup = new google.maps.InfoWindow({
+          map: map
+          , position: event.latLng
+          , content: s
+        });
+    })
 }
 
 // This example adds a search box to a map, using the Google Place Autocomplete
@@ -126,12 +184,14 @@ var handleNoGeolocation = function handleNoGeolocation(errorFlag) {
 }
 
 
-var placeMarker = function placeMarker(location) {
+var placeMarker = function placeMarker(location, options) {
 
     if(circle) {
       // remove it
       circle.setMap(null);
     }
+
+    options = options || {};
 
     if(currentPopup) currentPopup.close();
 
@@ -142,10 +202,13 @@ var placeMarker = function placeMarker(location) {
         map: map
     };
 
+    var opts = Application.extend({}, dropOptions, options);
+
     if(dropMarker) {
-        dropMarker.setOptions(dropOptions);
+        dropMarker.setOptions(opts);
     } else {
-        dropMarker = new google.maps.Marker(dropOptions);
+
+        dropMarker = new google.maps.Marker(opts);
     }
 }
 
@@ -210,35 +273,52 @@ var servicePredictionHandler = function(value, data, status) {
       return;
   }
 
+  mapData = data;
+  var d = [];
+
   for (var i = data.length - 1; i >= 0; i--) {
-    console.log(data[i].description);
+      console.log(data[i].description);
+      $('<option/>', {
+        value: data[i].id
+      })
+      .text(data[i].description)
+      .data('location', data[i])
+      .appendTo( '#id_address')
   };
+
+
+  // $('#id_address').select2("data", d, true);
+
 
 }
 
 var addressNoMatch = function(value){
     console.log('Tell google maps');
     $('#pac-input').val(value);
-
-    service.getPlacePredictions({
-      input: value
-      // 100~ miles.
-      , radius: 160934
-      , location: geoPosition
-    }, function(data, status){
-      servicePredictionHandler(value, data, status)
-    });
-
+    placesSearch(value, geoPosition);
     return 'Searching for "' + value + '" on Google Maps...'
     // if good result from map, map it and show create new
     // address button.
 }
 
+var placesSearch = function(value, position, radius){
+
+    service.getPlacePredictions({
+      input: value
+      // 100~ miles.
+      , radius: radius || 160934
+      , location: position
+    }, function(data, status){
+      servicePredictionHandler(value, data, status)
+    });
+
+}
 
 function initialize() {
 
     service = new google.maps.places.AutocompleteService();
     map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+    places = new google.maps.places.PlacesService(map)
     // Create the search box and link it to the UI element.
     input = $('#pac-input')[0];
 
@@ -263,12 +343,32 @@ function initialize() {
         , allowClear: true
         , width: 'resolve'
         , formatNoMatches: addressNoMatch
+        // , data:{ results: mapData, text: function(item) { return item.description ; } }
     })
 
     $('#id_address').change(function(e){
         var id = $(this).val();
         var marker;
-        $.getJSON('/api/locations/' + id, addressChangeJsonHandler)
+        var $option =  $(this).find('option[value="' + $(this).val() + '"]');
+        var googleLocation = $option.data('location');
+        if(googleLocation) {
+
+            places.getDetails(googleLocation, function( result, status) {
+                googleResult = result;
+                var gr = googleResult;
+                placeMarker(googleResult.geometry.location, {
+                    // icon: gr.icon
+                    title: gr.formatted_address
+                });
+                map.setCenter(gr.geometry.location)
+                $('#pac-input').val(gr.name);
+                $('#id_name').val(gr.name  + ', ' + gr.vicinity);
+                $option.val(gr.formatted_address)
+            });
+
+        } else {
+            $.getJSON('/api/locations/' + id, addressChangeJsonHandler)
+        }
     });
 });
 
