@@ -25,7 +25,7 @@
 	<div class="template hidden">
 		<div class="calendar">
 
-			<div class="cell day-cell" id='%(id)s'>
+			<div class="cell hour-type day-cell" id='%(id)s'>
 				<div class="date">
 					<div class="count hour">{ .count0 }:00</div>
 					<div class="range day">{ .datetime | date ddd Do }</div>
@@ -71,24 +71,37 @@
 		<div class="dates">
 			<div class="day-view">
 				<h3>Day view</h3>
+				<div class="date">{ .targetdate }</div>
 				<!-- A day view is broken in hourly (selected) intervals
 				with each booking listed start and end time. -->
+				<div class="cells-container">
+					<div class="cells"></div>
+				</div>
 			</div>
 			<!-- in here will list a period of dates -->
 			<div class="week-view">
 				<h3>Week view</h3>
 				<!-- A stack of of days, divided horizonally by a selected
 				time range. -->
+				<div class="cells-container">
+					<div class="cells"></div>
+				</div>
 			</div>
 			<div class="month-view">
 				<h3>Month view</h3>
 				<!-- up to 36 blocks of the selected month.
 				Each month has a number next to the event -->
+				<div class="cells-container">
+					<div class="cells"></div>
+				</div>
 			</div>
 			<div class="year-view">
 				<h3>Year view</h3>
 				<!-- Each cell is a month of the selected year, each month
 				has an event with a count. Each count is a booking number -->
+				<div class="cells-container">
+					<div class="cells"></div>
+				</div>
 			</div>
 		</div>
 	</div>

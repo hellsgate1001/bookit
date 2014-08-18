@@ -129,7 +129,6 @@
             this.app = app
             this.selector(selector);
             this.placeholder(placeholder)
-
         }
 
         /*
@@ -198,12 +197,33 @@
                 // we can template a string.
                 var _selector = sprintf(_s, this.space() );
                 // Create the _selector
-                return sprintf( this.internalSelectorTemplate
-                    , Application.extend({}
-                        , this.space()
-                        , { selector: _selector })
-                    );
+                var d = Application.extend({} , this.space(), this.data() || {}, { selector: _selector });
+                var str = sprintf( this.internalSelectorTemplate, d);
+                // Strip a pre space.
+                if( str[0] == ' ') return str.slice(1)
+                return str;
             }
+        }
+
+        , element: function(e){
+            // Return the element defines by the selector; this
+            // will be the original and not a template or clone element.
+            // Altering this element, will result in the bound elements
+            // to change.
+            if(e !== undefined) {
+                this._element = e;
+                return this;
+            };
+
+            if(this._element === undefined) {
+                // never set, lets pick a dynamic one.
+                // This is a simple combination of the getDOM
+                // and the current selector.
+                var element = this.getDOM( this.selector() );
+                return element;
+            }
+
+            return this._element;
         }
 
         /*
@@ -312,7 +332,12 @@
                 this._target = value;
                 return this;
             }
-            return this._target || space.target;
+            var ta = this._target || space.target;
+
+            if( ta === undefined ) {
+                return this.element()
+            }
+            return ta
         }
 
         , clone: function clone(value){
@@ -329,7 +354,7 @@
             data = data || this.data();
             var node;
             // be false or create;
-            create = (create === undefined)?false:create;
+            create = (create === undefined)? false: create;
             if( this.clone() ) {
                 node = this.node(data, create)
             } else {
@@ -364,7 +389,7 @@
             }
 
             // be false if clone() === true or create === true;
-            this._node = create? false: this._node;
+            this._node = create ? false: this._node;
 
             // null, undefined, false, 0
             if( !this._node ) {
@@ -434,15 +459,6 @@
             };
 
             return nhtml;
-        }
-
-        // Tne element to push the template
-        , target: function target(value){
-            if(value !== undefined) {
-                this._target = value;
-                return this;
-            }
-            return this._target || space.target;
         }
     });
 
@@ -627,6 +643,24 @@
     Application.Template = Template;
     Application.prototype.Template = Template;
 
+    /**
+     * A ModelTemplate works in a very similar structure to a Template. The
+     * ModelTempalte binds the DOM entity to a `model` object within the
+     * class. The closely wrapped `data()` method can care for the model;
+     * of which is bound to the in view DOM element.
+     *
+     * The in view DOM elements can are within `models`.
+     *
+     * The model template will not generate a new node natually (as like the Template class).
+     * Instead the default target is the `element()` or the element targeted with the
+     * `selector()`
+     *
+     * The ModelTemplate does not target the `.template` namespace this
+     * has been removed; in favour of a cleaner `selector()` for the modeled
+     * object.
+     *
+     * @return {[type]} [description]
+     */
     ModelTemplate = Application.Component([ Application.Template
         , Application.mixins.FormatterMixin
     ], {
@@ -643,7 +677,18 @@
         }
         , constructor: function(){
             // Do super.
+
+            /*
+            By overriding the internal data object; rather than an
+            internally scoped element; the api easily exposes the overrides the
+            model has performed.
+             */
+            this._data = {
+                namespace: ''
+            };
+
             this.constructor.$super.apply(this, arguments);
+
         }
 
         , data: function(value){
@@ -714,10 +759,26 @@
         /* Overwrites the default node() method. When a new node is created;
         bindings are assigned to the model. */
         , toView: function toView(target, data, create) {
-            var dom = this.constructor.$super.prototype.toView.apply(this, arguments);
-            var view = this.bind(dom, data.options || data);
+            // Passing an object only, binds the current view element to the data
+            // provided. The data Provided is pushed into the view data.
+            var dom
+                , d
+                , view
+                ;
+
+            if( arguments.length === 0
+                || arguments.length === 1 ) {
+                dom = this.element();
+                d = target || this.data();
+            } else {
+                dom = this.constructor.$super.prototype.toView.apply(this, arguments);
+                d = data.options || data;
+            };
+
+            view = this.bind(dom, d);
             return view.els;
         }
+
     });
 
 

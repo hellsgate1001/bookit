@@ -16,8 +16,20 @@
 
 		calendar = new Application.Calendar(app);
 		calendar.make = make;
+		setupUI();
+	}
 
-		setupUI()
+	var defineTemplates = function(){
+
+		/*
+		 Define all the templating library elements, of which
+		 become accessible through the (Application).template
+		 object.
+		 */
+		app.template.define('cells', '.calendar .%(key)s-cell', {
+			id: undefined
+			// , date: undefined
+		});
 	}
 
 	var setupUI = function(){
@@ -28,9 +40,13 @@
 			return false;
 		});
 
+		// Pick a view to display
 		showView(localStorage.lastLayer || 'Month');
 	}
 
+	/*
+	 Convert a date to day, month, tyear array
+	 */
 	var getDateParials = function(date) {
 		var date = date || new Date;
 		var day = moment(date).day();
@@ -38,13 +54,6 @@
 		var year = moment(date).year();
 
 		return [day, month, year];
-	}
-
-	var defineTemplates = function(){
-		app.template.define('cells', '.calendar .%(key)s-cell', {
-			id: undefined
-			// , date: undefined
-		});
 	}
 
 	var showView = function(type, date){
@@ -86,10 +95,10 @@
 		calendar.show(name);
 
 		var date = new Date
-	    var day = day || moment(date).day();
-	    var month = month || moment(date).month();
-	    var year = year || moment(date).year();
-	    var _date = new Date(year, month, day);
+	    var _date = new Date( year || moment(date).year()
+					    	, month || moment(date).month()
+					    	, day || moment(date).day()
+					    );
 
 
 	   return make._layer[nm] = make.Cells(name, count, {
@@ -112,7 +121,7 @@
 	    	for (var prop in data) {
 	    		_data[prop] = data[prop]
 	    	}
-	    	var $cell = cell.toView('.' + type  +'-view', _data)
+	    	var $cell = cell.toView('.' + type  +'-view .cells', _data)
 	    	$cells.push( cell );
 	    };
 

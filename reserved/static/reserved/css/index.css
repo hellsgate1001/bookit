@@ -888,3 +888,25 @@ display: inline-block;
 text-align: right;
 width: 76%;
 }
+
+.dates .day-view .cells-container {
+  overflow: auto;
+  width: 100%;
+}
+
+.cell.hour-type {
+min-height: 250px;
+width: 100px;
+padding: 0px;
+}
+
+.cell .date {
+color: #aaa;
+font-size: 14px;
+padding: 10px;
+}
+
+.dates .day-view .cells {
+width: 2400px;
+border: solid 1px;
+}
