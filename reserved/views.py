@@ -55,20 +55,51 @@ class LocationAPI(Resource):
 class IndexView(TemplateView):
     template_name ='reserved/index.html'
 
+
 class CompanyList(ListView):
     model = Company
+
 
 class VenueCreate(CreateView):
     model = Venue
 
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        # form.send_email()
+        # import pdb; pdb.set_trace()
+        venue = form.save()
+        self.form_id = venue.id
+        ll = self.request._post.get('latlng', None)
+        if ll:
+            lat, lng = ll.split(',')
+            location = Location(address=venue.name,
+                                name=venue.name,
+                                latitude=lat,
+                                longitude=lng
+                                )
+            location.save()
+            venue.address = location
+            venue.save()
+
+        return super(VenueCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return '/venues/'
+        return '/venues/created/%s' % self.form_id
+
+
 class VenueList(ListView):
     model = Venue
+
 
 class VenueCalendarView(TemplateView):
     template_name = 'reserved/venue_calendar.html'
 
+
 class BookingList(ListView):
     model = Booking
+
 
 class BookingCreate(CreateView):
     model = Booking

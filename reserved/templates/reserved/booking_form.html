@@ -5,9 +5,12 @@
 	<div class="bookings">
 		<h2>New Booking</h2>
 
-		<form class='booking-form'>
+		<form class='booking-form' method="POST">
+		{% csrf_token %}
 		{{ form }}
+  		<input type="submit" value="Save" />
 		</form>
+
 	</div>
 
 {% endblock %}

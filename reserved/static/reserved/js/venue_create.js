@@ -15,17 +15,63 @@ var places;
 var geoPosition;
 var mapData = [];
 var googleResult;
+var $addressSelect;
 
 var mapOptions = {
     zoom: 9
     , mapTypeId: google.maps.MapTypeId.ROADMAP
 };
 
-
 var defaultBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng(-33.8902, 151.1759)
     , new google.maps.LatLng(-33.8474, 151.2631)
     );
+
+function initialize() {
+
+    service = new google.maps.places.AutocompleteService();
+    map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+    places = new google.maps.places.PlacesService(map);
+    // Create the search box and link it to the UI element.
+    input = $('#pac-input')[0];
+
+    map.fitBounds(defaultBounds);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    searchBox = new google.maps.places.SearchBox( (input) );
+
+    // Listen for the event fired when the user selects an item from the
+    // pick list. Retrieve the matching places for that item.
+    google.maps.event.addListener(searchBox, 'places_changed', placeChangedEventHandler);
+    google.maps.event.addListener(map, 'click', mapClickEventHandler);
+    google.maps.event.addListener(map, 'bounds_changed', mapBoundsChangedEventHandler);
+
+    geoLocation();
+}
+
+
+;$(function(){
+    $('#id_company').select2({
+        placeholder: 'Select a Company'
+        , allowClear: true
+        , width: 'resolve'
+        // , formatNoMatches: addressNoMatch
+        // , data:{ results: mapData, text: function(item) { return item.description ; } }
+    });
+
+    $('#id_address').select2({
+        placeholder: 'Select an address'
+        , allowClear: true
+        , width: 'resolve'
+        , formatNoMatches: addressNoMatch
+        // , data:{ results: mapData, text: function(item) { return item.description ; } }
+    });
+
+    $('#id_address').change(onAddressInputChange);
+    $addressSelect = $('#id_address').data('select2').container;
+});
+
+google.maps.event.addDomListener(window, 'load', initialize);
 
 
 var geoLocation = function(){
@@ -55,7 +101,30 @@ var geoLocation = function(){
 }
 
 
+// This example adds a search box to a map, using the Google Place Autocomplete
+// feature. People can enter geographical searches. The search box will return a
+// pick list containing a mix of places and predicted search terms.
+
+var handleNoGeolocation = function handleNoGeolocation(errorFlag) {
+    if (errorFlag) {
+        var content = 'Error: The Geolocation service failed.';
+    } else {
+        var content = 'Error: Your browser doesn\'t support geolocation.';
+    }
+
+    var options = {
+        map: map,
+        position: new google.maps.LatLng(60, 105),
+        content: content
+    };
+
+    currentPopup = new google.maps.InfoWindow(options);
+    map.setCenter(options.position);
+}
+
 var placeChangedEventHandler = function() {
+    setInvalid()
+
     var _places = searchBox.getPlaces();
 
     if (_places.length == 0) {
@@ -90,7 +159,6 @@ var placeChangedEventHandler = function() {
         markers.push(marker);
         bounds.extend(place.geometry.location);
 
-
     }
 
     places.getDetails(_places[0], function( result, status) {
@@ -100,43 +168,12 @@ var placeChangedEventHandler = function() {
             title: gr.formatted_address
         });
         map.setCenter(gr.geometry.location)
-        $('#pac-input').val(gr.name);
+        // $('#pac-input').val(gr.name);
         $('#id_name').val(gr.name  + ', ' + gr.vicinity);
+        setValidAddress(gr)
     });
 
     map.fitBounds(bounds);
-}
-
-
-var mapBoundsChangedEventHandler = function() {
-    // Bias the SearchBox results towards places that are within the bounds of the
-    // current map's viewport.
-    var bounds = map.getBounds();
-    searchBox.setBounds(bounds);
-}
-
-var clickHash = {};
-
-var ch = function(id) {
-
-  if( !clickHash[id] ) {
-      throw new Error('Cannot find clickable: ' + id);
-  }
-
-  var location = clickHash[id];
-
-  places.getDetails(location, function( result, status) {
-      googleResult = result;
-      var gr = googleResult;
-      placeMarker(googleResult.geometry.location, {
-          // icon: gr.icon
-          title: gr.formatted_address
-      });
-      map.setCenter(gr.geometry.location)
-      $('#pac-input').val(gr.name);
-      $('#id_name').val(gr.name  + ', ' + gr.vicinity);
-
-  });
 }
 
 var mapClickEventHandler = function(event) {
@@ -162,54 +199,86 @@ var mapClickEventHandler = function(event) {
     })
 }
 
-// This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
-
-var handleNoGeolocation = function handleNoGeolocation(errorFlag) {
-    if (errorFlag) {
-        var content = 'Error: The Geolocation service failed.';
-    } else {
-        var content = 'Error: Your browser doesn\'t support geolocation.';
-    }
-
-    var options = {
-        map: map,
-        position: new google.maps.LatLng(60, 105),
-        content: content
-    };
-
-    currentPopup = new google.maps.InfoWindow(options);
-    map.setCenter(options.position);
+var mapBoundsChangedEventHandler = function() {
+    // Bias the SearchBox results towards places that are within the bounds of the
+    // current map's viewport.
+    var bounds = map.getBounds();
+    searchBox.setBounds(bounds);
 }
 
 
-var placeMarker = function placeMarker(location, options) {
+var onAddressInputChange = function(e){
 
-    if(circle) {
-      // remove it
-      circle.setMap(null);
-    }
+    var id = $(this).val()
+        , marker
+        , $option =  $(this).find('option[value="' + $(this).val() + '"]')
+        , googleLocation = $option.data('location')
+        ;
 
-    options = options || {};
+    setInvalid()
 
-    if(currentPopup) currentPopup.close();
+    if(googleLocation) {
+        places.getDetails(googleLocation, function( result, status) {
+            googleResult = result;
+            var gr = googleResult;
 
-    var dropOptions = {
-        position: location,
-        animation: google.maps.Animation.DROP,
-        draggable:true,
-        map: map
-    };
+            placeMarker(googleResult.geometry.location, {
+                // icon: gr.icon
+                title: gr.formatted_address
+            });
 
-    var opts = Application.extend({}, dropOptions, options);
-
-    if(dropMarker) {
-        dropMarker.setOptions(opts);
+            map.setCenter(gr.geometry.location)
+            // $('#pac-input').val(gr.name);
+            $('#id_name').val(gr.name  + ', ' + gr.vicinity);
+            $option.val(gr.formatted_address)
+            setValidAddress(gr)
+        });
     } else {
-
-        dropMarker = new google.maps.Marker(opts);
+        $.getJSON('/api/locations/' + id, addressChangeJsonHandler)
     }
+}
+
+// Disable function
+jQuery.fn.extend({
+    disable: function(state) {
+        return this.each(function() {
+            this.disabled = (state === undefined)? true: state;
+        });
+    }
+});
+
+var validAddress, validLatLng;
+var setValidAddress = function(d) {
+    // console.log('valid location', d)
+    validAddress = d;
+    var name = d.address || d.name;
+
+    if( d.latitude && d.longitude ) {
+        validLatLng = [d.latitude, d.longitude];
+    } else if( d.geometry.location ) {
+        validLatLng = [d.geometry.location.k, d.geometry.location.B];
+    }
+
+    console.log('name', name);
+    console.log('lat long', validLatLng);
+
+    $('#id_latlng').val( validLatLng.join(',') );
+    $('#pac-input').val(name);
+      $('#id_name').val(d.name  + ', ' + (d.vicinity || d.address));
+    $('span#select2-chosen-2').text(name)
+
+    if( validLatLng[0] !== undefined
+        && validLatLng[1] !== undefined ) {
+        $addressSelect.addClass('valid');
+
+        $('#id_save').disable(false)
+    }
+}
+
+var setInvalid = function(){
+    $addressSelect.removeClass('valid');
+    $('#id_save').disable()
+
 }
 
 var addressChangeJsonHandler = function(data){
@@ -232,8 +301,8 @@ var addressChangeJsonHandler = function(data){
         });
 
         // Push the selected address to the input field.
-        $('#pac-input').val(location.address);
-
+        // $('#pac-input').val(location.address);
+        setValidAddress(location)
         map.panTo(pos);
 
                // Create a marker for each place.
@@ -266,30 +335,82 @@ var addressChangeJsonHandler = function(data){
 }
 
 var servicePredictionHandler = function(value, data, status) {
-  console.log(status, value)
+    console.log(status, value)
 
-  if (status != google.maps.places.PlacesServiceStatus.OK) {
+    setInvalid()
+
+    if (status != google.maps.places.PlacesServiceStatus.OK) {
       console.log(status);
       return;
+    }
+
+    mapData = data;
+    var d = [];
+
+    for (var i = data.length - 1; i >= 0; i--) {
+        // console.log(data[i].description);
+        $('<option/>', {
+            value: data[i].id
+        })
+        .text(data[i].description)
+        .data('location', data[i])
+        .appendTo( '#id_address')
+    };
+// $('#id_address').select2("data", d, true);
+}
+
+var clickHash = {};
+
+var ch = function(id) {
+
+  if( !clickHash[id] ) {
+      throw new Error('Cannot find clickable: ' + id);
   }
 
-  mapData = data;
-  var d = [];
+  var location = clickHash[id];
 
-  for (var i = data.length - 1; i >= 0; i--) {
-      console.log(data[i].description);
-      $('<option/>', {
-        value: data[i].id
-      })
-      .text(data[i].description)
-      .data('location', data[i])
-      .appendTo( '#id_address')
-  };
+  places.getDetails(location, function( result, status) {
+      googleResult = result;
+      var gr = googleResult;
+      placeMarker(googleResult.geometry.location, {
+          // icon: gr.icon
+          title: gr.formatted_address
+      });
+
+      map.setCenter(gr.geometry.location);
+      // $('#pac-input').val(gr.name);
+      $('#id_name').val(gr.name  + ', ' + gr.vicinity);
+      setValidAddress(gr)
+  });
+}
 
 
-  // $('#id_address').select2("data", d, true);
+var placeMarker = function placeMarker(location, options) {
 
+    if(circle) {
+      // remove it
+      circle.setMap(null);
+    }
 
+    options = options || {};
+
+    if(currentPopup) currentPopup.close();
+
+    var dropOptions = {
+        position: location,
+        animation: google.maps.Animation.DROP,
+        draggable:true,
+        map: map
+    };
+
+    var opts = Application.extend({}, dropOptions, options);
+
+    if(dropMarker) {
+        dropMarker.setOptions(opts);
+    } else {
+
+        dropMarker = new google.maps.Marker(opts);
+    }
 }
 
 var addressNoMatch = function(value){
@@ -309,68 +430,6 @@ var placesSearch = function(value, position, radius){
       , radius: radius || 160934
       , location: position
     }, function(data, status){
-      servicePredictionHandler(value, data, status)
+        servicePredictionHandler(value, data, status)
     });
-
 }
-
-function initialize() {
-
-    service = new google.maps.places.AutocompleteService();
-    map = new google.maps.Map($('#map-canvas')[0], mapOptions);
-    places = new google.maps.places.PlacesService(map)
-    // Create the search box and link it to the UI element.
-    input = $('#pac-input')[0];
-
-    map.fitBounds(defaultBounds);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-    searchBox = new google.maps.places.SearchBox( (input) );
-
-    // Listen for the event fired when the user selects an item from the
-    // pick list. Retrieve the matching places for that item.
-    google.maps.event.addListener(searchBox, 'places_changed', placeChangedEventHandler);
-    google.maps.event.addListener(map, 'click', mapClickEventHandler);
-    google.maps.event.addListener(map, 'bounds_changed', mapBoundsChangedEventHandler);
-
-    geoLocation();
-}
-
-;$(function(){
-
-    $('#id_address').select2({
-        placeholder: 'Select an address'
-        , allowClear: true
-        , width: 'resolve'
-        , formatNoMatches: addressNoMatch
-        // , data:{ results: mapData, text: function(item) { return item.description ; } }
-    })
-
-    $('#id_address').change(function(e){
-        var id = $(this).val();
-        var marker;
-        var $option =  $(this).find('option[value="' + $(this).val() + '"]');
-        var googleLocation = $option.data('location');
-        if(googleLocation) {
-
-            places.getDetails(googleLocation, function( result, status) {
-                googleResult = result;
-                var gr = googleResult;
-                placeMarker(googleResult.geometry.location, {
-                    // icon: gr.icon
-                    title: gr.formatted_address
-                });
-                map.setCenter(gr.geometry.location)
-                $('#pac-input').val(gr.name);
-                $('#id_name').val(gr.name  + ', ' + gr.vicinity);
-                $option.val(gr.formatted_address)
-            });
-
-        } else {
-            $.getJSON('/api/locations/' + id, addressChangeJsonHandler)
-        }
-    });
-});
-
-google.maps.event.addDomListener(window, 'load', initialize);
-

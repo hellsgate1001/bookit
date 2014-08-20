@@ -1,9 +1,11 @@
-	$('body .menu').on('clickoutside', function(){
-		$('body .menu').addClass('hidden')
-	});
+$('.nav-icon.icon-menu').on('click', function(){
 
-$('.nav-icon.icon-menu').hover(function(){
-	$('body .menu.hidden').removeClass('hidden')
-}, function(){
-	// $('body .menu.hidden').off('clickout');
+	$('body .menu.hidden').removeClass('hidden');
+	window.setTimeout(function(){
+		$('body .menu').off('clickoutside').on('clickoutside', function(){
+			$('body .menu').addClass('hidden');
+			$('body .menu').off('clickoutside');
+		});
+		// Just fast enough
+	}, 200);
 })
