@@ -88,7 +88,7 @@ class Venue(models.Model):
     name = models.CharField(max_length=255,
         help_text='Fiendly name of the venue such as <i>O2 Arena</i> ')
 
-    address = models.ForeignKey(Location,
+    address = models.ForeignKey(Location, blank=True, null=True,
         help_text='The exact address of the venue.')
 
     company = models.ForeignKey(Company,

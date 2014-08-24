@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView, ListView, CreateView
 from models import Company, Venue, Booking, Location
+from forms import VenueForm
 
 from simple_rest.auth.decorators import login_required, admin_required
 from django.http import HttpResponse
@@ -62,23 +63,32 @@ class CompanyList(ListView):
 
 class VenueCreate(CreateView):
     model = Venue
+    form_class = VenueForm
+
+    # def post(self, request, *args, **kwargs):
+    #     post_values = request.POST.copy()
+
+    #     import pdb; pdb.set_trace()
+    #     return super(VenueCreate, self).post(request, *args, **kwargs)
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         # form.send_email()
-        # import pdb; pdb.set_trace()
         venue = form.save()
         self.form_id = venue.id
-        ll = self.request._post.get('latlng', None)
-        if ll:
+        ll = form.cleaned_data.get('latlng', None)
+        full_address = form.cleaned_data.get('full_address', None)
+        # import pdb; pdb.set_trace()
+        if ll and full_address:
             lat, lng = ll.split(',')
-            location = Location(address=venue.name,
-                                name=venue.name,
-                                latitude=lat,
-                                longitude=lng
-                                )
-            location.save()
+
+            location, created = Location.objects.get_or_create(address=full_address)
+            if created is True:
+                location.name=venue.name
+                location.latitude=lat
+                location.longitude=lng
+                location.save()
             venue.address = location
             venue.save()
 

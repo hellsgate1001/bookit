@@ -230,7 +230,8 @@ var onAddressInputChange = function(e){
             map.setCenter(gr.geometry.location)
             // $('#pac-input').val(gr.name);
             $('#id_name').val(gr.name  + ', ' + gr.vicinity);
-            $option.val(gr.formatted_address)
+            $option.val('')
+            $('#id_full_address').val(gr.formatted_address)
             setValidAddress(gr)
         });
     } else {
@@ -266,6 +267,9 @@ var setValidAddress = function(d) {
     $('#pac-input').val(name);
       $('#id_name').val(d.name  + ', ' + (d.vicinity || d.address));
     $('span#select2-chosen-2').text(name)
+
+    debugger; // correct address shoudl go here.
+    $('#id_full_address').val(d.formatted_address || d.address)
 
     if( validLatLng[0] !== undefined
         && validLatLng[1] !== undefined ) {
