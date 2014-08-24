@@ -1,6 +1,9 @@
 {% extends 'reserved/base.html' %}
 {% load staticfiles %}
 
+{% block page_container %}full-width{% endblock %}
+
+
 {% block headcss %}
 	{{ block.super }}
     <link rel="stylesheet" type="css" href="{% static "reserved/css/calendar.css" %}" />

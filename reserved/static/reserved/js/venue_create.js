@@ -268,7 +268,7 @@ var setValidAddress = function(d) {
       $('#id_name').val(d.name  + ', ' + (d.vicinity || d.address));
     $('span#select2-chosen-2').text(name)
 
-    debugger; // correct address shoudl go here.
+    // debugger; // correct address shoudl go here.
     $('#id_full_address').val(d.formatted_address || d.address)
 
     if( validLatLng[0] !== undefined
