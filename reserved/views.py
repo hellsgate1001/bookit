@@ -8,6 +8,7 @@ from django.core import serializers
 from json import dumps
 from simple_rest import Resource
 # from simple_rest.response import RESTfulResponse
+from django.contrib import messages
 
 class LocationAPI(Resource):
 
@@ -65,12 +66,6 @@ class VenueCreate(CreateView):
     model = Venue
     form_class = VenueForm
 
-    # def post(self, request, *args, **kwargs):
-    #     post_values = request.POST.copy()
-
-    #     import pdb; pdb.set_trace()
-    #     return super(VenueCreate, self).post(request, *args, **kwargs)
-
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
@@ -90,8 +85,9 @@ class VenueCreate(CreateView):
                 location.longitude=lng
                 location.save()
             venue.address = location
-            venue.save()
-
+        venue.owner = self.request.user
+        venue.save()
+        messages.success(self.request, 'New venue \'%s\' created' % (venue))
         return super(VenueCreate, self).form_valid(form)
 
     def get_success_url(self):
@@ -102,6 +98,12 @@ class VenueCreate(CreateView):
 class VenueList(ListView):
     model = Venue
 
+    def get_context_data(self, **kwargs):
+
+        kwargs['venues_owned'] = self.model.objects.filter(owner=self.request.user)
+        kwargs['venues_other'] = self.model.objects.filter(contact__email=self.request.user.email)
+
+        return kwargs
 
 class VenueCalendarView(TemplateView):
     template_name = 'reserved/venue_calendar.html'

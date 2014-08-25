@@ -97,6 +97,8 @@ class Venue(models.Model):
     contact = models.ManyToManyField(Customer,
         help_text='People to contact for event coordiation')
 
+    owner = models.ForeignKey(UserProfile, blank=True, null=True,
+        help_text='The established owner of the online venue profile')
 
     def __unicode__(self):
         return "Venue: %s by %s" % (self.name, self.company)

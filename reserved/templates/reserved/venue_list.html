@@ -5,8 +5,17 @@
 		<li><a href="{% url 'reserved_venues_calendar' %}">Calendar</a></li>
 	</ul>
 	{{ block.super }}
+
+	<h1>Owned</h1>
 	<ul class='list'>
-	{% for venue in object_list %}
+	{% for venue in venues_owned %}
+		<li>{{ venue }}</li>
+	{% endfor %}
+	</ul>
+
+	<h2>Associated</h2>
+	<ul class='list'>
+	{% for venue in venues_other %}
 		<li>{{ venue }}</li>
 	{% endfor %}
 	</ul>

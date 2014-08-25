@@ -222,7 +222,7 @@ header .bar {
 /* line 32, ../scss/userena.scss */
 .accounts form, .bookings form {
   /* border: solid 1px #8D8D8D; */
-  width: 70%;
+  width: 100%;
   margin: 1em auto;
   box-shadow: 0 3px 1px rgba(0, 0, 0, 0.02); }
   /* line 40, ../scss/userena.scss */
@@ -231,7 +231,9 @@ header .bar {
     width: 100%;
     text-decoration: none;
     line-height: 3em;
-    background: #FFF; }
+    background: #3C3C3C;
+    color: white;
+}
     /* line 47, ../scss/userena.scss */
     .accounts form #box-nav li a:hover, .bookings form #box-nav li a:hover {
       background: #E2E2E2;
@@ -436,6 +438,7 @@ body {
     display: inline-block;
     width: 70%;
     /* min-width: 1024px; */
+    background: white;
     min-height: 750px; }
 
 /* line 37, ../scss/base.scss */
@@ -445,7 +448,7 @@ body {
   background: url("/static/img/8.jpg");
   text-shadow: 0 2px 1px rgba(50, 50, 50, 0.9);
   background-size: cover;
-  padding: 200px 0 0;
+  padding: 130px 0 3px;
   position: relative;
   transition: all 3s ease;
   margin: 0 auto;
@@ -865,6 +868,9 @@ section.slice {
 
 #map-canvas {
   height: 300px;
+  margin-bottom: 7em;
+  border-top: solid 1px #B4B4B4;
+  border-bottom: solid 1px #D1D1D1;
 }
 
 input#pac-input {
@@ -876,10 +882,11 @@ border: none;
 box-shadow: 0 2px 1px rgba(0, 0, 0, 0.32);
 min-width: 35%;
 border-radius: 2px;
+background: white;
 }
 
 #id_address, #id_company {
-  width: 50%;
+  width: 63%;
 }
 
 .cell {
@@ -976,13 +983,13 @@ background: white;
 }
 
 .bookings .booking-form input {
-width: 70%;
+width: 71%;
 border: solid 1px #FFF;
 border-radius: 4px;
 font-size: 1.8em;
 padding: 12px 0% 12px 3%;
 background: #829EBB;
-margin: 0 1%;
+margin: 0 0%;
 font-weight: 400;
 font-family: 'Lato';
 color: #FFF;
@@ -994,7 +1001,7 @@ outline: none;
 font-size: 1.3em;
 font-weight: 200;
 color: #7EABC3;
-padding: 1em 5% 2em 3%;
+padding: 1em 5% 3em 3%;
 }
 
 
@@ -1016,8 +1023,9 @@ border-radius: 0 2px 2px 0;
 
 .bookings form input[type="submit"] {
 width: 23%;
-margin: 2em 0 1em;
+margin: 0em 0 1em 4em;
 padding: 0.5em 0;
+color: #333;
 }
 
 
@@ -1122,4 +1130,74 @@ width: 100%;
 .page-container.full-width {
 margin: 0;
 width: 100%;
+}
+
+li.divider {
+height: 2px;
+background: #3A3A3A;
+}
+
+body .menu li a:hover {
+background: #181818;
+transition: all .3s ease;
+color: white;
+/* font-weight: 400; */
+}
+form .row {
+width: 85%;
+margin: 0 auto;
+}
+
+form .row.address {
+width: 100%;
+}
+
+form .row.address label {
+margin-left: 9%;
+width: 16.2%;
+}
+
+p.large {
+font-size: 2.3em;
+width: 84%;
+background: #DADADA;
+padding: 3% 8% 4%;
+font-weight: 300;
+margin-bottom: 2em;
+color: #777;
+line-height: 1.4em;
+}
+
+.row.full_address.hidden, .row.latlng.hidden {
+height: 0;
+overflow: hidden;
+}
+
+form .row.address span {
+margin-left: 9%;
+}
+
+#id_company {
+width: 74%;
+}
+
+.select2-container .select2-choice > span.select2-chosen {
+margin-left: 2%;
+font-size: 1.7em;
+}
+
+.row.address span.helptext {
+padding-bottom: 0%;
+}
+
+ul.messages li.success {
+background: rgb(202, 231, 210);
+}
+
+ul.messages li {
+background: #eee;
+margin: 3% 2%;
+padding: 1em;
+font-size: 1.2em;
+border-radius: 2px;
 }
