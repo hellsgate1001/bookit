@@ -1,4 +1,5 @@
 {% extends 'reserved/base.html' %}
+{% load staticfiles %}
 
 {% block container %}
 	{{ block.super }}
@@ -12,5 +13,18 @@
 		</form>
 
 	</div>
+	<div class="hidden">
+		<span class="checking-date-input">Checking your arrival date. <span class='shh'>This is a clever little box type a natural date like <span class="example">yesterday</span>.</span></span>
+		<span class="valid-date-input">Excellent! Date verified as %(text)s %(formatted)s</span>
+
+		<span class="invalid-date-input">Date "%(text)s" is not a valid date. <span class='shh'>Something like <span class="example">May 1st 2014</span>, <span class="example">3 days ago</span> will work.</span></span>
+	</div>
+
+{% endblock %}
+
+{% block footerjs %}
+	{{ block.super }}
+    <script src="{% static 'reserved/js/booking_form.js' %}"></script>
+
 
 {% endblock %}

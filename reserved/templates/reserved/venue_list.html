@@ -1,23 +1,66 @@
 {% extends 'reserved/base.html' %}
+{% load staticfiles %}
+{% block tagline %}Get it Reserved.{% endblock %}
+{% block tagstrap %}See ? Check.{% endblock %}
+
 {% block container %}
+
 	<ul class='links'>
-		<li><a href="{% url 'venues_create' %}">New Venue</a></li>
 		<li><a href="{% url 'reserved_venues_calendar' %}">Calendar</a></li>
 	</ul>
+
 	{{ block.super }}
 
-	<h1>Owned</h1>
+	<h1>Owned <span class="count">{{ venues_owned.count }}</span></h1>
+
+	<div class="links">
+		<a class='new-venue' href="{% url 'venues_create' %}">New Venue</a>
+	</div>
+
 	<ul class='list'>
 	{% for venue in venues_owned %}
-		<li>{{ venue }}</li>
+		<li class='venue' id='venue_{{ venue.pk }}' data-latlng='{{ venue.address.latitude }},{{ venue.address.longitude }}'>
+			<ul class='venue-data'>
+				<li class="name">{{ venue.name }}</li>
+				<li class="address">
+					<ul>
+						<li class='name'>{{ venue.address.name }}</li>
+						<li class="address">{{ venue.address.address }}</li>
+						<li class="latlng">
+							<span class="lat">{{ venue.address.latitude }}</span>
+							<span class="lng">{{ venue.address.longitude }}</span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<div class="listmap">
+				<div class="overlay"></div>
+				<img src="temp.png" alt="{{ venue.name }} image map" data-venue='{{ venue.pk }}' id='map_{{ venue.pk }}' class="map">
+			</div>
+		</li>
+	{% empty %}
+		<li class="empty_list">Let's move on...</li>
 	{% endfor %}
 	</ul>
 
-	<h2>Associated</h2>
+	<h2>Associated <span class="count">{{ venues_other.count }}</span></h2>
+
 	<ul class='list'>
 	{% for venue in venues_other %}
 		<li>{{ venue }}</li>
+	{% empty %}
+		<li class="empty_list">Nothing interesting...</li>
 	{% endfor %}
 	</ul>
+
+	<div class="links">
+		<a class='new-venue' href="{% url 'venues_create' %}">New Venue</a>
+	</div>
+
+{% endblock %}
+
+{% block footerjs %}
+	{{ block.super }}
+    <script src="{% static 'reserved/js/venue_list.js' %}"></script>
 
 {% endblock %}

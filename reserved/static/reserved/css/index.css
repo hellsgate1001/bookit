@@ -25,7 +25,8 @@ html {
 
 /* line 24, ../../../../../../../../../Program Files (x86)/Scout/vendor/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
-  list-style: none; }
+  list-style: none;
+}
 
 /* line 26, ../../../../../../../../../Program Files (x86)/Scout/vendor/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
@@ -1200,4 +1201,158 @@ margin: 3% 2%;
 padding: 1em;
 font-size: 1.2em;
 border-radius: 2px;
+}
+
+.main h1 {
+font-size: 3.1em;
+margin: 20px;
+font-weight: 400;
+}
+
+.main h2 {
+font-size: 2em;
+margin: 20px;
+}
+
+li.venue {
+width: 43.5%;
+display: inline-block;
+background: rgba(255, 255, 255, 0.67);
+margin: 1% 2% 2%;
+padding: 1%;
+position: relative;
+vertical-align: top;
+box-shadow: 0 5px 0 rgba(0, 0, 0, 0.14);
+}
+
+.venue .venue-data li.name {
+font-size: 1.8em;
+margin: 0 0 10px 0;
+border-bottom: solid 1px white;
+padding: 15px;
+font-weight: 600;
+color: #C5C5C5;
+/* text-shadow: 0 1px 0 #C9C9C9; */
+background: rgba(0, 0, 0, 0.75);
+}
+
+.venue .venue-data li.address ul li.name {
+font-size: 1.3em;
+border-bottom: none;
+/* margin-bottom: 0px; */
+color: white;
+margin-left: 5px;
+margin-bottom: 5px;
+/* text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); */
+background: none;
+margin-top: 0px;
+}
+
+.venue .venue-data li.address ul li.address {
+font-size: 1em;
+line-height: 2em;
+font-family: 'courier new', monospace;
+background: rgba(255, 255, 255, 0.75);
+padding: 1px 10px;
+margin: 2px 20px 0px;
+border-radius: 2px;
+}
+.venue .venue-data li.address ul li.latlng {
+font-size: 1.3em;
+margin-left: 20px;
+}
+
+.venue .venue-data li.address ul li.latlng span {
+font-size: .7em;
+background: rgba(255, 255, 255, 0.45);
+color: rgb(109, 109, 109);
+padding: 4px 8px;
+margin: 15px 5px 0 0px;
+display: inline-block;
+border-radius: 4px;
+}
+.listmap {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
+background: rgba(255, 255, 255, 0.36);
+}
+.listmap img {
+width: 100%;
+height: 100%;
+z-index: 2;
+position: relative;
+}
+.listmap .overlay {
+z-index: 3;
+opacity: .7;
+}
+.venue ul.venue-data {
+position: relative;
+z-index: 2;
+background: rgba(255, 255, 255, 0.38);
+padding: 0px 0 20px;
+}
+span.count {
+color: #ddd;
+}
+
+a.new-venue {
+  background: rgb(151, 221, 151);
+  color: #242121;
+  text-decoration: none;
+  padding: 20px 40px;
+  margin: 0px 0 20px;
+  border-radius: 2px;
+  display: inline-block;
+  font-size: 20px;
+  /* text-shadow: 0 0px 0 rgba(0, 0, 0, 1); */
+  font-weight: normal;
+}
+
+.links {
+display: inline-block;
+width: 100%;
+margin: 0 2%;
+}
+li.empty_list {
+font-size: 4em;
+margin: 0 20px 30px 20px;
+color: #ddd;
+border-bottom: solid 1px #EEE;
+display: inline-block;
+padding: 0 10px 0 0;
+}
+
+.helptext span.valid {
+color: rgb(120, 175, 120);
+}
+.helptext span.invalid {
+color: rgb(175, 106, 126);
+}
+.helptext span.checking {
+color: rgb(83, 94, 83);
+}
+.bookings .booking-form input.valid {
+background: rgb(143, 177, 147);
+color: #F0FFF1;
+text-shadow: none;
+transition: all .6s ease;
+}
+
+.bookings .booking-form input.invalid {
+background: rgb(172, 142, 142);
+color: #FFFFFF;
+text-shadow: none;
+transition: all .6s ease;
+}
+
+.bookings .booking-form input.checking {
+background: rgb(161, 178, 199);
+color: white;
+text-shadow: none;
+transition: all .7s ease;
 }
