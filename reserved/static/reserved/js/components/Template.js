@@ -8,15 +8,28 @@
     var FormatterMixin = Application.Class({
 
         formatters: {
-            date: function(value){
-                // recieve many arguments to create a string for the
-                // format.
-                var flattenedString = Array.prototype.slice.call(arguments, 1).join(' ');
-                // Be the string or a default.
-                format = flattenedString.length > 0 ? flattenedString : 'MMM DD, YYYY';
-                return moment(value).format(format);
-            }
+            date: {
+                _format: function(){
+                    // recieve many arguments to create a string for the
+                    // format.
+                    var flattenedString = Array.prototype.slice.call(arguments, 1).join(' ');
+                    // Be the string or a default.
+                    var format = flattenedString.length > 0 ? flattenedString : 'MMM DD, YYYY';
+                    return format
+                }
 
+                , read: function(value) {
+                    var format = this._format.apply(this, arguments)
+                    return moment(value).format(format)
+                }
+
+                , publish: function(value){
+                    var format = this._format.apply(this, arguments);
+                    var date = Date.parse( value );
+
+                    return date; //moment(date).format(format);
+                }
+            }
             , day: function(number){
                 return moment.weekdays(number)
             }
@@ -393,7 +406,7 @@
 
             // null, undefined, false, 0
             if( !this._node ) {
-                console.log("generate new node")
+                console.log("generate new node", data.name)
                 var s = $( this.toHTMLString( this.data() ) );
                 if(s.length >= 1) {
                     this._node = s[0]

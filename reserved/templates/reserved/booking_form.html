@@ -14,10 +14,11 @@
 
 	</div>
 	<div class="hidden">
-		<span class="checking-date-input">Checking your arrival date. <span class='shh'>This is a clever little box type a natural date like <span class="example">yesterday</span>.</span></span>
-		<span class="valid-date-input">Excellent! Date verified as %(text)s %(formatted)s</span>
+		<span class="checking-date-input">Checking your date. <span class='shh'>This clever little box will understand natural language like <span class="example">yesterday</span></span> and <span class="example">may 5th next year</span>.</span>
 
-		<span class="invalid-date-input">Date "%(text)s" is not a valid date. <span class='shh'>Something like <span class="example">May 1st 2014</span>, <span class="example">3 days ago</span> will work.</span></span>
+		<span class="valid-date-input">Excellent! The clever little box verified <span class="userinput">%(text)s</span> as <span class="date">%(formatted)s</span></span>
+
+		<span class="invalid-date-input">Date <span class="userinput">%(text)s</span> is not a valid date. <span class='shh'>Something like <span class="example">May 1st 2014</span>, <span class="example">3 days ago</span> will work.</span></span>
 	</div>
 
 {% endblock %}

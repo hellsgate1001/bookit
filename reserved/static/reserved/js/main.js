@@ -1,14 +1,20 @@
 var header = $('header .bar').addClass('fixed')
 
-$('.nav-icon.icon-menu').on('click', function(){
+$('.menu ul li[data-show]')
+	.addClass('has-child').hover(function(){
+		$('.menu ul li .' + $(this).data('show') ).toggleClass('hidden')
+	})
 
-	if( $('body .menu.hidden').hasClass('hidden') ) {
-		$('body .menu.hidden').removeClass('hidden');
+$('.nav-icon.icon-menu').on('click', function(){
+	var $hiddenMenu = $('body .menu.hidden');
+
+	if( $hiddenMenu.hasClass('hidden') ) {
+		$hiddenMenu.removeClass('hidden');
 		$('.hero.large').addClass('thin')
 
 	} else {
 		$('.hero.large').removeClass('thin')
-		$('body .menu.hidden').removeClass('hidden');
+		$hiddenMenu.removeClass('hidden');
 		$('body .menu').off('clickoutside');
 	}
 
@@ -17,6 +23,8 @@ $('.nav-icon.icon-menu').on('click', function(){
 		$('.hero.large').removeClass('thin')
 			$('body .menu').addClass('hidden');
 			$('body .menu').off('clickoutside');
+
+			$('.menu ul li[data-show]').addClass('hidden')
 		});
 		// Just fast enough
 	}, 200);

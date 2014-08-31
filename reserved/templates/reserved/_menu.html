@@ -12,7 +12,11 @@
 			<li class="divider"></li>
 
 			<li><a href="{% url 'reserved_bookings' %}">Bookings</a></li>
-			<li><a href="{% url 'reserved_companies' %}">Companies</a></li>
+			<li  data-show='company-list'><a href="{% url 'reserved_companies' %}">Companies</a>
+				<ul class='company-list hidden'>
+					<li><a href="{% url 'reserved_companies' %}">New</a></li>
+				</ul>
+			</li>
 			<li><a href="{% url 'reserved_venues' %}">Venues</a></li>
 			<li><a href="{% url 'userena_profile_list' %}">Accounts</a></li>
 
