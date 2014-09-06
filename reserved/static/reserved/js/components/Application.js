@@ -30,6 +30,7 @@ var runApplication = function(){
 					// Pick a template from the view. If the template has been used
 					// before a cached version may be
 					// returned, unless otherwise acclaimed.
+
 					var html = $(selector)[0].outerHTML;
 					return html;
 				}
@@ -115,6 +116,13 @@ var runApplication = function(){
 		Application.g = function(){
 			return this.getGlobal()
 		};
+
+        Application.Str = function() {
+            var args = Array.prototype.slice.call(arguments, 0);
+            // var name = args.shift()
+            return sprintf.apply(this, args);
+        }
+        Application.prototype.Str = Application.Str
 
 		Application.getGlobal = function(){
 			return globalApplication;
@@ -263,281 +271,281 @@ It functionality simplifies type checking.
 
 
 
-;var IT = function(){
-    // It class set.
-    //
-    var self = this;
-    this._value = undefined;
+    ;var IT = function(){
+        // It class set.
+        //
+        var self = this;
+        this._value = undefined;
 
-    /**
-     * IT init method, accepting a value to wrap.
-     * @param  {*} value Pass an object to determine it's value
-     * @return {IT}       and instance of the IT
-     */
-    var init = function(value) {
-        return this.value(value);
-    }
+        /**
+         * IT init method, accepting a value to wrap.
+         * @param  {*} value Pass an object to determine it's value
+         * @return {IT}       and instance of the IT
+         */
+        var init = function(value) {
+            return this.value(value);
+        }
 
-    /**
-     * apply and return the value to be tested. This is optionally passed
-     * through the instance reaction. This is a chained method.
-     * value is optional. If a value is passed, `this` is returned, if no
-     * parameters are given, the existing value is returned
-     */
-    this.value = function(val) {
+        /**
+         * apply and return the value to be tested. This is optionally passed
+         * through the instance reaction. This is a chained method.
+         * value is optional. If a value is passed, `this` is returned, if no
+         * parameters are given, the existing value is returned
+         */
+        this.value = function(val) {
 
-        if(val !== undefined) {
-            this._value = val;
+            if(val !== undefined) {
+                this._value = val;
+                return this;
+            }
+
+            return this._value || this;
+        }
+
+        this.data = function(val){
+
+            if(val === undefined) {
+                return this._value;
+            }
+
             return this;
         }
 
-        return this._value || this;
-    }
-
-    this.data = function(val){
-
-        if(val === undefined) {
-            return this._value;
+        this.toString = function(){
+            return this.data().toString()
         }
 
-        return this;
+        /*
+        Check an element is another type.
+        typeString can be string of name type or type.toString
+
+            it.is(typeString, value);
+
+        typeString should be a string name of a basic type.
+        value should be your object.
+
+        returned is a boolean.
+
+            // Can accept string name for the type
+            it.is('string', 'foo')
+            // can accept cased types
+            it.is('Boolean', false);
+            // Can accept basic type
+            it.is(Number, 1)
+         */
+
+
+
+        return init.apply(this, arguments);
+
+    };
+
+    var it = function(value) {
+        /*
+        return an IT(value) chain.
+         */
+        if(value === undefined) {
+            return IT;
+        }
+
+        var _it = new IT(value);
+        return _it;
     }
 
-    this.toString = function(){
-        return this.data().toString()
+    IT.implement = function(name, func){
+        it[name] = function(){
+            return func.apply(IT, arguments)
+        }
+
+        IT.prototype[name] = function(typeString, value) {
+            var val = this.value() || value;
+            return func(typeString, val);
+        }
+
+        IT[name] = it[name];
+    }
+
+    IT.extend = function(name, func){
+        if( typeof(func) == 'function' ) {
+            // call the method, with the extension as an arg.
+            var val = func.apply(IT, [ IT[name] ]);
+            // The extension passed a new entity back.
+            if(val !== undefined) {
+                it[name] = val
+            }
+        }
+
+        IT[name] = it[name];
     }
 
     /*
-    Check an element is another type.
-    typeString can be string of name type or type.toString
+        Tests the value against the type, returning true or false
+        if the value is the same.
 
-        it.is(typeString, value);
+        use the primitive or string representation of as the type string:
 
-    typeString should be a string name of a basic type.
-    value should be your object.
-
-    returned is a boolean.
-
-        // Can accept string name for the type
-        it.is('string', 'foo')
-        // can accept cased types
-        it.is('Boolean', false);
-        // Can accept basic type
-        it.is(Number, 1)
+            it    .is('Array', [])  == true
+            it    .is( Array,  [])  == true
+            it()  .is('Array', [])  == true
+            it()  .is( Array,  [])  == true
+            it([]).is('Array')      == true
+            it([]).is( Array)       == true
+            (IT)  .is('Array')      == true
+            (IT)  .is( Array)       == true
      */
+    ;(function(){
 
 
 
-    return init.apply(this, arguments);
+        var IS = (function() {
+            var self = this;
 
-};
+            self._null = function( a )
+            {
+                return ( a === null );
+            };
+            self._undefined = function( a )
+            {
+                return ( self._null( a ) || typeof a == 'undefined' || a === 'undefined' );
+            };
 
-var it = function(value) {
+            self._string = function ( a )
+            {
+                return ( ( a instanceof String || typeof a == 'string' ) && !self._undefined( a ) && !self._true( a ) && !self._false( a ) );
+            };
+            self._number = function( a )
+            {
+                return ( ( a instanceof Number || typeof a == 'number' ) && !isNaN( a ) );
+            };
+            self._boolean = function( a )
+            {
+                return ( a instanceof Boolean || typeof a == 'boolean' || self._true( a ) || self._false( a ) );
+            };
+            self._object = function( a )
+            {
+                return ( ( a instanceof Object || typeof a == 'object' ) && !self._null( a ) && !self._jquery( a ) && !self._array( a ) && !self._function( a ) );
+            };
+            self._array = function ( a )
+            {
+                return ( a instanceof Array );
+            };
+            self._function = function( a )
+            {
+                return ( a instanceof Function || typeof a == 'function' );
+            };
+
+            self._jquery = function ( a )
+            {
+                return ( typeof jQuery != 'undefined' && a instanceof jQuery );
+            };
+
+            self._true = function( a )
+            {
+                return ( a === true || a === 'true' );
+            };
+            self._false = function( a )
+            {
+                return ( a === false || a === 'false' );
+            };
+            self._percentage = function( a )
+            {
+                return ( self._string( a ) && a.slice( -1 ) == '%' && self._number( parseInt( a.slice( 0, -1 ), 10 ) ) );
+            };
+
+            return self;
+        }).apply({});
+
+
+        IT.implement('is', function is(typeString, value) {
+
+            if(typeString === undefined && value === undefined) return undefined;
+
+            if (value === undefined) {
+                console.warn('IT.is type checking against an undefined value');
+            }
+
+            var typeName;
+            if( typeString.hasOwnProperty('name') ) {
+                typeName = typeString.name.toLowerCase();
+            } else {
+                typeName = String(typeString).toLowerCase();
+            }
+
+            if( typeName === undefined || typeName.length == 0
+                && IS._string(typeString) ) {
+                typeName = String(typeString).toLowerCase()
+            }
+
+
+            var val = value;
+            if( value instanceof IT && value.hasOwnProperty('value') ) {
+                val = value._value;
+            }
+
+            if(IS.hasOwnProperty('_' + typeName)) {
+
+                return IS['_' + typeName](val);
+            }
+
+            // Extending IS with the additional properties may
+            // not be allows. So use three chars from any type
+
+            return typeString === value;
+        });
+
+        // it(element).is.number()     // Is element a Number type
+        // it(element).is.boolean()    // is boolean type
+        // it(element).is.string()     // is string type
+        // it(element).is.undefined()  // is undefined
+        // it(element).is.object()     // is an object type
+        // it(element).is.array()      // is array type
+        // it(element).is.function()   // is function
+
+        IT.extend('is', function(ext){
+            var is = ext;
+
+            is.bool                          = IS._boolean;
+            is.number            = is.num    = IS._number;
+            is.string            = is.str    = IS._string;
+            is.undefined         = is.undef  = IS._undefined;
+            is.object            = is.obj    = IS._object;
+            is.array             = is.arr    = IS._array;
+            is.fn                = is.fun    = is.func          = IS._function;
+        });
+
+    })();
+
     /*
-    return an IT(value) chain.
+        Can check for a key in an object
+
+            var obj = {
+                bar: 'apples'
+            }
+            it.has('bar', obj)   == true;
+
+        Can check for an entity in an array
+
+            var arr = ['george', 'huxely', 'will']
+            it.has('will', arr)  == true;
+
+        Can check string types:
+
+            var str = 'The worlds tallest colour!'
+            it.has('world', str) == true;
+
      */
-    if(value === undefined) {
-        return IT;
-    }
+    IT.implement('has', function(typeString, value){
+        var val = it(value)
 
-    var _it = new IT(value);
-    return _it;
-}
-
-IT.implement = function(name, func){
-    it[name] = function(){
-        return func.apply(IT, arguments)
-    }
-
-    IT.prototype[name] = function(typeString, value) {
-        var val = this.value() || value;
-        return func(typeString, val);
-    }
-
-    IT[name] = it[name];
-}
-
-IT.extend = function(name, func){
-    if( typeof(func) == 'function' ) {
-        // call the method, with the extension as an arg.
-        var val = func.apply(IT, [ IT[name] ]);
-        // The extension passed a new entity back.
-        if(val !== undefined) {
-            it[name] = val
+        if( val.is(Object) ) {
+            return value.hasOwnProperty(typeString);
+        } else if( val.is(Array) || val.is(String) ) {
+            return value.indexOf(typeString) > -1;
         }
-    }
-
-    IT[name] = it[name];
-}
-
-/*
-    Tests the value against the type, returning true or false
-    if the value is the same.
-
-    use the primitive or string representation of as the type string:
-
-        it    .is('Array', [])  == true
-        it    .is( Array,  [])  == true
-        it()  .is('Array', [])  == true
-        it()  .is( Array,  [])  == true
-        it([]).is('Array')      == true
-        it([]).is( Array)       == true
-        (IT)  .is('Array')      == true
-        (IT)  .is( Array)       == true
- */
-;(function(){
-
-
-
-    var IS = (function() {
-        var self = this;
-
-        self._null = function( a )
-        {
-            return ( a === null );
-        };
-        self._undefined = function( a )
-        {
-            return ( self._null( a ) || typeof a == 'undefined' || a === 'undefined' );
-        };
-
-        self._string = function ( a )
-        {
-            return ( ( a instanceof String || typeof a == 'string' ) && !self._undefined( a ) && !self._true( a ) && !self._false( a ) );
-        };
-        self._number = function( a )
-        {
-            return ( ( a instanceof Number || typeof a == 'number' ) && !isNaN( a ) );
-        };
-        self._boolean = function( a )
-        {
-            return ( a instanceof Boolean || typeof a == 'boolean' || self._true( a ) || self._false( a ) );
-        };
-        self._object = function( a )
-        {
-            return ( ( a instanceof Object || typeof a == 'object' ) && !self._null( a ) && !self._jquery( a ) && !self._array( a ) && !self._function( a ) );
-        };
-        self._array = function ( a )
-        {
-            return ( a instanceof Array );
-        };
-        self._function = function( a )
-        {
-            return ( a instanceof Function || typeof a == 'function' );
-        };
-
-        self._jquery = function ( a )
-        {
-            return ( typeof jQuery != 'undefined' && a instanceof jQuery );
-        };
-
-        self._true = function( a )
-        {
-            return ( a === true || a === 'true' );
-        };
-        self._false = function( a )
-        {
-            return ( a === false || a === 'false' );
-        };
-        self._percentage = function( a )
-        {
-            return ( self._string( a ) && a.slice( -1 ) == '%' && self._number( parseInt( a.slice( 0, -1 ), 10 ) ) );
-        };
-
-        return self;
-    }).apply({});
-
-
-    IT.implement('is', function is(typeString, value) {
-
-        if(typeString === undefined && value === undefined) return undefined;
-
-        if (value === undefined) {
-            console.warn('IT.is type checking against an undefined value');
-        }
-
-        var typeName;
-        if( typeString.hasOwnProperty('name') ) {
-            typeName = typeString.name.toLowerCase();
-        } else {
-            typeName = String(typeString).toLowerCase();
-        }
-
-        if( typeName === undefined || typeName.length == 0
-            && IS._string(typeString) ) {
-            typeName = String(typeString).toLowerCase()
-        }
-
-
-        var val = value;
-        if( value instanceof IT && value.hasOwnProperty('value') ) {
-            val = value._value;
-        }
-
-        if(IS.hasOwnProperty('_' + typeName)) {
-
-            return IS['_' + typeName](val);
-        }
-
-        // Extending IS with the additional properties may
-        // not be allows. So use three chars from any type
-
-        return typeString === value;
     });
 
-    // it(element).is.number()     // Is element a Number type
-    // it(element).is.boolean()    // is boolean type
-    // it(element).is.string()     // is string type
-    // it(element).is.undefined()  // is undefined
-    // it(element).is.object()     // is an object type
-    // it(element).is.array()      // is array type
-    // it(element).is.function()   // is function
+    IT.implement('asserts', function(typeString, value){
 
-    IT.extend('is', function(ext){
-        var is = ext;
-
-        is.bool                          = IS._boolean;
-        is.number            = is.num    = IS._number;
-        is.string            = is.str    = IS._string;
-        is.undefined         = is.undef  = IS._undefined;
-        is.object            = is.obj    = IS._object;
-        is.array             = is.arr    = IS._array;
-        is.fn                = is.fun    = is.func          = IS._function;
     });
 
-})();
-
-/*
-    Can check for a key in an object
-
-        var obj = {
-            bar: 'apples'
-        }
-        it.has('bar', obj)   == true;
-
-    Can check for an entity in an array
-
-        var arr = ['george', 'huxely', 'will']
-        it.has('will', arr)  == true;
-
-    Can check string types:
-
-        var str = 'The worlds tallest colour!'
-        it.has('world', str) == true;
-
- */
-IT.implement('has', function(typeString, value){
-    var val = it(value)
-
-    if( val.is(Object) ) {
-        return value.hasOwnProperty(typeString);
-    } else if( val.is(Array) || val.is(String) ) {
-        return value.indexOf(typeString) > -1;
-    }
-});
-
-IT.implement('asserts', function(typeString, value){
-
-});
-
-runApplication()
+    runApplication()

@@ -23,16 +23,17 @@
 	}
 
 	var defineTemplates = function(){
-
 		/*
 		 Define all the templating library elements, of which
 		 become accessible through the (Application).template
 		 object.
 		 */
-		app.template.define('cells', '.calendar .%(key)s-cell', {
+		var d = app.template.define('cells', '.calendar .%(key)s-cell', {
 			id: undefined
 			// , date: undefined
 		});
+
+		app.template.defineStatic('dateInput', '.date-input-container')
 	}
 
 	var setupUI = function(){
@@ -54,41 +55,46 @@
 	var globalDate = Date.parse('today');
 	var breadcrumbs=[];
 
-	var fitInput = function(){
-		$dateInput.$span.text( $dateInput.val() );
-		lastWidth = $dateInput.$span.width();
-		$dateInput.width( lastWidth );
+	var fitInput = function(event){
+		if(this === window) return false;
+		$(this).data('span').text( $(this).val() );
+		lastWidth = $(this).data('span').width();
+		$(this).width( lastWidth );
 	};
 
 	var setupDateInput = function() {
-		$dateInput = $('#dayDateInput');
+		$dateInput = $('.date-input');
 
-		if( !$dateInput.$span ) {
-			$dateInput.$span = $('<span/>', {
-				id: $dateInput.attr('id') + '_span'
-				, text:  $dateInput.val()
-				,'class': $dateInput.attr('class')
-			}).appendTo(
-				$dateInput.parent()
-			).hide()
-		}
+		$dateInput.each(function(){
+			if( !$(this).data('span') ) {
+
+				var $span =  $('<span/>', {
+					id: $(this).attr('id') + '_span'
+					, text:  $(this).val()
+					,'class': $(this).attr('class')
+				}).appendTo(
+					$(this).parent()
+				).hide();
+
+				$(this).data('span', $span);
+			}
+		})
 
 
 		$dateInput.on('focus', function(e){
-			fitInput();
+			fitInput.apply(this, [e]);
 		});
 
 		$dateInput.on('blur', function(e){
-			fitInput();
+			fitInput.apply(this, [e]);
 			globalDate = Date.parse( $(this).val() );
 		});
 
 		$dateInput.on('keyup', function(e){
-			$dateInput.$span.text( $dateInput.val() );
-			if( $dateInput.width() < $dateInput.$span.width()) fitInput();
+			$dateInput.data('span').text( $dateInput.val() );
+			if( $dateInput.width() < $dateInput.data('span').width()) fitInput();
 		});
 
-		fitInput();
 	}
 
 	/*
@@ -112,7 +118,9 @@
 			return
 		};
 
-		return make[ type ].apply(make, getDateParials(date) );
+		var m = make[ type ].apply(make, getDateParials(date) );
+		// fitInput.apply($dateInput);
+		return m
 	}
 
 	make.Year = function(day, month, year) {
@@ -147,7 +155,8 @@
 		if( !make.views ) make.views = {};
 		if( make.views[nm] === undefined ) {
 			// Generate a new model view for the calendar cell
-			make.views[nm] = new ModelTemplate('.' + name + '-view');
+			// make.views[nm] = new ModelTemplate('.' + name + '-view');
+			make.views[nm] = app.template.get( app.Str('.%s-view', name) )
 		}
 
 		rangeView = make.views[nm];
@@ -181,7 +190,7 @@
 	    var _data = {};
 
 		for (var i = 0; i < count; i++) {
-	    	cell = app.template.cells(type);
+	    	cell = app.template.create.cells(type);
 
 	    	_data.id 		= type + '-' + i
 	    	_data.name 		= type + ' cell'

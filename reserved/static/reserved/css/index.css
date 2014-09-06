@@ -963,9 +963,10 @@ font-weight: 200;
 font-size: 48px;
 color: #AAA;
 text-shadow: 0 1px 0 #FFF;
+min-width: 200px;
 }
 
-.dates .day-view>.date {
+.dates .view>.date {
 display: inline-block;
 width: 50%;
 font-size: 2em;
@@ -1395,7 +1396,7 @@ p.checkbox input[type=checkbox] {
 width: 30px;
 }
 
-input#dayDateInput {
+input.date-input {
 font-size: 1em;
 font-family: 'Lato';
 min-width: 200px;
@@ -1409,13 +1410,13 @@ transition: all 1s ease;
 padding: 5px 15px;
 }
 
-input#dayDateInput:focus {
+input.date-input:focus {
 outline: none;
 color: #000;
 background: #F8F8F8;
 }
 
-.date .input {
+.date-input {
 display: inline-block;
 }
 

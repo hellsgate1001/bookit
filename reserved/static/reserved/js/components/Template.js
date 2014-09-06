@@ -1,5 +1,5 @@
 
-;(function(){
+;(function(MainApp){
 
     // Personal scope to keep an eye on reapplying formatters.
     var implemented = [];
@@ -54,12 +54,24 @@
         }
     });
 
-    Application.mixins.FormatterMixin = FormatterMixin;
-    Application.prototype.mixins.FormatterMixin = FormatterMixin;
-    Application.FormatterMixin = FormatterMixin;
-})();
+    MainApp.mixins.FormatterMixin = FormatterMixin;
+    MainApp.prototype.mixins.FormatterMixin = FormatterMixin;
+    MainApp.FormatterMixin = FormatterMixin;
 
-;(function($){
+})(Application);
+
+;(function(MainApp){
+
+        // Where to put all the user created templates ready for use
+        // within the ready API.
+    var userspace   = 'create'
+        , viewspace = 'view'
+        , staticspace = 'static'
+        , parent    = MainApp.prototype.template
+        , parentalUserSpace
+        , parentalViewSpace
+        , parentalStaticSpace
+        ;
 
     // Configurations for a space object.
     var space = {
@@ -114,16 +126,39 @@
         , data: undefined
     };
 
+    var integrate = function(App) {
 
+        // Space to put all user defined templates.
+        if( !parent[userspace] ) parent[userspace] = {};
+        // A location for generated views;
+        if( !parent[viewspace] ) parent[viewspace] = {};
+        if( !parent[staticspace] ) parent[staticspace] = {};
+        // Extend the native api
+        parentalUserSpace = parent[userspace];
+        parentalViewSpace = parent[viewspace];
+        parentalStaticSpace = parent[staticspace];
+
+
+
+        this.template.define = applicationExtender
+        this.template.defineStatic = staticApplicationExtender;
+        this.template.get = getTemplate
+
+        // Application.Template = Template;
+        // this.Template = Template;
+        Application.Template = ModelTemplate;
+        this.Template = ModelTemplate;
+
+    }
+    /*
+     A Template can be called in a number of ways,
+
+        new Template(selector <String>)
+        new Template(name <String>, selector <String>)
+        new Template(space <Object>)
+     */
     Template = Application.Component(Application.Basic, {
         type: 'Template'
-        /*
-         A Template can be called in a number of ways,
-
-            new Template(selector <String>)
-            new Template(name <String>, selector <String>)
-            new Template(space <Object>)
-         */
         , constructor: function(name, selector, app, placeholder){
 
             if( name !== undefined
@@ -251,6 +286,7 @@
          without passing a value will return the variable.
          */
         , name: function name(value){
+
             if(value !== undefined) {
                 // Check if the name has already been changed
                 if( this.space('name') != space.name ) {
@@ -332,9 +368,15 @@
                 return this;
             };
 
-            if(value !== undefined) {
-                this._data = value;
-                return this;
+            if( value !== undefined ) {
+
+                if( it(value).is('string') ) {
+                    return this._data[value]
+
+                } else {
+                    this._data = value;
+                    return this;
+                }
             }
 
             return this._data || space.data;
@@ -475,186 +517,6 @@
         }
     });
 
-    /*
-     return a function of which returns the initially passed
-     template;
-
-     This acts as an easy referer to pass a template method recevier.
-     */
-    var templateReturn = function (templates, space){
-        // return a closed scope function with the template as the
-        // scope only.
-        var TemplateHook = function TemplateHook(){
-            var self = this;
-
-            var init = function(templates, space) {
-                this.templates = templates;
-                this.space;
-                this.hook = this.get;
-
-                if( this.templates.selector
-                    && it( this.templates.selector ).is('function') ) {
-                    this.hook = this.specialSelector;
-                };
-            }
-
-            this.specialSelector = function(){
-                // Perform handling of the user function;
-                if( self.templates
-                    && it(self.templates).is('function') ) {
-                    var ret = self.templates.apply(this, arguments);
-                    if( it(ret).is('string') ) {
-                        return new Application.Template(self.space.space, self.space.selector[prop], self.space.app);
-                    }
-                } else {
-                    // debugger;
-                    // self.templates.selector({ key: 'day' })
-                    var selector = self.get.apply(this, arguments);
-
-                    if( it(selector).is('string') ) {
-                        // debugger;
-                        // console.log("specialSelector", selector);
-                    } else {
-                        // console.log("Selector isn't string... ")
-                        selector =  ( (_space) ? _space.selector: undefined) || (self.space? self.space.selector[prop]: selector._selector);
-                    }
-
-                    var space = selector.space || (self.space ? self.space.space: false);
-                    var app = selector.app || space.app || false;
-                    var _space = space;
-
-                    if( self.hasOwnProperty('get') ) {
-
-                        var parent = self.get();
-
-                        if( space === false) {
-                            _space = parent.space()
-                        };
-
-                        if( app === false) {
-                            app = parent.app
-                        }
-                    }
-
-                    if( it(space).is('function') ) {
-                        _space = space();
-                    }
-
-                    return new Application.Template(_space, selector, app);
-                }
-            }
-            // serves the template to get.
-            this.get = function templateSelector(key){
-
-                if(key !== undefined) {
-                    if(key in self.templates) {
-                        return self.templates[key];
-                    } else {
-                        try {
-                            var dynamicSelector = self.templates.selector({key: key});
-                            return dynamicSelector;
-                        } catch(e) {
-                            console.error(e.stack)
-                            throw new Error(e)
-
-                        }
-
-                    }
-
-                }
-
-                if(self.templates.length == 1) {
-                    // return the only template
-                    return self.templates[0]
-                };
-
-                return self.templates;
-            };
-
-            return init.apply(this, arguments);
-        }
-
-        // an object containing a template for each key.
-        var hook = new TemplateHook(templates);
-        return hook;
-    };
-
-    var subTemplateReturn = function(space) {
-        var spaces = {}
-            , prop
-            ;
-
-        for (prop in space.selector) {
-            spaces[prop] = new Template(space.space, space.selector[prop], space.app);
-            spaces[prop].space('key', prop);
-        };
-
-        return templateReturn(spaces, spaces);
-    };
-
-    var applicationExtender = function(name, selector, options){
-        var spacer
-            , defines
-            // Set of defaults for the template.
-            , options
-            ;
-
-        if( it(name).is('string') ) {
-            spacer = { name: name };
-        } else {
-            spacer = name;
-        }
-
-        // define the new type as placeholders; using the inbound options
-        // object to be a configuration for the basic application template
-        var _space = Application.extend({ placeholders: options }, space, spacer);
-        var parent = Application.prototype.template;
-        // Extend the native api
-
-        if(_space.name !== undefined) {
-            parent[_space.name] = (function(){
-
-                if( it( this.selector ).is('object') ) {
-                    // object selector.
-                    var hook = subTemplateReturn(this);
-                    hook.get.template = hook;
-                    return hook.get;
-                 } else if( it( this.selector ).is('function') ) {
-                    // object selector.
-                    var hook = subTemplateReturn(this);
-                    hook.get.template = hook;
-                    return hook.get;
-                } else {
-                    var template = new Template(this.space, this.selector, this.app, this.options);
-                    /* Defining a new function to call - this is treturned
-                    back to be implemented on the application
-                    */
-                    var hook = templateReturn(template);
-                    hook.hook.template = hook;
-                    return hook.hook;
-                }
-            }).apply({
-                // for parental checking. Pass a reference
-                // of the parent object. The Template should
-                // be able to typecheck against itself for existance
-                //
-                // pheudocode:
-                //      this.app[this.name]() == this;
-                app: parent
-                , space: _space
-                , selector: selector
-                , options: options
-            })
-        }
-
-    }
-
-    Application.prototype.template.define = function(space, definition, options){
-        return applicationExtender(space, definition, options)
-    }
-
-    Application.Template = Template;
-    Application.prototype.Template = Template;
 
     /**
      * A ModelTemplate works in a very similar structure to a Template. The
@@ -672,9 +534,23 @@
      * has been removed; in favour of a cleaner `selector()` for the modeled
      * object.
      *
+     * Usage:
+     *      v = new ModelTemplate('.date-input-container')
+     *      v.toView({ date: Date.parse('yesterday') })
+     *
+     *
+     *
+     * data is wrapped through to the view for
+     * clever object updates
+     *
+     * app.template.view.apples.data('date', Date.parse('yesterday') )
+     *
+     * If the same template is called again, the data is updated and the template
+     * doesnt change.
+     *
      * @return {[type]} [description]
      */
-    ModelTemplate = Application.Component([ Application.Template
+    ModelTemplate = Application.Component([ Template
         , Application.mixins.FormatterMixin
     ], {
         type: 'ModelTemplate'
@@ -688,6 +564,7 @@
             prefix: 'rs'
             // , templateDelimiters: ['{', '}']
         }
+
         , constructor: function(){
             // Do super.
 
@@ -704,12 +581,27 @@
 
         }
 
+        /*
+         data is wrapped through to the view for
+         clever object updates
+
+             app.template.view.apples.data('date', Date.parse('yesterday') )
+
+         If the same template is called again, the data is updated and the template
+         doesnt change.
+
+         */
         , data: function(value){
             // write the model if the data changes;
-            d = this.constructor.$super.prototype.data.apply(this, arguments);
+            var d= this.constructor.$super.prototype.data.apply(this, arguments);
 
             if(value !== undefined) {
-                this.dataToModel(this._data)
+                if( this._data.namespace === undefined ) {
+                    this._data.namespace = ''
+                }
+
+                this.dataToModel(this._data);
+
                 return this;
             }
 
@@ -793,12 +685,403 @@
             return view.els;
         }
 
+        , name: function(n){
+            var n = this.constructor.$super.prototype.name.apply(this, arguments);
+            if( n === null) {
+                return this.data('name')
+            }
+            return n
+        }
     });
 
+// return a closed scope function with the template as the
+        // scope only.
+        var TemplateHook = function TemplateHook(){
+            var self = this;
+
+            var init = function(templates, space) {
+                this.templates = templates;
+                this.space;
+                this.hook = this.get;
+
+                if( this.templates.selector
+                    && it( this.templates.selector ).is('function') ) {
+                    this.hook = this.specialSelector;
+                };
+            }
+
+            this.specialSelector = function(){
+                // Perform handling of the user function;
+                if( self.templates
+                    && it(self.templates).is('function') ) {
+                    var ret = self.templates.apply(this, arguments);
+                    if( it(ret).is('string') ) {
+                        return new Application.Template(self.space.space, self.space.selector[prop], self.space.app);
+                    }
+                } else {
+                    // debugger;
+                    // self.templates.selector({ key: 'day' })
+                    var selector = self.get.apply(this, arguments);
+
+                    if( it(selector).is('string') ) {
+                        // debugger;
+                        // console.log("specialSelector", selector);
+                    } else {
+                        // console.log("Selector isn't string... ")
+                        selector =  ( (_space) ? _space.selector: undefined) || (self.space? self.space.selector[prop]: selector._selector);
+                    }
+
+                    var space = selector.space || (self.space ? self.space.space: false);
+                    var app = selector.app || space.app || false;
+                    var _space = space;
+
+                    if( self.hasOwnProperty('get') ) {
+
+                        var parent = self.get();
+
+                        if( space === false) {
+                            _space = parent.space()
+                        };
+
+                        if( app === false) {
+                            app = parent.app
+                        }
+                    }
+
+                    if( it(space).is('function') ) {
+                        _space = space();
+                    }
+
+                    return new Application.Template(_space, selector, app);
+                }
+            }
+            // serves the template to get.
+            this.get = function templateSelector(key){
+
+                if(key !== undefined) {
+                    if(key in self.templates) return self.templates[key];
+
+                    try {
+                        var dynamicSelector = self.templates.selector({key: key});
+                        return dynamicSelector;
+                    } catch(e) {
+                        console.error(e.stack)
+                        throw new Error(e)
+
+                    }
 
 
-    Application.Template = ModelTemplate;
-    Application.prototype.Template = ModelTemplate;
 
-    return;
-})($);
+                }
+
+                if(self.templates.length == 1) {
+                    // return the only template
+                    return self.templates[0]
+                };
+
+                return self.templates;
+            };
+
+            return init.apply(this, arguments);
+        }
+    /*
+     return a function of which returns the initially passed
+     template;
+
+     This acts as an easy referer to pass a template method recevier.
+     */
+    var templateReturn = function (templates, space){
+
+        // an object containing a template for each key.
+        var hook = new TemplateHook(templates);
+        return hook;
+    };
+
+    var applicationExtender = function(name, selector, options){
+        var spacer
+            , defines
+            // Set of defaults for the template.
+            , options
+            ;
+
+        if( it(name).is('string') ) {
+            spacer = { name: name };
+        } else {
+            spacer = name;
+        }
+
+        // define the new type as placeholders; using the inbound options
+        // object to be a configuration for the basic application template
+        var _space = Application.extend({ placeholders: options }, space, spacer);
+
+        if(_space.name !== undefined) {
+            var d = {
+                // for parental checking. Pass a reference
+                // of the parent object. The Template should
+                // be able to typecheck against itself for existance
+                //
+                // pheudocode:
+                //      this.app[this.name]() == this;
+                app: parent
+                , space: _space
+                , selector: selector
+                , options: options
+            };
+
+            parentalUserSpace[_space.name] = (function(){
+
+                if( it( this.selector ).is('object') ) {
+                    // object selector.
+                    var hook = subTemplateReturn(this);
+                    hook.get.template = hook;
+                    return hook.get;
+                 } else if( it( this.selector ).is('function') ) {
+                    // object selector.
+                    var hook = subTemplateReturn(this);
+                    hook.get.template = hook;
+                    return hook.get;
+                } else {
+                    var template = new Template(this.space, this.selector, this.app, this.options);
+                    /* Defining a new function to call - this is treturned
+                    back to be implemented on the application
+                    */
+                    var hook = templateReturn(template);
+                    hook.hook.template = hook;
+                    return hook.hook;
+                }
+            }).apply(d)
+
+            d.method = parentalUserSpace[_space.name];
+            return d
+        }
+
+        return {
+            space: _space
+            , parent: parent
+            , method: parent[_space.name]
+        }
+
+    }
+
+    var subTemplateReturn = function(space) {
+        var spaces = {}
+            , prop
+            ;
+
+        for (prop in space.selector) {
+            spaces[prop] = new Template(space.space, space.selector[prop], space.app);
+            spaces[prop].space('key', prop);
+        };
+
+        return templateReturn(spaces, spaces);
+    };
+
+
+    /*
+     Generating a new template is useful for implementing model bound copies.
+     But you may wish to model bind an already implemented view.
+     By defining a static template a single state will be returned
+     instaf od a newly generated model.
+     */
+    var staticApplicationExtender = function(space, definition, options){
+
+        var d = applicationExtender(space, definition, options);
+        parentalStaticSpace[d.space.name] = function staticTemplate(name, obj) {
+            var template = d.method.apply(this, arguments);
+            if(arguments.length==1){
+                obj=name;
+                name = d.space.name;
+            }
+
+            return runTemplate(name, template, obj)
+        }
+        return d;
+    }
+
+    var runTemplate = function(name, view, obj){
+
+        // putting the object into the data (rather than pushing it
+        // to the view model) ensures the data can found a little easier.
+        // The data is written to the bound view as `model` and changes
+        // to data() or model will bind to both.
+        view.data(obj);
+
+        // If you were to pass the object to the view, the data
+        // is only visible to the bound view `model`, not the
+        // Template class `data()`
+        view.toView();
+
+        parentalViewSpace[view.selector()] = view;
+
+        if( !(name in parentalViewSpace)  ) {
+            // Implement the external name.
+            parentalViewSpace[name] = view;
+        }
+
+        return view
+    }
+
+
+
+    /*
+     Get a template defined for creation. Passing the name only will return
+     the new template method ready to call. Passing additional arguments will
+     return a rendered template.
+
+        fooTemplate = app.template.get('foo')
+        // => function(){}
+        var foo = new fooTemplate('args')
+        foo.toView()
+
+        fooTemplate = app.template.get('foo', 'args')
+        // => template<Template:foo>
+        fooTemplate.toView()
+
+     Pass a selector to the get method to define an instant template, bound to
+     optional data. The templated object is edited in place and toView is called
+     immediately.
+
+        app.template.get('.selector');
+        app.template.get('.selector', { foo: 'bar'});
+        // => Template
+        app.template.get('.selector', 'name', {})
+
+     If the name passed exists as a static template, the static definition will
+     be called and returned.
+     If a static definition is found and a secondary name was passsed.
+
+     This gets an already existing 'date' static template, defined as 'apple'
+     as a reference and pass the model object:
+
+        app.template.get('date', 'apple', { date: Date.parse('yesterday') })
+
+     */
+    var getTemplate = function(name /* args */) {
+
+        // If name is a selector and the selector is not
+        // a defined template and the $(selector) exists,
+        // wrap the element with a ModelView and store is as a static.
+        //
+        var template;
+        var definition;
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        if( name in parentalStaticSpace ) {
+            definition = getStatic.apply(this, arguments);
+            template   = definition.template
+            name       = definition.name;
+
+        } else if( name in parentalUserSpace ){
+            // template = parentalUserSpace[name].apply(this, args);
+            definition = getDefined.apply(this, arguments);
+            template   = definition.template
+            name       = definition.name;
+        } else {
+            // Passing the name of a useable API defined will return
+            // the Template ready for view.
+            if( $(name).length == 0 ) {
+                console.error('DOM selector', name, 'does not exist');
+                return
+            }
+
+            definition = getNewly.apply(this, arguments);
+            template   = definition.template
+            name       = definition.name;
+        }
+
+        return runTemplate(name, template, args);
+    }
+
+    var getStatic = function(name, staticName, obj){
+        var o = arguments[1]
+        var staticName = arguments[0];
+        var template;
+
+        if(arguments.length == 3) {
+            // 'string', obj
+            o = arguments[2]
+            // Replace the `name` of which defined the space within the
+            // parentalViewSpace.
+            // this ensures if a user has passed a name, it should be defined
+            // under new namel not the default for same name space
+            staticName = arguments[1];
+
+            // Return the static template.
+            if( staticName in parentalViewSpace) {
+                return parentalViewSpace[staticName];
+            }
+        }
+
+        template = parentalStaticSpace[ staticName ].apply(this, [name, o]);
+        return {
+            template: template
+            , method: parentalStaticSpace[ staticName ]
+            , name: name
+            , obj: obj
+        }
+
+        return returnDefined(template, method, name, staticName, obj)
+    }
+
+    var getDefined = function(name, staticName, obj){
+        var args = Array.prototype.slice.call(arguments, 1);
+        parentalUserSpace[name].apply(this, args);
+        return returnDefined(
+            parentalUserSpace[name].apply(this, args)
+            , parentalUserSpace[name]
+            , name
+            , staticName
+            , args
+            )
+    }
+
+    var getNewly = function(name, staticName, obj) {
+        var obj = arguments[1];
+        var _name = name;
+
+        var getFunction = function(name, selector){
+            /*
+             new Template(selector <String>)
+             new Template(name <String>, selector <String>)
+             new Template(space <Object>)
+             */
+            var template= new ModelTemplate(name, selector);
+            return template;
+        };
+
+        if(arguments.length == 3) {
+            obj = arguments[2];
+            _name = arguments[1]
+        }
+
+        // As this is a selector, only a single model template
+        // is implemented.
+        if( parentalViewSpace[_name] ) {
+            if( obj !== undefined
+                && it(obj).is('object') ) {
+                parentalViewSpace[_name].data(obj);
+            }
+
+            return parentalViewSpace[_name];
+        }
+
+        template = new ModelTemplate(name);
+        return returnDefined(
+            template
+            , getFunction
+            , name
+            , _name
+            , obj)
+    }
+
+    var returnDefined = function(template, method, name, staticName, obj){
+        return {
+            template: template
+            , method: parentalStaticSpace[ staticName ]
+            , name: name
+            , obj: obj
+        }
+    }
+
+    return integrate.call(Application.prototype, MainApp);
+})(Application);

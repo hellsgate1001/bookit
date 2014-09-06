@@ -71,52 +71,35 @@
 	</div>
 
 	<div class="calendar">
+
+		<div class="date-input-container">
+			<div class="input">
+				<input type="text" name="dayDateInput" class="date-input" rs-value='.date | date dddd Do MMMM YYYY'>
+			</div>
+			<div class="small">(year { .date | date YYYY })</div>
+			<div class="breadcrumbs">
+				<ul>
+					<li class="breadcrumb" rs-each-breadcrumb='layers'>
+						{ breadcrumb.date | date MMM YYYY }
+					</li>
+				</ul>
+			</div>
+		</div>
+
 		<div class="dates">
-			<div class="day-view">
-				<h3>Day view</h3>
-				<div class="date">
-					<div class="input">
-						<input type="text" name="dayDateInput" id="dayDateInput" rs-value='.date | date dddd Do MMMM YYYY'>
-					</div>
-					<div class="small">(day { .date | date DDD })</div>
-				</div>
-				<!-- A day view is broken in hourly (selected) intervals
-				with each booking listed start and end time. -->
-				<div class="cells-container">
-					<div class="cells"></div>
-				</div>
+
+			<div class="view day-view">
+				{% include 'reserved/venue/calendar/day-view.html' %}
 			</div>
 			<!-- in here will list a period of dates -->
-			<div class="week-view">
-				<h3>Week view</h3>
-				<!-- A stack of of days, divided horizonally by a selected
-				time range. -->
-				<div class="cells-container">
-					<div class="cells"></div>
-				</div>
+			<div class="view week-view">
+				{% include 'reserved/venue/calendar/week-view.html' %}
 			</div>
-			<div class="month-view">
-				<h3>Month view</h3>
-				<div class="breadcrumbs">
-					<ul>
-						<li class="breadcrumb" rs-each-breadcrumb='layers'>
-							{ breadcrumb.date | date MMM YYYY }
-						</li>
-					</ul>
-				</div>
-				<!-- up to 36 blocks of the selected month.
-				Each month has a number next to the event -->
-				<div class="cells-container">
-					<div class="cells"></div>
-				</div>
+			<div class="view month-view">
+				{% include 'reserved/venue/calendar/month-view.html' %}
 			</div>
-			<div class="year-view">
-				<h3>Year view</h3>
-				<!-- Each cell is a month of the selected year, each month
-				has an event with a count. Each count is a booking number -->
-				<div class="cells-container">
-					<div class="cells"></div>
-				</div>
+			<div class="view year-view">
+				{% include 'reserved/venue/calendar/year-view.html' %}
 			</div>
 		</div>
 	</div>
