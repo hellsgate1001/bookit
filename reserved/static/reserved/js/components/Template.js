@@ -138,11 +138,9 @@
         parentalViewSpace = parent[viewspace];
         parentalStaticSpace = parent[staticspace];
 
-
-
-        this.template.define = applicationExtender
+        this.template.define = applicationExtender;
         this.template.defineStatic = staticApplicationExtender;
-        this.template.get = getTemplate
+        this.template.get = getTemplate;
 
         // Application.Template = Template;
         // this.Template = Template;
@@ -694,96 +692,96 @@
         }
     });
 
-// return a closed scope function with the template as the
-        // scope only.
-        var TemplateHook = function TemplateHook(){
-            var self = this;
+    // return a closed scope function with the template as the
+    // scope only.
+    var TemplateHook = function TemplateHook(){
+        var self = this;
 
-            var init = function(templates, space) {
-                this.templates = templates;
-                this.space;
-                this.hook = this.get;
+        var init = function(templates, space) {
+            this.templates = templates;
+            this.space;
+            this.hook = this.get;
 
-                if( this.templates.selector
-                    && it( this.templates.selector ).is('function') ) {
-                    this.hook = this.specialSelector;
-                };
-            }
+            if( this.templates.selector
+                && it( this.templates.selector ).is('function') ) {
+                this.hook = this.specialSelector;
+            };
+        }
 
-            this.specialSelector = function(){
-                // Perform handling of the user function;
-                if( self.templates
-                    && it(self.templates).is('function') ) {
-                    var ret = self.templates.apply(this, arguments);
-                    if( it(ret).is('string') ) {
-                        return new Application.Template(self.space.space, self.space.selector[prop], self.space.app);
-                    }
-                } else {
+        this.specialSelector = function(){
+            // Perform handling of the user function;
+            if( self.templates
+                && it(self.templates).is('function') ) {
+                var ret = self.templates.apply(this, arguments);
+                if( it(ret).is('string') ) {
+                    return new Application.Template(self.space.space, self.space.selector[prop], self.space.app);
+                }
+            } else {
+                // debugger;
+                // self.templates.selector({ key: 'day' })
+                var selector = self.get.apply(this, arguments);
+
+                if( it(selector).is('string') ) {
                     // debugger;
-                    // self.templates.selector({ key: 'day' })
-                    var selector = self.get.apply(this, arguments);
-
-                    if( it(selector).is('string') ) {
-                        // debugger;
-                        // console.log("specialSelector", selector);
-                    } else {
-                        // console.log("Selector isn't string... ")
-                        selector =  ( (_space) ? _space.selector: undefined) || (self.space? self.space.selector[prop]: selector._selector);
-                    }
-
-                    var space = selector.space || (self.space ? self.space.space: false);
-                    var app = selector.app || space.app || false;
-                    var _space = space;
-
-                    if( self.hasOwnProperty('get') ) {
-
-                        var parent = self.get();
-
-                        if( space === false) {
-                            _space = parent.space()
-                        };
-
-                        if( app === false) {
-                            app = parent.app
-                        }
-                    }
-
-                    if( it(space).is('function') ) {
-                        _space = space();
-                    }
-
-                    return new Application.Template(_space, selector, app);
+                    // console.log("specialSelector", selector);
+                } else {
+                    // console.log("Selector isn't string... ")
+                    selector =  ( (_space) ? _space.selector: undefined) || (self.space? self.space.selector[prop]: selector._selector);
                 }
+
+                var space = selector.space || (self.space ? self.space.space: false);
+                var app = selector.app || space.app || false;
+                var _space = space;
+
+                if( self.hasOwnProperty('get') ) {
+
+                    var parent = self.get();
+
+                    if( space === false) {
+                        _space = parent.space()
+                    };
+
+                    if( app === false) {
+                        app = parent.app
+                    }
+                }
+
+                if( it(space).is('function') ) {
+                    _space = space();
+                }
+
+                return new Application.Template(_space, selector, app);
             }
-            // serves the template to get.
-            this.get = function templateSelector(key){
+        }
+        // serves the template to get.
+        this.get = function templateSelector(key){
 
-                if(key !== undefined) {
-                    if(key in self.templates) return self.templates[key];
+            if(key !== undefined) {
+                if(key in self.templates) return self.templates[key];
 
-                    try {
-                        var dynamicSelector = self.templates.selector({key: key});
-                        return dynamicSelector;
-                    } catch(e) {
-                        console.error(e.stack)
-                        throw new Error(e)
-
-                    }
-
-
+                try {
+                    var dynamicSelector = self.templates.selector({key: key});
+                    return dynamicSelector;
+                } catch(e) {
+                    console.error(e.stack)
+                    throw new Error(e)
 
                 }
 
-                if(self.templates.length == 1) {
-                    // return the only template
-                    return self.templates[0]
-                };
 
-                return self.templates;
+
+            }
+
+            if(self.templates.length == 1) {
+                // return the only template
+                return self.templates[0]
             };
 
-            return init.apply(this, arguments);
-        }
+            return self.templates;
+        };
+
+        return init.apply(this, arguments);
+    }
     /*
      return a function of which returns the initially passed
      template;
@@ -884,17 +882,28 @@
      instaf od a newly generated model.
      */
     var staticApplicationExtender = function(space, definition, options){
-
         var d = applicationExtender(space, definition, options);
+        var defaults = {};
+
         parentalStaticSpace[d.space.name] = function staticTemplate(name, obj) {
             var template = d.method.apply(this, arguments);
-            if(arguments.length==1){
+            if( arguments.length == 1 ){
                 obj=name;
                 name = d.space.name;
             }
 
             return runTemplate(name, template, obj)
         }
+
+        d.initialize = function(options) {
+            var _options = Application.extend({}, options || {}, defaults);
+            var template = d.method()
+            d.instance = runTemplate(d.space.name, template, _options)
+            return d
+        }
+
+        d.init = d.initialize
+
         return d;
     }
 
@@ -920,8 +929,6 @@
 
         return view
     }
-
-
 
     /*
      Get a template defined for creation. Passing the name only will return
@@ -968,14 +975,9 @@
 
         if( name in parentalStaticSpace ) {
             definition = getStatic.apply(this, arguments);
-            template   = definition.template
-            name       = definition.name;
-
         } else if( name in parentalUserSpace ){
             // template = parentalUserSpace[name].apply(this, args);
             definition = getDefined.apply(this, arguments);
-            template   = definition.template
-            name       = definition.name;
         } else {
             // Passing the name of a useable API defined will return
             // the Template ready for view.
@@ -985,11 +987,9 @@
             }
 
             definition = getNewly.apply(this, arguments);
-            template   = definition.template
-            name       = definition.name;
         }
 
-        return runTemplate(name, template, args);
+        return runTemplate(definition.name, definition.template, args);
     }
 
     var getStatic = function(name, staticName, obj){
@@ -1008,6 +1008,7 @@
 
             // Return the static template.
             if( staticName in parentalViewSpace) {
+                return returnDefined(parentalViewSpace[staticName], undefined, name, staticName, o)
                 return parentalViewSpace[staticName];
             }
         }

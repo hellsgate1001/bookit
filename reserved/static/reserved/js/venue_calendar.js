@@ -33,7 +33,20 @@
 			// , date: undefined
 		});
 
-		app.template.defineStatic('dateInput', '.date-input-container')
+		/*
+		 this instantly runs the static template to define the structure and
+		 run the view binding. Pass an optional object to init as you would
+		 use `.get(name, options)`.
+
+		 You can access variables into the defined model like:
+
+		 	app.template.view.dateInput.model.date = Date.parse('last week friday')
+		 	// or preferred
+		 	app.template.view.dateInput.data('date', Date.parse('yesterday') );
+
+		 */
+		app.template.defineStatic('dateInput', '.date-input-container').init();
+
 	}
 
 	var setupUI = function(){
@@ -51,9 +64,9 @@
 
 
 	var $dateInput;
-	var lastWidth = 0;
-	var globalDate = Date.parse('today');
-	var breadcrumbs=[];
+	var lastWidth 	= 0;
+	var globalDate 	= Date.parse('today');
+	var breadcrumbs = [];
 
 	var fitInput = function(event){
 		if(this === window) return false;
