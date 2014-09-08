@@ -1396,18 +1396,30 @@ p.checkbox input[type=checkbox] {
 width: 30px;
 }
 
+.date-input-container {
+  font-size: 2.5em;
+}
+
+.date-input-container .input {
+  display: inline-block;
+}
+
+.date-input-container  .small {
+display: inline-block;
+}
+
 input.date-input {
-font-size: 1em;
-font-family: 'Lato';
-min-width: 200px;
-background: none;
-margin: 0;
-color: #666;
-font-weight: 200;
-border: none;
-/* background: #eee; */
-transition: all 1s ease;
-padding: 5px 15px;
+  font-family: 'Lato';
+  min-width: 200px;
+  background: none;
+  margin: 0;
+  color: #666;
+  font-weight: 200;
+  border: none;
+  /* background: #eee; */
+  font-size: inherit;
+  transition: all 1s ease;
+  padding: 5px 15px;
 }
 
 input.date-input:focus {

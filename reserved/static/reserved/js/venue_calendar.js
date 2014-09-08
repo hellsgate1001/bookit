@@ -82,8 +82,7 @@
 			if( !$(this).data('span') ) {
 
 				var $span =  $('<span/>', {
-					id: $(this).attr('id') + '_span'
-					, text:  $(this).val()
+					text:  $(this).val()
 					,'class': $(this).attr('class')
 				}).appendTo(
 					$(this).parent()
@@ -192,6 +191,29 @@
 			, date: _date
 		});
 
+		if( !make.originalPathName ) {
+			make.originalPathName = location.pathname;
+
+			// remove end slash
+			if( make.originalPathName.slice(-1) === '/' ){
+				make.originalPathName = make.originalPathName.slice(0, -1);
+			}
+		}
+
+		// Get current path (clean)
+		var url = app.Str('%(path)s/%(date)s/%(type)s', {
+			path: make.originalPathName
+			, date: moment(_date).format('YYYY-MM-DD')
+			, type: name
+		});
+
+		var title = app.Str('View %(date)s %(type)s', {
+			date: moment(_date).format('YYYY-MM-DD')
+			, type: name
+		});
+
+	    window.history.pushState(name, title, url);
+
 	   	return make._layer[nm] = make.Cells(name, count, {
 	    	datetime: _date
 	    });
@@ -219,5 +241,10 @@
 
 	    return $cells
 	}
+
+	window.addEventListener("popstate", function(e) {
+	    debugger;
+	    console.log(location.pathname, e);
+	});
 
 })();

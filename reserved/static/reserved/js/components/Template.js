@@ -989,7 +989,7 @@
             definition = getNewly.apply(this, arguments);
         }
 
-        return runTemplate(definition.name, definition.template, args);
+        return runTemplate(definition.name, definition.template || definition, args);
     }
 
     var getStatic = function(name, staticName, obj){
