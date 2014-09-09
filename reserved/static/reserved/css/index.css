@@ -1397,7 +1397,8 @@ width: 30px;
 }
 
 .date-input-container {
-  font-size: 2.5em;
+  font-size: 2.6em;
+  margin: 20px 0 40px 40px;
 }
 
 .date-input-container .input {
@@ -1406,6 +1407,11 @@ width: 30px;
 
 .date-input-container  .small {
 display: inline-block;
+min-width: 100px;
+/* padding: 0 20px; */
+color: #999;
+font-weight: 200;
+text-transform: uppercase;
 }
 
 input.date-input {
@@ -1413,7 +1419,7 @@ input.date-input {
   min-width: 200px;
   background: none;
   margin: 0;
-  color: #666;
+  color: #4B4B4B;
   font-weight: 200;
   border: none;
   /* background: #eee; */
@@ -1424,8 +1430,8 @@ input.date-input {
 
 input.date-input:focus {
 outline: none;
-color: #000;
-background: #F8F8F8;
+color: #000000;
+background: #E6E6E6;
 }
 
 .date-input {

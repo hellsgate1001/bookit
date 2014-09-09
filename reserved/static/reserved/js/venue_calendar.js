@@ -99,7 +99,6 @@
 
 		$dateInput.on('blur', function(e){
 			fitInput.apply(this, [e]);
-			globalDate = Date.parse( $(this).val() );
 		});
 
 		$dateInput.on('keyup', function(e){
@@ -162,7 +161,17 @@
 	    	, _date = new Date( year    || m.year()
 						    	, month || m.month()
 					    		, day   || m.day()
-					    	);
+					    	)
+	    	;
+
+		globalDate = _date;
+
+	    if( _date.toDateString() != globalDate.toDateString() ) {
+	    	// A date has been pushed through the API,
+	    	// therefore the view doesn't match the date.
+	    	// Change the dateInput to the correct value.
+			// app.template.view.dateInput.data('date', _date)
+	    }
 
 		if( !make.views ) make.views = {};
 		if( make.views[nm] === undefined ) {
@@ -172,6 +181,21 @@
 		}
 
 		rangeView = make.views[nm];
+
+		make.updateURL(name, _date);
+
+		breadcrumbs.push({
+			name: nm
+			, date: _date
+		});
+
+		/*
+		 This is a slight hotwire of updating the range in the
+		 date input view.
+
+		 This will be changed in favour of something more agnositic.
+		 */
+		app.template.view.dateInput.data('range', name)
 
 
 		if(make._layer[nm]) {
@@ -186,10 +210,12 @@
 
 		$('.calendar .dates>.' + name + '-view').removeClass('hidden');
 
-		breadcrumbs.push({
-			name: nm
-			, date: _date
-		});
+	   	return make._layer[nm] = make.Cells(name, count, {
+	    	datetime: _date
+	    });
+	}
+
+	make.updateURL = function(name, date){
 
 		if( !make.originalPathName ) {
 			make.originalPathName = location.pathname;
@@ -203,20 +229,16 @@
 		// Get current path (clean)
 		var url = app.Str('%(path)s/%(date)s/%(type)s', {
 			path: make.originalPathName
-			, date: moment(_date).format('YYYY-MM-DD')
+			, date: moment(date).format('YYYY-MM-DD')
 			, type: name
 		});
 
 		var title = app.Str('View %(date)s %(type)s', {
-			date: moment(_date).format('YYYY-MM-DD')
+			date: moment(date).format('YYYY-MM-DD')
 			, type: name
 		});
 
-	    window.history.pushState(name, title, url);
-
-	   	return make._layer[nm] = make.Cells(name, count, {
-	    	datetime: _date
-	    });
+	    window.history.pushState({ name: name, date: date}, title, url);
 	}
 
 	make.Cells = function(type, count, data){
@@ -243,8 +265,12 @@
 	}
 
 	window.addEventListener("popstate", function(e) {
-	    debugger;
-	    console.log(location.pathname, e);
+	    make.Layer(
+		    e.state.name
+		    , e.state.date.getMonth()
+		    , e.state.date.getDate()
+		    , e.state.date.getFullYear()
+	    )
 	});
 
 })();
