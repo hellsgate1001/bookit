@@ -1,0 +1,76 @@
+{% extends 'reserved/base.html' %}
+{% load staticfiles %}
+{% block tagline %}Get it Reserved.{% endblock %}
+{% block tagstrap %}Need a new place to host a thing? Check.{% endblock %}
+
+{% block container %}
+	{{ block.super }}
+	<!-- classes need to be renamed; after scss compliation tool is implemented -->
+	<div class="Venues bookings">
+		<p class='large'>Need a new place to plot? Add the details of your new location
+		start using it now!</p>
+		<form class='booking-form' method="POST">
+			{% csrf_token %}
+
+			<div class="row address">
+				<div class="errors">{{ form.address.errors }}</div>
+			    {{ form.address.label_tag }} {{ form.address }}
+			    <span class="helptext">
+			    	{{ form.address.help_text | safe }}
+			    </span>
+			    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+	 			<div id="map-canvas"></div>
+			</div>
+
+			<div class="row full_address hidden">
+				<div class="errors">{{ form.full_address.errors }}</div>
+			    {{ form.full_address.label_tag }} {{ form.full_address }}
+			    <span class="helptext">
+			    	{{ form.full_address.help_text | safe }}
+			    </span>
+			</div>
+
+			<div class="row latlng hidden">
+				<div class="errors">{{ form.latlng.errors }}</div>
+			    {{ form.latlng.label_tag }} {{ form.latlng }}
+			    <span class="helptext">
+			    	{{ form.latlng.help_text | safe }}
+			    </span>
+			</div>
+
+			<div class="row name">
+				<div class="errors">{{ form.name.errors }}</div>
+			    {{ form.name.label_tag }} {{ form.name }}
+			    <span class="helptext">
+			    	{{ form.name.help_text | safe }}
+			    </span>
+			</div>
+
+			<div class="row company">
+				<div class="errors">{{ form.company.errors }}</div>
+			    {{ form.company.label_tag }} {{ form.company }}
+			    <span class="helptext">
+			    	{{ form.company.help_text | safe }}
+			    </span>
+			</div>
+
+			<div class="row contact">
+				<div class="errors">{{ form.contact.errors }}</div>
+			    {{ form.contact.label_tag }} {{ form.contact }}
+			    <span class="helptext">
+			    	{{ form.contact.help_text | safe }}
+			    </span>
+			</div>
+
+	  		<input type="submit" name='save' id='id_save' value="Save" />
+		</form>
+
+	</div>
+
+{% endblock %}
+
+{% block footerjs %}
+{{ block.super }}
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+<script src="{% static 'reserved/js/venue_create.js' %}"></script>
+{% endblock %}

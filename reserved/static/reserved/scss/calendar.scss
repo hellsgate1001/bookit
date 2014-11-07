@@ -1,0 +1,13 @@
+.dates {
+	&>div {
+		border:solid 1px;
+		width: 100%;
+	}
+
+	h3 {
+		font-size: 2em;
+	}
+}
+.dates>div.hidden {
+	display: none;
+}

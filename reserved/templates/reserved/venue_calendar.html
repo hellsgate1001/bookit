@@ -1,0 +1,120 @@
+{% extends 'reserved/base.html' %}
+{% load staticfiles %}
+
+{% block page_container %}full-width{% endblock %}
+
+
+{% block headcss %}
+	{{ block.super }}
+    <link rel="stylesheet" type="css" href="{% static "reserved/css/calendar.css" %}" />
+{% endblock %}
+
+{% block container %}
+	<h2>Venue Calendar</h2>
+
+	<div class="range">
+		<p>Pick a date range to view bookings in this event.</p>
+		<ul>
+			<li><a href="javascript:;">Agenda</a></li>
+			<li><a href="javascript:;" data-type='Day'>A Day (as hours)</a></li>
+			<li><a href="javascript:;" data-type='Week'>A Week (as days)</a></li>
+			<li><a href="javascript:;" data-type='Month'>A Month (as days)</a></li>
+			<li><a href="javascript:;" data-type='Year'>A Year (as months)</a></li>
+		</ul>
+		<div class="dates">
+		</div>
+	</div>
+
+	<div class="template hidden">
+		<div class="calendar">
+
+			<div class="cell hour-type day-cell" id='%(id)s'>
+				<div class="date">
+					<div class="count hour">{ .count0 }:00</div>
+					<!-- <div class="range day">{ .datetime | date ddd Do }</div> -->
+				</div>
+				<div class="cell-info">
+					<div class="name">{ .name }</div>
+				</div>
+			</div>
+
+			<div class="cell week-cell" id='%(id)s'>
+				<div class="date">
+					<div class="count week">{ .count | day }</div>
+					<div class="range month">week { .datetime | date WW }</div>
+				</div>
+				<div class="cell-info">
+					<div class="name">{ .name }</div>
+				</div>
+			</div>
+
+			<div class="cell month-cell" id='%(id)s'>
+				<div class="date">
+					<div class="count day">{ .count }</div>
+					<div class="range month">{ .datetime | date MMM YYYY }</div>
+				</div>
+				<div class="cell-info">
+					<div class="name">{ .name }</div>
+				</div>
+			</div>
+
+			<div class="cell year-cell" id='%(id)s'>
+				<div class="date">
+					<div class="count month">{ .count0 | month }</div>
+					<div class="range year">{ .datetime | date YYYY }</div>
+				</div>
+				<div class="cell-info">
+					<div class="name">{ .name }</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="calendar">
+
+		<div class="date-input-container">
+			<div class="input">
+				<input type="text" name="dayDateInput" class="date-input" rs-value='.date | date dddd Do MMMM YYYY'>
+			</div>
+			<div class="small">{ .range }</div>
+			<div class="breadcrumbs">
+				<ul>
+					<li class="breadcrumb" rs-each-breadcrumb='layers'>
+						{ breadcrumb.date | date MMM YYYY }
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="dates">
+
+			<div class="view day-view">
+				{% include 'reserved/venue/calendar/day-view.html' %}
+			</div>
+			<!-- in here will list a period of dates -->
+			<div class="view week-view">
+				{% include 'reserved/venue/calendar/week-view.html' %}
+			</div>
+			<div class="view month-view">
+				{% include 'reserved/venue/calendar/month-view.html' %}
+			</div>
+			<div class="view year-view">
+				{% include 'reserved/venue/calendar/year-view.html' %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footerjs %}
+	{{ block.super }}
+
+    <script src="{% static 'reserved/js/components/Calendar.js' %}"></script>
+    <script src="{% static 'reserved/js/venue_calendar.js' %}"></script>
+
+	<!--
+    <script src="{% static 'reserved/js/dist/uncompressed/vendor.js' %}"></script>
+    <script src="{% static 'reserved/js/dist/uncompressed/app.js' %}"></script>
+    <script src="{% static 'reserved/js/dist/uncompressed/site.js' %}"></script>
+	-->
+
+{% endblock %}

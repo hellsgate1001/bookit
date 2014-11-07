@@ -1,7 +1,11 @@
 {% extends 'reserved/base.html' %}
+{% load staticfiles %}
 
+{% block title %}Home{% endblock %}
 
+{% block page_container %}full-width{% endblock %}
 {% block header_size %}large{% endblock %}
+
 {% block hero_extra %}
 	<section class="slice core signup">
 	    <a href="{% url 'userena_signup' %}" class='signup'>Sign up</a>
@@ -46,4 +50,9 @@
 	{% include 'reserved/sections/_pricing.html' %}
 	</section>
 
+{% endblock %}
+
+{% block footerjs %}
+    {{ block.super }}
+	<script src="{% static 'reserved/js/index.js' %}"></script>
 {% endblock %}

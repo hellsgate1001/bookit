@@ -25,7 +25,8 @@ html {
 
 /* line 24, ../../../../../../../../../Program Files (x86)/Scout/vendor/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
-  list-style: none; }
+  list-style: none;
+}
 
 /* line 26, ../../../../../../../../../Program Files (x86)/Scout/vendor/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
@@ -99,49 +100,56 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /* line 2, ../scss/header-bar.scss */
 header {
-  position: fixed;
+  /*position: fixed;*/
   top: 0;
   /* height: 100px; */
   width: 100%;
-  background: white;
-  z-index: 4; }
+  /*background: white;*/
+  z-index: 4;
+  box-shadow: 0 2px 1px rgba(1, 1, 1, 0.18); }
 
-/* line 11, ../scss/header-bar.scss */
+/* line 12, ../scss/header-bar.scss */
 header .bar {
   font-size: 32px;
   margin: 20px 0 20px 0;
   line-height: 60px;
   font-weight: 200;
-  height: 60px; }
-  /* line 18, ../scss/header-bar.scss */
+  height: 80px; }
+  /* line 19, ../scss/header-bar.scss */
   header .bar .logo {
     width: 100px;
+    position: relative;
     height: 60px;
+    top: 0;
     float: right;
     display: inline-block;
     vertical-align: top;
-    background-color: #EEE; }
-    /* line 26, ../scss/header-bar.scss */
+    background-color: #EEE;
+    transition: all 1s ease;
+}
+    /* line 27, ../scss/header-bar.scss */
     header .bar .logo .icon {
       background: url("/static/img/icons/marker.svg") no-repeat top;
       width: 100px;
       height: 60px;
       background-size: 61%; }
-  /* line 34, ../scss/header-bar.scss */
+  /* line 35, ../scss/header-bar.scss */
   header .bar h1, header .bar h2 {
     font-size: 2em;
     display: inline-block;
     margin: 0;
     padding: 0;
     vertical-align: top; }
-  /* line 42, ../scss/header-bar.scss */
+  /* line 43, ../scss/header-bar.scss */
   header .bar h1 {
     font-size: 1.6em;
     margin-left: 1.9em;
     line-height: 60px;
     margin-top: 2px;
-    color: #DDD; }
-  /* line 50, ../scss/header-bar.scss */
+    color: #DDD;
+    transition: all 2.4s ease;
+}
+  /* line 51, ../scss/header-bar.scss */
   header .bar h2.site {
     position: absolute;
     text-align: center;
@@ -149,7 +157,7 @@ header .bar {
     margin: 0 auto;
     left: 0%;
     line-height: 0em; }
-    /* line 59, ../scss/header-bar.scss */
+    /* line 60, ../scss/header-bar.scss */
     header .bar h2.site .icon {
       display: block;
       color: rgba(0, 0, 0, 0.1);
@@ -159,151 +167,171 @@ header .bar {
       height: auto;
       font-size: 32px;
       line-height: 1em; }
-    /* line 70, ../scss/header-bar.scss */
+    /* line 71, ../scss/header-bar.scss */
     header .bar h2.site .icon:hover {
       color: rgba(0, 0, 0, 0.5); }
-    /* line 74, ../scss/header-bar.scss */
+    /* line 75, ../scss/header-bar.scss */
     header .bar h2.site .location {
       color: rgba(0, 0, 0, 0.23);
       font-size: 16px; }
-      /* line 78, ../scss/header-bar.scss */
+      /* line 79, ../scss/header-bar.scss */
       header .bar h2.site .location:hover {
         color: #333;
         transition: all .7s ease; }
-  /* line 87, ../scss/header-bar.scss */
+  /* line 88, ../scss/header-bar.scss */
   header .bar .nav-icon {
     font-size: 52px;
-    top: 25px;
+    top: 0px;
     position: absolute;
-    left: 25px;
+    left: 0px;
     color: #333;
     z-index: 3;
     cursor: pointer;
     text-shadow: 0 1px 0 rgba(27, 27, 27, 0.06); }
-  /* line 98, ../scss/header-bar.scss */
+  /* line 99, ../scss/header-bar.scss */
   header .bar nav ul {
     display: none; }
 
-/* line 5, ../scss/userena.scss */
-.accounts h2 {
+/* line 2, ../scss/userena.scss */
+.bookings {
+  /* border: solid 1px red; */
+  background: white;
+}
+
+/* line 7, ../scss/userena.scss */
+.accounts h2, .main .bookings h2 {
   text-align: center;
-  margin: .5em auto;
+  margin: 0.8em auto 1em auto;
   position: relative;
   display: inline-block;
   width: 100%;
   font-weight: 100;
   font-family: 'Open Sans';
-  font-size: 4em; }
-/* line 16, ../scss/userena.scss */
-.accounts .white-box {
+  font-size: 4em;
+  line-height: 1em;
+}
+/* line 18, ../scss/userena.scss */
+.accounts .white-box, .bookings .white-box {
   width: 90%;
   margin: 4em auto;
   margin-top: 1em;
   background: #eee; }
-  /* line 22, ../scss/userena.scss */
-  .accounts .white-box #box-nav {
+  /* line 24, ../scss/userena.scss */
+  .accounts .white-box #box-nav, .bookings .white-box #box-nav {
     line-height: 3em; }
-    /* line 24, ../scss/userena.scss */
-    .accounts .white-box #box-nav li a {
+    /* line 26, ../scss/userena.scss */
+    .accounts .white-box #box-nav li a, .bookings .white-box #box-nav li a {
       color: #333; }
-/* line 30, ../scss/userena.scss */
-.accounts form {
+/* line 32, ../scss/userena.scss */
+.accounts form, .main .bookings form {
   /* border: solid 1px #8D8D8D; */
-  width: 70%;
+  width: 100%;
   margin: 1em auto;
   box-shadow: 0 3px 1px rgba(0, 0, 0, 0.02); }
-  /* line 38, ../scss/userena.scss */
-  .accounts form #box-nav li a {
+  /* line 40, ../scss/userena.scss */
+  .accounts form #box-nav li a, .bookings form #box-nav li a {
     display: inline-block;
     width: 100%;
     text-decoration: none;
     line-height: 3em;
-    background: #FFF; }
-    /* line 45, ../scss/userena.scss */
-    .accounts form #box-nav li a:hover {
+    background: #3C3C3C;
+    color: white;
+}
+    /* line 47, ../scss/userena.scss */
+    .accounts form #box-nav li a:hover, .bookings form #box-nav li a:hover {
       background: #E2E2E2;
       color: #333;
       transition: all .5s ease; }
-  /* line 52, ../scss/userena.scss */
-  .accounts form input[type="submit"] {
+  /* line 54, ../scss/userena.scss */
+  .accounts form input[type="submit"], .bookings form input[type="submit"] {
     border: none;
     margin: 3%;
-    padding: 1em 2em;
+    padding: .4em 1.3em;
     border-radius: 2px;
     background: #abe2ab;
-    display: inline-block; }
-  /* line 61, ../scss/userena.scss */
-  .accounts form p input[type="file"] {
+    display: inline-block;
+    font-size: 2em;
+    color: #FFF;
+    font-weight: 300;
+    font-family: 'Lato';
+}
+  /* line 63, ../scss/userena.scss */
+  .accounts form p input[type="file"], .bookings form p input[type="file"] {
     width: 65%;
     display: inline-block;
     font-size: 14px;
     line-height: 2em; }
-  /* line 68, ../scss/userena.scss */
-  .accounts form span.helptext {
+  /* line 70, ../scss/userena.scss */
+  .accounts form span.helptext, .bookings form span.helptext {
     padding: 1em 3% 0em 29.5%;
     margin: 0 0 2em;
     color: #AAA;
     display: block; }
-  /* line 76, ../scss/userena.scss */
-  .accounts form ul.errorlist li {
+  /* line 78, ../scss/userena.scss */
+  .accounts form ul.errorlist li, .bookings form ul.errorlist li {
     margin: 1em 0;
     background: #3D3D3D;
     display: inline-block;
     padding: .4em .8em;
     color: white;
     border-radius: 2px; }
-  /* line 85, ../scss/userena.scss */
-  .accounts form ul.errorlist {
-    margin: 0 1em 0 0;
-    padding: 1% 3% 0%; }
-  /* line 90, ../scss/userena.scss */
-  .accounts form legend {
-    font-size: 3em;
-    padding: 1% 3%;
+  /* line 87, ../scss/userena.scss */
+  .accounts form ul.errorlist, .bookings form ul.errorlist {
+margin: 0 1em 0 0;
+padding: 1% 1% 1%;
+}
+  /* line 92, ../scss/userena.scss */
+  .accounts form legend, .bookings form legend {
+    font-size: 5em;
+    padding: .2em 3% .4em;
     font-weight: 100;
-    color: #AAA; }
-  /* line 97, ../scss/userena.scss */
-  .accounts form fieldset p {
+    color: #777; }
+  /* line 99, ../scss/userena.scss */
+  .accounts form fieldset p, .bookings form fieldset p {
     line-height: 1.6em;
     padding: 1em 0;
     display: inline-block;
     width: 100%;
     vertical-align: top; }
-  /* line 107, ../scss/userena.scss */
-  .accounts form p label {
+  /* line 109, ../scss/userena.scss */
+  .accounts form p label, .bookings form p label {
     vertical-align: top;
     width: 21%;
     font-weight: normal;
     display: inline-block;
-    font-size: 1.2em;
-    margin: 0 3%; }
-  /* line 116, ../scss/userena.scss */
-  .accounts form p input {
+    font-size: 1.6em;
+    margin: 0 3%;
+    line-height: 50px;
+    color: #ACACAC;
+    font-weight: 200;
+}
+  /* line 118, ../scss/userena.scss */
+  .accounts form p input, .bookings form p input {
     width: 67%;
     border: none;
-    background: #DDD;
+    background-color: #F3F3F3;
     font-size: 1.4em;
     border-radius: 4px;
     padding: .5em 1em;
     line-height: 1em; }
-  /* line 126, ../scss/userena.scss */
-  .accounts form p .checkbox {
+  /* line 128, ../scss/userena.scss */
+  .accounts form p .checkbox, .bookings form p .checkbox {
     margin: 1em 0em 01em 32%; }
-    /* line 128, ../scss/userena.scss */
-    .accounts form p .checkbox input {
+    /* line 130, ../scss/userena.scss */
+    .accounts form p .checkbox input, .bookings form p .checkbox input {
       width: initial; }
 
-/* line 136, ../scss/userena.scss */
+/* line 138, ../scss/userena.scss */
 p.forgot-password {
   display: inline-block; }
 
-/* line 141, ../scss/userena.scss */
+/* line 143, ../scss/userena.scss */
 ul#box-nav {
   margin: 0;
   padding: 0;
   white-space: nowrap;
   overflow: hidden; }
-  /* line 147, ../scss/userena.scss */
+  /* line 149, ../scss/userena.scss */
   ul#box-nav li {
     display: inline-block;
     width: 24.7%;
@@ -313,32 +341,32 @@ ul#box-nav {
     border-bottom: solid 1px;
     text-align: center;
     /* padding: 1em 0; */ }
-    /* line 157, ../scss/userena.scss */
+    /* line 159, ../scss/userena.scss */
     ul#box-nav li a {
       text-decoration: none;
       color: #333;
       font-size: 1.2em;
       line-height: 1.8em; }
 
-/* line 167, ../scss/userena.scss */
+/* line 169, ../scss/userena.scss */
 img.mugshot {
   width: 140px;
   margin: 4%;
   background: rgba(0, 0, 0, 0.08);
   padding: 20px; }
 
-/* line 174, ../scss/userena.scss */
+/* line 176, ../scss/userena.scss */
 #details dl dt {
   display: inline-block;
   width: 20%;
   /* background: #ddd; */ }
 
-/* line 180, ../scss/userena.scss */
+/* line 182, ../scss/userena.scss */
 #details dl dd {
   display: inline-block;
   width: 78%; }
 
-/* line 185, ../scss/userena.scss */
+/* line 187, ../scss/userena.scss */
 div#details {
   /* border: solid 1px; */
   width: 50%;
@@ -346,15 +374,15 @@ div#details {
   font-size: 18px;
   line-height: 2em; }
 
-/* line 193, ../scss/userena.scss */
+/* line 195, ../scss/userena.scss */
 div.clear {
   clear: both; }
 
-/* line 197, ../scss/userena.scss */
+/* line 199, ../scss/userena.scss */
 div.navbar.navbar-inverse.navbar-fixed-top {
   height: 100px; }
 
-/* line 202, ../scss/userena.scss */
+/* line 204, ../scss/userena.scss */
 .navbar ul.main.menu li:nth-child(1) {
   border-top: none; }
 
@@ -415,12 +443,14 @@ body {
   color: #333333;
   background: #f5f5f5;
   height: 100%;
-  margin-top: 100px; }
+}
   /* line 29, ../scss/base.scss */
   body .page-container {
-    margin-left: 15%;
+    margin: 0 15%;
     display: inline-block;
     width: 70%;
+    /* min-width: 1024px; */
+    background: white;
     min-height: 750px; }
 
 /* line 37, ../scss/base.scss */
@@ -430,8 +460,12 @@ body {
   background: url("/static/img/8.jpg");
   text-shadow: 0 2px 1px rgba(50, 50, 50, 0.9);
   background-size: cover;
-  padding: 200px 0 0;
-  position: relative; }
+  padding: 130px 0 3px;
+  position: relative;
+  transition: all 3s ease;
+  margin: 0 auto;
+  width: 100%;
+}
   /* line 46, ../scss/base.scss */
   .hero.mini {
     min-height: 60px;
@@ -449,9 +483,14 @@ body {
       margin-top: 30px; }
     /* line 63, ../scss/base.scss */
     .hero.mini h2 {
-      width: 74.5%;
+      width: 70%;
       margin-top: .5em;
-      font-size: 1.8em; }
+      font-size: 1.8em;
+      float: left;
+      margin-left: 10px;
+      margin-right: 0;
+      margin-bottom: 0;
+}
   /* line 70, ../scss/base.scss */
   .hero .icon {
     width: 35%;
@@ -549,7 +588,10 @@ body .menu {
   vertical-align: top;
   position: fixed;
   transition: all 500ms cubic-bezier(0.49, 0.675, 0.055, 0.785);
-  left: 0; }
+  left: 0;
+  padding-top: 30px;
+  z-index: 3;
+}
   /* line 11, ../scss/menu.scss */
   body .menu.hidden {
     left: -15%;
@@ -568,7 +610,36 @@ body .menu {
     border-bottom: solid 1px #000;
     cursor: pointer; }
 
-/* line 4, ../scss/index.scss */
+/* line 3, ../scss/bookings.scss */
+.bookings .booking-form input {
+  width: 70%;
+  border: solid 1px #FFF;
+  border-radius: 4px;
+  font-size: 2.1em;
+  padding: 8px 1%;
+  background-color: #FAFAFA;
+  margin: 0 1%;
+  font-weight: 200;
+  font-family: 'Lato';
+  background-position: 110% 50%;
+  background-size: 10px;
+}
+/* line 15, ../scss/bookings.scss */
+.bookings .booking-form label {
+  font-size: 2em;
+  font-weight: 300;
+  color: #666;
+  margin: 0 0% 0 10%;
+  width: 20%;
+  display: inline-block; }
+/* line 23, ../scss/bookings.scss */
+.bookings .booking-form span.helptext {
+  font-size: 1.3em;
+  font-weight: 200;
+  color: #333;
+  padding: 1em 5% 2em 3%; }
+
+/* line 5, ../scss/index.scss */
 .quote {
   font-size: 3.5em;
   line-height: 1.4em;
@@ -580,17 +651,17 @@ body .menu {
   margin-top: 1em;
   position: relative;
   background-position: center 65px; }
-  /* line 5, ../scss/index.scss */
+  /* line 6, ../scss/index.scss */
   .quote.intersection {
     padding: .5em 1.5em 1em;
     background: url("/static/img/4.jpg");
     background-position: bottom;
     background-size: cover; }
-    /* line 11, ../scss/index.scss */
+    /* line 12, ../scss/index.scss */
     .quote.intersection p {
       position: relative;
       z-index: 2; }
-  /* line 29, ../scss/index.scss */
+  /* line 30, ../scss/index.scss */
   .quote .icon {
     background: url("/static/img/icons/marker.svg") no-repeat;
     background-size: 200px;
@@ -599,7 +670,7 @@ body .menu {
     margin: 1em auto;
     display: block; }
 
-/* line 40, ../scss/index.scss */
+/* line 41, ../scss/index.scss */
 section.slice {
   clear: both;
   margin: 5em 0;
@@ -607,13 +678,13 @@ section.slice {
   font-size: 1.4em;
   background: rgba(0, 0, 0, 0.05);
   line-height: 1.8em; }
-  /* line 48, ../scss/index.scss */
+  /* line 49, ../scss/index.scss */
   section.slice.signup {
     background: none;
     text-align: center;
     margin-bottom: 3em;
     margin-top: 1em; }
-    /* line 55, ../scss/index.scss */
+    /* line 56, ../scss/index.scss */
     section.slice.signup a.signup {
       display: inline-block;
       border: solid 1px #181818;
@@ -627,12 +698,12 @@ section.slice {
       box-shadow: none;
       background: rgba(0, 0, 0, 0.01);
       position: relative;
-      z-index: 3; }
-  /* line 72, ../scss/index.scss */
+      z-index: 4; }
+  /* line 73, ../scss/index.scss */
   section.slice.pricing {
     background: url("/static/img/2.jpg");
     background-size: cover; }
-    /* line 77, ../scss/index.scss */
+    /* line 78, ../scss/index.scss */
     section.slice.pricing .items .price {
       width: 33%;
       display: inline-block;
@@ -641,19 +712,19 @@ section.slice {
       margin: 0 0 2em;
       box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.19);
       padding: 0 0 4em; }
-      /* line 86, ../scss/index.scss */
+      /* line 87, ../scss/index.scss */
       section.slice.pricing .items .price ul li {
         font-size: 1em;
         font-weight: 200;
         margin: 0 2em .1em;
         list-style-type: initial;
         line-height: 1.8; }
-      /* line 94, ../scss/index.scss */
+      /* line 95, ../scss/index.scss */
       section.slice.pricing .items .price p.cost {
         font-size: 2.3em;
         margin: 1em .5em;
         text-align: center; }
-      /* line 100, ../scss/index.scss */
+      /* line 101, ../scss/index.scss */
       section.slice.pricing .items .price p {
         display: block;
         margin: 10px 1em 2em 1em;
@@ -661,7 +732,7 @@ section.slice {
         width: 89%;
         font-size: 1.2em;
         color: #333; }
-      /* line 109, ../scss/index.scss */
+      /* line 110, ../scss/index.scss */
       section.slice.pricing .items .price h4 {
         border: solid 7px;
         width: 5em;
@@ -675,28 +746,28 @@ section.slice {
         color: black;
         text-shadow: 0 -1px 1px rgba(255, 255, 255, 0.58);
         background: rgba(252, 252, 252, 0.77); }
-        /* line 123, ../scss/index.scss */
+        /* line 124, ../scss/index.scss */
         section.slice.pricing .items .price h4.free {
           border-color: #80bb88; }
-        /* line 127, ../scss/index.scss */
+        /* line 128, ../scss/index.scss */
         section.slice.pricing .items .price h4.small {
           border-color: #BDB561; }
-        /* line 131, ../scss/index.scss */
+        /* line 132, ../scss/index.scss */
         section.slice.pricing .items .price h4.simple {
           border-color: #80AABB; }
-        /* line 135, ../scss/index.scss */
+        /* line 136, ../scss/index.scss */
         section.slice.pricing .items .price h4.standard {
           border-color: #8F2A2A; }
-        /* line 139, ../scss/index.scss */
+        /* line 140, ../scss/index.scss */
         section.slice.pricing .items .price h4.enterprise {
           border-color: #4B4B4B; }
-        /* line 143, ../scss/index.scss */
+        /* line 144, ../scss/index.scss */
         section.slice.pricing .items .price h4.big {
           border-color: #fff; }
-    /* line 151, ../scss/index.scss */
+    /* line 152, ../scss/index.scss */
     section.slice.pricing .price-intersection {
       position: relative; }
-      /* line 154, ../scss/index.scss */
+      /* line 155, ../scss/index.scss */
       section.slice.pricing .price-intersection p {
         color: white;
         width: 100%;
@@ -711,20 +782,23 @@ section.slice {
         background: url("/static/img/icons/marker.png") no-repeat;
         background-size: 200px;
         background-position: center .75em; }
-        /* line 169, ../scss/index.scss */
+        /* line 170, ../scss/index.scss */
         section.slice.pricing .price-intersection p a {
           color: #EFEFEF;
           text-decoration: none;
           border-bottom: dotted 1px; }
-  /* line 178, ../scss/index.scss */
+  /* line 179, ../scss/index.scss */
   section.slice.main {
-    padding-top: 3em; }
-  /* line 182, ../scss/index.scss */
+    padding-top: 3em;
+    /* width: 60%; */
+    /* margin: 5em auto; */
+}
+  /* line 183, ../scss/index.scss */
   section.slice .point {
     width: 33%;
     display: inline-block;
     vertical-align: top; }
-    /* line 187, ../scss/index.scss */
+    /* line 188, ../scss/index.scss */
     section.slice .point h3 {
       color: #333;
       margin: 0% 0 10%;
@@ -732,7 +806,7 @@ section.slice {
       font-size: 2.3em;
       text-align: center;
       font-weight: 200; }
-    /* line 196, ../scss/index.scss */
+    /* line 197, ../scss/index.scss */
     section.slice .point .image {
       width: 128px;
       clear: both;
@@ -743,16 +817,16 @@ section.slice {
       border: solid 4px;
       border-radius: 50%;
       background: white; }
-      /* line 198, ../scss/index.scss */
+      /* line 199, ../scss/index.scss */
       section.slice .point .image.water {
         border-color: #95b3ca; }
-      /* line 202, ../scss/index.scss */
+      /* line 203, ../scss/index.scss */
       section.slice .point .image.ribbon {
         border-color: #56687E; }
-      /* line 206, ../scss/index.scss */
+      /* line 207, ../scss/index.scss */
       section.slice .point .image.covered {
         border-color: #BD8383; }
-      /* line 220, ../scss/index.scss */
+      /* line 221, ../scss/index.scss */
       section.slice .point .image .icon {
         margin-top: 30px;
         font-size: 80px;
@@ -763,16 +837,16 @@ section.slice {
         width: 180px;
         background: rgba(255, 255, 255, 0.7);
         box-shadow: 0 7px 0px rgba(0, 0, 0, 0.16); }
-      /* line 232, ../scss/index.scss */
+      /* line 233, ../scss/index.scss */
       section.slice .point .image .icon-bookmark {
         color: #7A2E2E; }
-      /* line 236, ../scss/index.scss */
+      /* line 237, ../scss/index.scss */
       section.slice .point .image .icon-leaf {
         color: #507E50; }
-      /* line 240, ../scss/index.scss */
+      /* line 241, ../scss/index.scss */
       section.slice .point .image .icon-shield {
         color: #424757; }
-    /* line 245, ../scss/index.scss */
+    /* line 246, ../scss/index.scss */
     section.slice .point p {
       font-size: 1em;
       width: 90%;
@@ -780,14 +854,14 @@ section.slice {
       padding: 0;
       line-height: 1.7em;
       font-weight: 200; }
-  /* line 255, ../scss/index.scss */
+  /* line 256, ../scss/index.scss */
   section.slice .shot {
     width: 60%;
     height: 300px;
     display: inline-block;
     background: #333333;
     vertical-align: bottom; }
-  /* line 264, ../scss/index.scss */
+  /* line 265, ../scss/index.scss */
   section.slice h3 {
     padding: 0px 0px 20px 0px;
     font-size: 2.5em;
@@ -795,7 +869,7 @@ section.slice {
     margin-bottom: 1.5em;
     text-transform: uppercase;
     font-weight: 200; }
-  /* line 273, ../scss/index.scss */
+  /* line 274, ../scss/index.scss */
   section.slice p {
     width: 30%;
     display: inline-block;
@@ -805,7 +879,626 @@ section.slice {
     font-size: 1.5em;
     font-weight: 200;
     line-height: 1.6em; }
-  /* line 284, ../scss/index.scss */
+  /* line 285, ../scss/index.scss */
   section.slice p.left {
     margin-left: 0;
     margin-right: 9%; }
+
+
+
+#map-canvas {
+  height: 300px;
+  margin-bottom: 7em;
+  border-top: solid 1px #B4B4B4;
+  border-bottom: solid 1px #D1D1D1;
+}
+
+input#pac-input {
+font-size: 1.6em;
+margin-top: 20px;
+padding: 10px 20px;
+color: #666;
+border: none;
+box-shadow: 0 2px 1px rgba(0, 0, 0, 0.32);
+min-width: 35%;
+border-radius: 2px;
+background: white;
+}
+
+#id_address, #id_company {
+  width: 63%;
+}
+
+.cell {
+outline: solid 1px #DDD;
+width: 14%;
+min-height: 80px;
+display: inline-block;
+padding: 1%;
+}
+
+
+.template.hidden {
+  display:none;
+}
+
+.cell .count {
+  width: 20%;
+  text-align: center;
+  display: inline-block;
+}
+
+
+.date .range {
+display: inline-block;
+text-align: right;
+width: 76%;
+}
+
+.dates .day-view .cells-container {
+  overflow: auto;
+  width: 100%;
+}
+
+.cell.hour-type {
+min-height: 290px;
+width: 120px;
+padding: 0px;
+}
+
+.cell .date {
+color: #aaa;
+font-size: 14px;
+padding: 10px;
+}
+
+.dates .day-view .cells {
+width: 2900px;
+border: solid 1px;
+}
+.dates h3 {
+display: inline-block;
+margin: 1% 3%;
+font-weight: 200;
+font-size: 48px;
+color: #AAA;
+text-shadow: 0 1px 0 #FFF;
+min-width: 200px;
+}
+
+.dates .view>.date {
+display: inline-block;
+width: 50%;
+font-size: 2em;
+color: #444;
+}
+
+.calendar .dates > div {
+ border: none;
+width: 100%;
+}
+
+.calendar .date .small {
+display: inline-block;
+color: #999;
+font-size: .55em;
+vertical-align: top;
+margin: .48em;
+}
+
+.range ul li {
+display: inline-block;
+width: 19.5%;
+text-align: center;
+}
+
+.range ul li a {
+display: inline-block;
+width: 100%;
+text-decoration: none;
+color: #444;
+margin: 1em 0;
+border-bottom: solid 1px #DDD;
+padding: 1em 0;
+background: white;
+}
+
+.bookings .booking-form input {
+width: 55%;
+border: none;
+border-radius: 4px;
+font-size: 1.8em;
+padding: 12px 0% 12px 3%;
+background-color: #F3F6F8;
+margin: 0 0%;
+font-weight: 400;
+font-family: 'Lato';
+color: #414141;
+/* text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.4); */
+outline: none;
+background-position: 110% 50%;
+background-repeat: no-repeat;
+}
+
+.bookings .booking-form span.helptext {
+font-size: 1.3em;
+font-weight: 200;
+color: #CFCFCF;
+padding: 2em 10% 3em 10%;
+line-height: 1.5em;
+}
+
+
+.booking-form .select2-container .select2-choice {
+border: solid 1px #ccc;
+background: #A9BCD1;
+color: #333;
+border-radius: 2px;
+height: 50px;
+line-height: 50px;
+}
+
+form .select2-container .select2-choice .select2-arrow {
+width: 50px;
+background: #DDD;
+border: none;
+border-radius: 0 2px 2px 0;
+}
+
+.bookings form input[type="submit"] {
+width: 21%;
+margin: 3em 0 1em 4em;
+padding: 0.5em 0;
+color: #FFF;
+}
+
+
+.select2-container.valid .select2-choice {
+background: rgb(183, 214, 183);
+color: rgb(87, 87, 87);
+border: solid 1px rgb(139, 177, 135);
+}
+
+.select2-container.valid .select2-choice .select2-arrow b {
+background: url('/static/reserved/img/icons/check.svg') no-repeat;
+background-size: 34px;
+background-position: 50% 50%;
+background-color: rgb(116, 177, 111);
+}
+.bookings form input[type="submit"][disabled] {
+color: rgb(221, 210, 210);
+background: rgb(231, 205, 190);
+}
+
+
+header .bar.static h1 {
+color: transparent;
+}
+
+header .bar.static {
+position: absolute;
+width: 100%;
+height: 72px;
+z-index: 2;
+background: white;
+margin: 0;
+top: 650px;
+box-shadow: 0 4px 0px rgba(14, 14, 14, 0.12);
+padding: 20px 0;
+transition: background 1s ease;
+}
+
+header .bar.fixed {
+position: fixed;
+width: 100%;
+height: 72px;
+z-index: 5;
+background: rgba(255, 255, 255, 0.97);
+margin: 0;
+top: 0px;
+box-shadow: 0 4px 0px rgba(14, 14, 14, 0.12);
+padding: 20px 0;
+}
+
+.page-container section.slice {
+width: 59.5%;
+margin: 5em auto;
+}
+
+header .bar.static .logo {
+    top: -640px;
+    transition: all 1s ease;
+    background: rgba(255, 255, 255, 0.02);
+    right: 0;
+    box-shadow: 0 3px 0 rgba(255, 255, 255, 0.06);
+}
+
+
+header .bar .nav-icon {
+position: fixed;
+color: white;
+/* outline: solid; */
+padding: 26px 20px 30px 25px;
+z-index: 2;
+transition: all 1s ease;
+}
+
+.hero.large.thinner {
+width: 70%;
+margin: 0 auto;
+}
+
+.bar.fixed .nav-icon.icon-menu {
+color: #333;
+}
+
+.menu li.seperator a {
+background: transparent;
+font-weight: 400;
+font-size: 1.3em;
+text-align: center;
+text-shadow: none;
+}
+
+.hero.thin {
+width: 70%;
+margin: 0 auto;
+transition: all 2s ease;
+}
+
+.hero.mini {
+margin-top: 110px;
+width: 100%;
+}
+
+.page-container.full-width {
+margin: 0;
+width: 100%;
+}
+
+li.divider {
+height: 2px;
+background: #3A3A3A;
+}
+
+body .menu li a:hover {
+background: #181818;
+transition: all .3s ease;
+color: white;
+/* font-weight: 400; */
+}
+form .row {
+width: 85%;
+margin: 0 auto;
+}
+
+form .row.address {
+width: 100%;
+}
+
+form .row.address label {
+margin-left: 9%;
+width: 16.2%;
+}
+
+p.large {
+font-size: 2.3em;
+width: 84%;
+background: #DADADA;
+padding: 3% 8% 4%;
+font-weight: 300;
+margin-bottom: 2em;
+color: #777;
+line-height: 1.4em;
+}
+
+.row.full_address.hidden, .row.latlng.hidden {
+height: 0;
+overflow: hidden;
+}
+
+form .row.address span {
+margin-left: 9%;
+}
+
+#id_company {
+width: 58%;
+}
+
+.select2-container .select2-choice > span.select2-chosen {
+margin-left: 2%;
+font-size: 1.7em;
+}
+
+.row.address span.helptext {
+padding-bottom: 0%;
+}
+
+ul.messages li.success {
+background: rgb(202, 231, 210);
+}
+
+ul.messages li {
+background: #eee;
+margin: 3% 2%;
+padding: 1em;
+font-size: 1.2em;
+border-radius: 2px;
+}
+
+.main h1 {
+font-size: 3.1em;
+margin: 20px;
+font-weight: 400;
+}
+
+.main h2 {
+font-size: 2em;
+margin: 20px;
+}
+
+li.venue {
+width: 43.5%;
+display: inline-block;
+background: rgba(255, 255, 255, 0.67);
+margin: 1% 2% 2%;
+padding: 1%;
+position: relative;
+vertical-align: top;
+box-shadow: 0 5px 0 rgba(0, 0, 0, 0.14);
+}
+
+.venue .venue-data li.name {
+font-size: 1.8em;
+margin: 0 0 10px 0;
+border-bottom: solid 1px white;
+padding: 15px;
+font-weight: 600;
+color: #C5C5C5;
+/* text-shadow: 0 1px 0 #C9C9C9; */
+background: rgba(0, 0, 0, 0.75);
+}
+
+.venue .venue-data li.address ul li.name {
+font-size: 1.3em;
+border-bottom: none;
+/* margin-bottom: 0px; */
+color: white;
+margin-left: 5px;
+margin-bottom: 5px;
+/* text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); */
+background: none;
+margin-top: 0px;
+}
+
+.venue .venue-data li.address ul li.address {
+font-size: 1em;
+line-height: 2em;
+font-family: 'courier new', monospace;
+background: rgba(255, 255, 255, 0.75);
+padding: 1px 10px;
+margin: 2px 20px 0px;
+border-radius: 2px;
+}
+.venue .venue-data li.address ul li.latlng {
+font-size: 1.3em;
+margin-left: 20px;
+}
+
+.venue .venue-data li.address ul li.latlng span {
+font-size: .7em;
+background: rgba(255, 255, 255, 0.45);
+color: rgb(109, 109, 109);
+padding: 4px 8px;
+margin: 15px 5px 0 0px;
+display: inline-block;
+border-radius: 4px;
+}
+.listmap {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
+background: rgba(255, 255, 255, 0.36);
+}
+.listmap img {
+width: 100%;
+height: 100%;
+z-index: 2;
+position: relative;
+}
+.listmap .overlay {
+z-index: 3;
+opacity: .7;
+}
+.venue ul.venue-data {
+position: relative;
+z-index: 2;
+background: rgba(255, 255, 255, 0.38);
+padding: 0px 0 20px;
+}
+span.count {
+color: #ddd;
+}
+
+a.new-venue {
+  background: rgb(151, 221, 151);
+  color: #242121;
+  text-decoration: none;
+  padding: 20px 40px;
+  margin: 0px 0 20px;
+  border-radius: 2px;
+  display: inline-block;
+  font-size: 20px;
+  /* text-shadow: 0 0px 0 rgba(0, 0, 0, 1); */
+  font-weight: normal;
+}
+
+.links {
+display: inline-block;
+width: 100%;
+margin: 0 2%;
+}
+li.empty_list {
+font-size: 4em;
+margin: 0 20px 30px 20px;
+color: #ddd;
+border-bottom: solid 1px #EEE;
+display: inline-block;
+padding: 0 10px 0 0;
+}
+
+.helptext span.valid {
+color: rgb(120, 175, 120);
+}
+.helptext span.invalid {
+color: rgb(175, 106, 126);
+}
+.helptext span.checking {
+color: rgb(83, 94, 83);
+}
+.bookings .booking-form input.valid {
+background-color: rgb(176, 226, 182);
+color: #316B2E;
+text-shadow: none;
+transition: all .6s ease;
+background-image: url(/static/reserved/img/icons/check.svg);
+background-position: 98.4% 40%;
+background-size: 45px;
+}
+
+.bookings .booking-form input.invalid {
+background-color: rgb(190, 151, 151);
+color: #FFFFFF;
+text-shadow: none;
+background-image: url(/static/reserved/img/icons/cross.svg);
+transition: all .6s ease;
+background-position: 98.9% 50%;
+background-size: 50px;
+}
+
+.bookings .booking-form input.checking {
+background-color: rgb(161, 178, 199);
+color: white;
+text-shadow: none;
+transition: all .7s ease;
+background-image: none;
+}
+
+.accounts form p.checkbox label {
+width: 71%;
+color: rgb(180, 180, 180);
+}
+
+p.checkbox input[type=checkbox] {
+width: 30px;
+}
+
+.date-input-container {
+  font-size: 2.6em;
+  margin: 20px 0 40px 40px;
+}
+
+.date-input-container .input {
+  display: inline-block;
+}
+
+.date-input-container  .small {
+display: inline-block;
+min-width: 100px;
+/* padding: 0 20px; */
+color: #999;
+font-weight: 200;
+text-transform: uppercase;
+}
+
+input.date-input {
+  font-family: 'Lato';
+  min-width: 200px;
+  background: none;
+  margin: 0;
+  color: #4B4B4B;
+  font-weight: 200;
+  border: none;
+  /* background: #eee; */
+  font-size: inherit;
+  transition: all 1s ease;
+  padding: 5px 15px;
+}
+
+input.date-input:focus {
+outline: none;
+color: #000000;
+background: #E6E6E6;
+}
+
+.date-input {
+display: inline-block;
+}
+
+.helptext .shh {
+
+}
+
+.helptext .example {
+    color: #96979C;
+    padding: 0px 7px 5px 7px;  background: #F8F8F8;
+
+}
+
+.helptext .userinput {
+  color: #333;
+  padding: 0 5px;
+}
+
+.helptext .date {
+    color: #2A9C46;
+
+    /* font-weight: 400; */
+    background: #F2F8F2;
+    padding: 2px 10px 6px 5px;
+    border-radius: 2px;
+}
+
+.menu ul li.has-child:before {
+  content: 'O';
+  color: transparent;
+  position: absolute;
+  right: 10%;
+  /* background: #222222; */
+  width: 13px;
+  height: 13px;
+  border-radius: 19px;
+  top: 39%;
+  border: solid 3px #686464;
+}
+
+.menu ul li {
+position: relative;
+}
+
+.menu ul li>ul {
+position: absolute;
+top: 0;
+right: -100%;
+width: 100%;
+transition: all .9s ease;
+z-index: -1;
+}
+
+.menu ul li>ul li a {
+background: #666;
+}
+.menu ul li ul.hidden {
+right: 100%;
+}
+.menu ul li a:hover {
+border-left: solid 4px rgb(139, 139, 139);
+}
+.bar.fixed .nav-icon.icon-menu:hover {
+color: #A7A7A7;
+transition: all 300ms ease;
+background: rgb(255, 255, 255);
+}

@@ -1,25 +1,42 @@
 
 <div class="menu hidden">
  	<ul>
+ 		<li class="seperator"><a href="javascript:;">Hi {{ user.username }}!</a></li>
     	<li><a href="/">Home</a></li>
 
 		{% if user.is_anonymous %}
 		  <li><a href="{% url 'userena_signup' %}">Signup</a></li>
 		  <li><a href="{% url 'userena_signin' %}">Login</a></li>
 		{% else %}
+
+			<li class="divider"></li>
+
+			<li><a href="{% url 'reserved_bookings' %}">Bookings</a></li>
+			<li  data-show='company-list'><a href="{% url 'reserved_companies' %}">Companies</a>
+				<ul class='company-list hidden'>
+					<li><a href="{% url 'reserved_companies' %}">New</a></li>
+				</ul>
+			</li>
+			<li><a href="{% url 'reserved_venues' %}">Venues</a></li>
+			<li><a href="{% url 'userena_profile_list' %}">Accounts</a></li>
+
+			<li class="divider"></li>
+		{% endif %}
+
+	    	<li><a href="About">About</a></li>
+	    	<li><a href="Contact">Contact</a></li>
+
+		{% if not user.is_anonymous %}
+
+			<li class="divider"></li>
 			{% if user.is_staff %}
 				<li class='admin'><a href="/admin/">Admin</a></li>
 			{% else %}
 				<li><a href="{% url 'userena_profile_detail' user.username %}">Profile</a></li>
-				<li class="divider"></li>
 			{% endif %}
-			<li><a href="{% url 'userena_profile_list' %}">Accounts</a></li>
-			<li><a href="{% url 'reserved_companies' %}">Companies</a></li>
+
 			<li><a href="{% url 'userena_signout' %}">Logout</a></li>
 		{% endif %}
 
-		<li class="divider"></li>
-    	<li><a href="About">About</a></li>
-    	<li><a href="Contact">Contact</a></li>
     </ul>
 </div>

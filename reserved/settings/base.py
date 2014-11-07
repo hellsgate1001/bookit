@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'guardian',
     'easy_thumbnails',
     'easy_maps',
+    'simple_rest',
 
     'compressor',
     'django_extensions',
@@ -156,3 +157,4 @@ SCSS_USE_COMPASS = True
 
 EASY_MAPS_CENTER = (-41.3, 32)
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

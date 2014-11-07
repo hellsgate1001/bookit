@@ -1,0 +1,15 @@
+{% extends 'reserved/base.html' %}
+
+{% block container %}
+	{{ block.super }}
+	<ul class='booking-links'>
+		<li><a href="{% url 'bookings_create' %}">New Booking</a></li>
+	</ul>
+
+	<ul class='booking-list'>
+	{% for booking in object_list %}
+		<li>{{ booking }}</li>
+	{% endfor %}
+	</ul>
+
+{% endblock %}

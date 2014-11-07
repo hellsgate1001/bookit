@@ -5,6 +5,7 @@ from easy_maps.models import Address
 
 from phonenumber_field.modelfields import PhoneNumberField
 
+
 class BookitModel(models.Model):
     request = None
 
@@ -27,7 +28,6 @@ class Location(Address):
     name = models.CharField(max_length=255, help_text='Name of the location')
 
 
-
 class Customer(models.Model):
     '''
     A customer defines an entity for puchasing bookings.
@@ -42,12 +42,14 @@ class Customer(models.Model):
     def __unicode__(self):
         return "Customer: %s:%s" % (self.name, self.email)
 
+
 class TelephoneType(models.Model):
     name = models.CharField(max_length=255, help_text='The name of the contact \
         phone number. i.e "Work" ')
 
     def __unicode__(self):
         return self.name
+
 
 class Telephone(models.Model):
     '''
@@ -81,6 +83,7 @@ class Company(models.Model):
     def __unicode__(self):
         return "Company: %s" % self.name
 
+
 class Venue(models.Model):
     '''A venue is a location of which events occur. A venue is a location owned
     by a company, Many Bookings can be made at a Venue through any Event.'''
@@ -88,7 +91,7 @@ class Venue(models.Model):
     name = models.CharField(max_length=255,
         help_text='Fiendly name of the venue such as <i>O2 Arena</i> ')
 
-    address = models.ForeignKey(Location,
+    address = models.ForeignKey(Location, blank=True, null=True,
         help_text='The exact address of the venue.')
 
     company = models.ForeignKey(Company,
@@ -97,6 +100,8 @@ class Venue(models.Model):
     contact = models.ManyToManyField(Customer,
         help_text='People to contact for event coordiation')
 
+    owner = models.ForeignKey(UserProfile, blank=True, null=True,
+        help_text='The established owner of the online venue profile')
 
     def __unicode__(self):
         return "Venue: %s by %s" % (self.name, self.company)
@@ -113,7 +118,6 @@ class Booking(models.Model):
     a default booking name is provided.
     '''
     name = models.CharField(max_length=255, help_text='Optionally name of the booking entity.')
-
 
     created = models.DateTimeField(auto_now=False, editable=False,
         null=True, blank=True, auto_now_add=True,
@@ -137,7 +141,11 @@ class Booking(models.Model):
     customers =  models.ManyToManyField(Customer,null=True, blank=True,
         help_text='People to contact for event coordiation')
 
-    status = models.CharField(max_length=100,null=True, blank=True)
+    status = models.CharField(max_length=100,null=True, blank=True, default='initial')
+
+    def __unicode__(self):
+        return 'Booking for %s: %s at %s = "%s"' % (self.customers.count(),
+            self.name, self.created, self.status)
 
 
 class Event(models.Model):
