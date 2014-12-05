@@ -1,4 +1,10 @@
 {% extends 'reserved/base.html' %}
+{% load staticfiles %}
+
+{% block headjs %}
+	{{ block.super }}
+    <link rel="stylesheet" type="css" href="{% static "reserved/css/bookings.css" %}" />
+{% endblock %}
 
 {% block container %}
 	{{ block.super }}
@@ -6,9 +12,45 @@
 		<li><a href="{% url 'bookings_create' %}">New Booking</a></li>
 	</ul>
 
+	<h1><span class="count">{{ object_list.count }}</span> Reservations</h1>
+
+
 	<ul class='booking-list'>
+		<li class='booking-list-item header'>
+			<div class="count">
+				<span class="label">Count</span>
+				<span class="value">0</span>
+			</div>
+			<div class="right">
+				<div class="updated">
+					<span class="label">updated</span>
+					<span class="value">Date Time</span>
+				</div>
+				<div class="status">
+					<span class="label">status</span>
+					<span class="value">Status Code</span>
+				</div>
+			</div>
+
+		</li>
 	{% for booking in object_list %}
-		<li>{{ booking }}</li>
+		<li class='booking-list-item'>
+			<div class="count">
+				<span class="label hidden">Count</span>
+				<span class="value">{{ booking.customers.count }}</span>
+			</div>
+			<div class="right">
+				<div class="updated">
+					<span class="label hidden">updated</span>
+					<span class="value">{{ booking.updated }}</span>
+				</div>
+				<div class="status">
+					<span class="label hidden">status</span>
+					<span class="value">{{ booking.name }} {{ booking.status }}</span>
+				</div>
+			</div>
+
+		</li>
 	{% endfor %}
 	</ul>
 

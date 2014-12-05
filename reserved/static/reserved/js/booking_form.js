@@ -52,7 +52,7 @@
 							&& date !== null) {
 							type = 'valid';
 							formatted = moment(date).format('dddd Do MMMM YYYY, h:mm:ss a');
-							$(self).addClass('valid').removeClass('invalid checking')
+							$(self).addClass('valid').removeClass('invalid checking').data('date', date)
 						} else {
 							$(self).addClass('invalid').removeClass('valid checking')
 
@@ -95,7 +95,16 @@
 	}
 
 	$(document).ready(function(){
-		easyDateInput('#id_arrival, #id_depature')
+		easyDateInput('#id_arrival, #id_depature');
+
+		$('form.booking-form').on('submit', function(){
+			$('#id_arrival, #id_depature').each(function(i, e){
+				var d = $(e).data('date');
+				var fd = moment( d ).format('YYYY-MM-DD HH:MM:SS');
+
+				$(e).val( fd );
+			})
+		})
 	})
 
 })(window)

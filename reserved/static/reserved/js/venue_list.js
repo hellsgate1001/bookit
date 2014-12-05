@@ -34,7 +34,7 @@
 		var ll = $venue.data('latlng');
 
 		var markerCenter = ll;
-		var center = ll.split(',')[0] + ',' + String( parseFloat(ll.split(',')[1]) - .015)
+		var center = ll.split(',')[0] + ',' + String( parseFloat(ll.split(',')[1]) )
 		var width = parseInt( $venue.outerWidth());
 		var height = parseInt( $venue.outerHeight());
 		return getMapUrl({
