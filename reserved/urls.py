@@ -17,8 +17,14 @@ urlpatterns = patterns('',
 
     url(r'^venues/$'
         , VenueList.as_view() , name='reserved_venues'),
+
     url(r'^venues/calendar/$'
         , VenueCalendarView.as_view() , name='reserved_venues_calendar'),
+
+    url(r'^venues/calendar/(?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})[/](?P<name_range>[\w]{0,}[^/])/$'
+        , VenueCalendarView.as_view() , name='reserved_venues__date_calendar'),
+
+
     url(r'^venues/new/$'
         , VenueCreate.as_view() , name='venues_create'),
     url(r'^bookings/$'

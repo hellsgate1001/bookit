@@ -68,6 +68,15 @@
 	var globalDate 	= Date.parse('today');
 	var breadcrumbs = [];
 
+	var storeDate = function(v){
+		var d = Date.parse(v);
+		if(d) {
+			globalDate = d;
+			return true;
+		}
+		return false;
+	};
+
 	var fitInput = function(event){
 		if(this === window) return false;
 		$(this).data('span').text( $(this).val() );
@@ -98,6 +107,7 @@
 		});
 
 		$dateInput.on('blur', function(e){
+			storeDate( $(this).data('span').text() )
 			fitInput.apply(this, [e]);
 		});
 
@@ -177,6 +187,13 @@
 		if( make.views[nm] === undefined ) {
 			// Generate a new model view for the calendar cell
 			// make.views[nm] = new ModelTemplate('.' + name + '-view');
+
+			/*
+			 Resuse an existing interface, changing only the interface
+			 model information. This saves regenerating another view as
+			 this can be expensive for many views.
+			 */
+
 			make.views[nm] = app.template.get( app.Str('.%s-view', name) )
 		}
 
@@ -193,7 +210,7 @@
 		 This is a slight hotwire of updating the range in the
 		 date input view.
 
-		 This will be changed in favour of something more agnositic.
+		 This will be changed in favour of something more agnostic.
 		 */
 		app.template.view.dateInput.data('range', name)
 
