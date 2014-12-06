@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
-from models import Company, Venue, Booking, Location
+from models import Company, Venue, Booking, Location, Event
 from forms import VenueForm
 
 from simple_rest.auth.decorators import login_required, admin_required
@@ -67,12 +67,24 @@ class VenueCalendarView(TemplateView):
     template_name = 'reserved/venue_calendar.html'
 
 
+class EventList(ListView):
+    model = Event
+
+
 class BookingList(ListView):
     model = Booking
+
+    def get_queryset(self):
+        return self.model.objects.all()
 
 
 class BookingCreate(CreateView):
     model = Booking
+    success_url = '/bookings/'
+
+class EventCreate(CreateView):
+    model = Event
+    success_url = '/events/'
 
 
 class BookingDetail(DetailView):

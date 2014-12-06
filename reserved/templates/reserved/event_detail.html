@@ -1,0 +1,17 @@
+{% extends 'reserved/base.html' %}
+{% load staticfiles %}
+
+{% block headjs %}
+	{{ block.super }}
+    <link rel="stylesheet" type="css" href="{% static "reserved/css/bookings.css" %}" />
+{% endblock %}
+
+{% block container %}
+	{{ block.super }}
+	<ul class='booking-links'>
+		<li><a href="{% url 'bookings_create' %}">New Booking</a></li>
+	</ul>
+
+	<h1><span class="count">{{ object }}</span> Reservation</h1>
+
+{% endblock %}

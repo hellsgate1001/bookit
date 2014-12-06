@@ -1,0 +1,49 @@
+{% extends 'reserved/base.html' %}
+{% load staticfiles %}
+
+{% block headjs %}
+	{{ block.super }}
+    <link rel="stylesheet" type="css" href="{% static "reserved/css/events.css" %}" />
+{% endblock %}
+
+{% block container %}
+	{{ block.super }}
+	<ul class='event-links'>
+		<li><a href="{% url 'event_create' %}">New event</a></li>
+	</ul>
+
+	<h1><span class="count">{{ object_list.count }}</span> Events</h1>
+
+
+	<ul class='event-list'>
+		<li class='event-list-item header'></li>
+	{% for event in object_list %}
+		<li class='event-list-item'>
+			<div class="count">
+				<span class="label">Name</span>
+				<span class="value">{{ event.name }}</span>
+			</div>
+			<div class="right">
+				<div class="updated">
+					<span class="label">company</span>
+					<span class="value">{{ event.company }}</span>
+				</div>
+				<div class="updated">
+					<span class="label">venues</span>
+					<span class="value">{{ event.venues.all }}</span>
+				</div>
+				<div class="updated">
+					<span class="label">bookings</span>
+					<span class="value">{{ event.bookings.count }}</span>
+				</div>
+				<div class="status">
+					<span class="label">status</span>
+					<span class="value">{{ event.start_time }} {{ event.end_time }}</span>
+				</div>
+			</div>
+
+		</li>
+	{% endfor %}
+	</ul>
+
+{% endblock %}

@@ -11,13 +11,19 @@
 
 			<li class="divider"></li>
 
-			<li><a href="{% url 'reserved_bookings' %}">Bookings</a></li>
-			<li  data-show='company-list'><a href="{% url 'reserved_companies' %}">Companies</a>
-				<ul class='company-list hidden'>
-					<li><a href="{% url 'reserved_companies' %}">New</a></li>
+			<li><a href="{% url 'event_list' %}">Events</a></li>
+			<li data-show='bookings-list'><a href="{% url 'reserved_bookings' %}">Bookings</a>
+				<ul class='bookings-list hidden'>
+					<li><a href="{% url 'bookings_create' %}">New</a></li>
 				</ul>
 			</li>
-			<li><a href="{% url 'reserved_venues' %}">Venues</a></li>
+			<li><a href="{% url 'reserved_companies' %}">Companies</a></li>
+			<li data-show='venues-list'><a href="{% url 'reserved_venues' %}">Venues</a>
+				<ul class='venues-list hidden'>
+					<li><a href="{% url 'venues_create' %}">New</a></li>
+					<li><a href="{% url 'venues_calendar' %}">Calendar</a></li>
+				</ul>
+			</li>
 			<li><a href="{% url 'userena_profile_list' %}">Accounts</a></li>
 
 			<li class="divider"></li>

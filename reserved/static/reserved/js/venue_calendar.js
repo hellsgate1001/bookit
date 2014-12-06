@@ -109,6 +109,7 @@
 		$dateInput.on('blur', function(e){
 			storeDate( $(this).data('span').text() )
 			fitInput.apply(this, [e]);
+			showView();
 		});
 
 		$dateInput.on('keyup', function(e){
@@ -132,8 +133,12 @@
 	}
 
 	var showView = function(type, date){
+		type = type || localStorage.lastLayer;
+		//date = date || localStorage.lastDate;
 		$('.calendar .dates>div').addClass('hidden');
-		localStorage.lastLayer = type
+		localStorage.lastLayer = type;
+		localStorage.lastDate = date;
+
 		if(!make[ type ]) {
 			console.warn( type + ' view does not exist');
 			return
@@ -258,13 +263,14 @@
 	    window.history.pushState({ name: name, date: date}, title, url);
 	}
 
+	var cellLayers = {};
 	make.Cells = function(type, count, data){
 		var $cells= [];
-
 	    var _data = {};
-
+	    var cell;
+	    var cells = cellLayers[type] || [];
 		for (var i = 0; i < count; i++) {
-	    	cell = app.template.create.cells(type);
+	    	cell = cells[i] || app.template.create.cells(type);
 
 	    	_data.id 		= type + '-' + i
 	    	_data.name 		= type + ' cell'
@@ -278,7 +284,8 @@
 	    	$cells.push( cell );
 	    };
 
-	    return $cells
+	    cellLayers[type] = $cells;
+	    return $cells;
 	}
 
 	window.addEventListener("popstate", function(e) {

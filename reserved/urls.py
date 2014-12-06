@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from views import IndexView, CompanyList, VenueList, BookingList, \
-BookingDetail, BookingCreate, VenueCalendarView, VenueCreate
+BookingDetail, BookingCreate, VenueCalendarView, VenueCreate, \
+EventCreate, EventList
 from api import LocationAPI, BookingsAPI, CustomersAPI
 
 from django.contrib import admin
@@ -15,24 +16,27 @@ urlpatterns = patterns('',
     url(r'^companies/$'
         , CompanyList.as_view() , name='reserved_companies'),
 
+    url(r'^events/$'
+        , EventList.as_view() , name='event_list'),
+    url(r'^events/new/$'
+        , EventCreate.as_view() , name='event_create'),
+
     url(r'^venues/$'
         , VenueList.as_view() , name='reserved_venues'),
-
+    url(r'^venues/new/$'
+        , VenueCreate.as_view() , name='venues_create'),
     url(r'^venues/calendar/$'
-        , VenueCalendarView.as_view() , name='reserved_venues_calendar'),
-
+        , VenueCalendarView.as_view() , name='venues_calendar'),
     url(r'^venues/calendar/(?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})[/](?P<name_range>[\w]{0,}[^/])/$'
         , VenueCalendarView.as_view() , name='reserved_venues__date_calendar'),
 
-
-    url(r'^venues/new/$'
-        , VenueCreate.as_view() , name='venues_create'),
     url(r'^bookings/$'
         , BookingList.as_view() , name='reserved_bookings'),
     url(r'^bookings/new/$'
         , BookingCreate.as_view() , name='bookings_create'),
     url(r'^bookings/detail/(?P<slug>[-_\w]+)/$'
         , BookingDetail.as_view() , name='bookings_detail'),
+
     (r'^accounts/', include('userena.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
