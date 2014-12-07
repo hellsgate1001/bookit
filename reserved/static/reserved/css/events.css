@@ -60,10 +60,10 @@ li.booking-list-item .status {
 }
 
 
-.right {
+.event-list-item .right {
     display: inline-block;
-    width: 80%;
     vertical-align: top;
+    padding: 2%;
 }
 
 .booking-list-item .count {
@@ -112,4 +112,25 @@ li.booking-list-item.header {
 .booking-list-item .status span.value {
     font-size: 1.4em;
     line-height: 1.9em;
+}
+
+
+ul.event-list {
+    border: solid 1px;
+}
+
+li.event-list-item {
+    display: inline-block;
+    width: 49.5%;
+    border: solid 1px;
+}
+
+.event-list-item .count {
+    border-bottom: solid 1px;
+    padding: 2%;
+    font-size: 1.5em;
+}
+
+.event-list-item .count span.label {
+    color: #CCC;
 }

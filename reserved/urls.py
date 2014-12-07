@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from views import IndexView, CompanyList, VenueList, BookingList, \
 BookingDetail, BookingCreate, VenueCalendarView, VenueCreate, \
 EventCreate, EventList
-from api import LocationAPI, BookingsAPI, CustomersAPI
+from api import LocationAPI, BookingsAPI, CustomersAPI, EventAPI
 
 from django.contrib import admin
 admin.autodiscover()
@@ -54,6 +54,9 @@ urlpatterns += patterns('',
         , CustomersAPI.as_view() , name='customer_api'),
     url(r'^api/customers/(?P<customer_id>[0-9]+)/?$'
         , CustomersAPI.as_view() , name='customer_id_api'),
+
+    url(r'^api/events/$'
+        , EventAPI.as_view() , name='event_api'),
 
     url(r'^api/locations/$'
         , LocationAPI.as_view() , name='locations_api'),

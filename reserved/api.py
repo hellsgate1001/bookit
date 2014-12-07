@@ -10,7 +10,7 @@ from simple_rest import Resource
 from models import Company, Venue, Booking, Location
 from simple_rest.auth.decorators import login_required, admin_required
 
-from models import Booking, Customer
+from models import Booking, Customer, Event
 
 '''
     class DateTimeEncoder(json.JSONEncoder):
@@ -68,6 +68,25 @@ class BookingsAPI(Resource):
         if booking_id:
             bookings = bookings.filter(pk=booking_id)
         return cheap_json_response(bookings, keys)
+
+
+
+class EventAPI(Resource):
+
+    # @RESTfulResponse
+    def get(self, request, booking_id=None, **kwargs):
+        events = Event.objects.all()
+        keys =  ['id',
+                'name',
+                'company',
+                'venues',
+                'bookings',
+                'start_time',
+                'end_time']
+        if booking_id:
+            events = events.filter(pk=booking_id)
+        return cheap_json_response(events, keys)
+
 
 
 class CustomersAPI(Resource):
