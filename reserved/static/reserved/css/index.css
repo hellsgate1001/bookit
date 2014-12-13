@@ -419,19 +419,22 @@ div.navbar.navbar-inverse.navbar-fixed-top {
   .page-container .hero h1.brand {
     font-size: 8em;
     width: 100%;
-    text-align: center;
-    float: none; }
+    /* text-align: right; */
+    float: none;
+    /* margin-left: 1%; */
+    /* width: 30%; */
+}
   /* line 55, ../scss/responsive.scss */
   .page-container .hero .icon {
     width: 100%;
-    float: none;
+    /* float: none; */
     height: 250px;
     background-position: 50%;
-    background-size: 200px; }
+    /* background-size: 200px; */ }
   /* line 63, ../scss/responsive.scss */
   .page-container .hero h2 {
     width: 100%%;
-    text-align: center;
+    /* text-align: center; */
     font-size: 2em; } }
 /* line 18, ../scss/base.scss */
 html {
@@ -1238,7 +1241,7 @@ margin: 20px;
 }
 
 li.venue {
-width: 43.5%;
+width: 94%;
 display: inline-block;
 background: rgba(255, 255, 255, 0.67);
 margin: 1% 2% 2%;
@@ -1260,12 +1263,12 @@ background: rgba(0, 0, 0, 0.75);
 }
 
 .venue .venue-data li.address ul li.name {
-font-size: 1.3em;
+font-size: 1em;
 border-bottom: none;
 /* margin-bottom: 0px; */
-color: white;
+color: rgb(145, 145, 145);
 margin-left: 5px;
-margin-bottom: 5px;
+margin-bottom: 0px;
 /* text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); */
 background: none;
 margin-top: 0px;
@@ -1275,7 +1278,7 @@ margin-top: 0px;
 font-size: 1em;
 line-height: 2em;
 font-family: 'courier new', monospace;
-background: rgba(255, 255, 255, 0.75);
+background: rgba(173, 173, 173, 0.75);
 padding: 1px 10px;
 margin: 2px 20px 0px;
 border-radius: 2px;
@@ -1287,7 +1290,7 @@ margin-left: 20px;
 
 .venue .venue-data li.address ul li.latlng span {
 font-size: .7em;
-background: rgba(255, 255, 255, 0.45);
+background: rgba(224, 224, 224, 1);
 color: rgb(109, 109, 109);
 padding: 4px 8px;
 margin: 15px 5px 0 0px;
@@ -1295,13 +1298,14 @@ display: inline-block;
 border-radius: 4px;
 }
 .listmap {
-position: absolute;
+position: relative;
 top: 0;
 left: 0;
-width: 100%;
+width: 49%;
 height: 100%;
 z-index: 1;
 background: rgba(255, 255, 255, 0.36);
+display: inline-block;
 }
 .listmap img {
 width: 100%;
@@ -1312,12 +1316,17 @@ position: relative;
 .listmap .overlay {
 z-index: 3;
 opacity: .7;
+transition: all 1s ease;
 }
 .venue ul.venue-data {
 position: relative;
 z-index: 2;
-background: rgba(255, 255, 255, 0.38);
+/* background: rgba(179, 179, 179, 1); */
 padding: 0px 0 20px;
+display: inline-block;
+width: 50%;
+vertical-align: top;
+height: 100%;
 }
 span.count {
 color: #ddd;
@@ -1501,4 +1510,10 @@ border-left: solid 4px rgb(139, 139, 139);
 color: #A7A7A7;
 transition: all 300ms ease;
 background: rgb(255, 255, 255);
+}
+
+
+.listmap .overlay:hover {
+    opacity: .3;
+    transition: all .3s ease;
 }

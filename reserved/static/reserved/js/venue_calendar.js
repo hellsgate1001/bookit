@@ -68,6 +68,15 @@
 	var globalDate 	= Date.parse('today');
 	var breadcrumbs = [];
 
+	var storeDate = function(v){
+		var d = Date.parse(v);
+		if(d) {
+			globalDate = d;
+			return true;
+		}
+		return false;
+	};
+
 	var fitInput = function(event){
 		if(this === window) return false;
 		$(this).data('span').text( $(this).val() );
@@ -98,7 +107,9 @@
 		});
 
 		$dateInput.on('blur', function(e){
+			storeDate( $(this).data('span').text() )
 			fitInput.apply(this, [e]);
+			showView();
 		});
 
 		$dateInput.on('keyup', function(e){
@@ -122,8 +133,12 @@
 	}
 
 	var showView = function(type, date){
+		type = type || localStorage.lastLayer;
+		//date = date || localStorage.lastDate;
 		$('.calendar .dates>div').addClass('hidden');
-		localStorage.lastLayer = type
+		localStorage.lastLayer = type;
+		localStorage.lastDate = date;
+
 		if(!make[ type ]) {
 			console.warn( type + ' view does not exist');
 			return
@@ -177,6 +192,13 @@
 		if( make.views[nm] === undefined ) {
 			// Generate a new model view for the calendar cell
 			// make.views[nm] = new ModelTemplate('.' + name + '-view');
+
+			/*
+			 Resuse an existing interface, changing only the interface
+			 model information. This saves regenerating another view as
+			 this can be expensive for many views.
+			 */
+
 			make.views[nm] = app.template.get( app.Str('.%s-view', name) )
 		}
 
@@ -193,7 +215,7 @@
 		 This is a slight hotwire of updating the range in the
 		 date input view.
 
-		 This will be changed in favour of something more agnositic.
+		 This will be changed in favour of something more agnostic.
 		 */
 		app.template.view.dateInput.data('range', name)
 
@@ -241,13 +263,14 @@
 	    window.history.pushState({ name: name, date: date}, title, url);
 	}
 
+	var cellLayers = {};
 	make.Cells = function(type, count, data){
 		var $cells= [];
-
 	    var _data = {};
-
+	    var cell;
+	    var cells = cellLayers[type] || [];
 		for (var i = 0; i < count; i++) {
-	    	cell = app.template.create.cells(type);
+	    	cell = cells[i] || app.template.create.cells(type);
 
 	    	_data.id 		= type + '-' + i
 	    	_data.name 		= type + ' cell'
@@ -261,7 +284,8 @@
 	    	$cells.push( cell );
 	    };
 
-	    return $cells
+	    cellLayers[type] = $cells;
+	    return $cells;
 	}
 
 	window.addEventListener("popstate", function(e) {

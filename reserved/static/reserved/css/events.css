@@ -1,0 +1,136 @@
+/* line 3, ../scss/events.scss */
+.events .booking-form input {
+  width: 70%;
+  border: solid 1px #FFF;
+  border-radius: 4px;
+  font-size: 2.1em;
+  padding: 8px 1%;
+  background: #FAFAFA;
+  margin: 0 1%;
+  font-weight: 200;
+  font-family: 'Lato'; }
+/* line 15, ../scss/events.scss */
+.events .booking-form label {
+  font-size: 2em;
+  font-weight: 300;
+  color: #666;
+  margin: 0 1%;
+  width: 20%;
+  display: inline-block; }
+/* line 23, ../scss/events.scss */
+.events .booking-form span.helptext {
+  font-size: 1.3em;
+  font-weight: 200;
+  color: #333;
+  padding: 1em 5% 2em 3%; }
+
+ul.booking-list {
+border: solid 1px rgb(237, 237, 237);
+}
+
+
+ul.booking-list-item {
+    border: solid 1px red;
+}
+
+li.booking-list-item {
+    border-bottom: solid 1px #BBBBBB;
+    position: relative;
+    height: 70px;
+}
+
+li.booking-list-item .count {
+    width: 19%;
+    border-right: solid 2px #E5E5E5;
+    display: inline-block;
+    height: 100%;
+    text-align: center;
+}
+
+li.booking-list-item .updated {
+    display: inline-block;
+    width: 99%;
+    border-bottom: solid 1px #EEE;
+    padding: 3px 4px 4px;
+}
+
+li.booking-list-item .status {
+    /* border: solid 1px; */
+    width: 65%;
+}
+
+
+.event-list-item .right {
+    display: inline-block;
+    vertical-align: top;
+    padding: 2%;
+}
+
+.booking-list-item .count {
+    font-size: 2em;
+    line-height: 2.3em;
+}
+
+
+li.booking-list-item.header {
+    font-size: .7em;
+    line-height: 1;
+    height: 45px;
+}
+
+.booking-list-item.header .count span.value {
+    display: none;
+}
+
+.booking-list-item.header .count span.label {
+    color: #DDD;
+}
+
+.header .right .updated span.value {
+    display: none;
+}
+
+.booking-list-item.header .right .status span.value {
+    display: none;
+}
+
+.header .right .status span.label, .header .right .updated span.label {
+    font-size: 1.5em;
+    color: #DDD;
+}
+
+.header .right .updated span.label {
+    font-size: 1.3em;
+    color: #CCC;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.booking-list-item .status span.value {
+    font-size: 1.4em;
+    line-height: 1.9em;
+}
+
+
+ul.event-list {
+    border: solid 1px;
+}
+
+li.event-list-item {
+    display: inline-block;
+    width: 49.5%;
+    border: solid 1px;
+}
+
+.event-list-item .count {
+    border-bottom: solid 1px;
+    padding: 2%;
+    font-size: 1.5em;
+}
+
+.event-list-item .count span.label {
+    color: #CCC;
+}

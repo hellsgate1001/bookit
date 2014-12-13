@@ -675,11 +675,22 @@
                 dom = this.element();
                 d = target || this.data();
             } else {
-                dom = this.constructor.$super.prototype.toView.apply(this, arguments);
-                d = data.options || data;
+                if( this.view !== undefined
+                    && create !== true ) {
+                    // new data
+                    view = this.view
+                    for(var k in data) {
+                        this.view.models[k]=data[k]
+                    }
+                } else {
+
+                    dom = this.constructor.$super.prototype.toView.apply(this, arguments);
+                    d = data.options || data;
+                }
+
             };
 
-            view = this.bind(dom, d);
+            view = this.view || this.bind(dom, d);
             return view.els;
         }
 
