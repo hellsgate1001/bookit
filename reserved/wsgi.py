@@ -21,8 +21,8 @@ _application = django.core.handlers.wsgi.WSGIHandler()
 
 def application(environ, start_response):
     #os.environ['RESERVED_DB_PASS'] = environ['CORE_DB_PASS']
-    #os.environ['DJANGO_SETTINGS_MODULE'] = environ['DJANGO_SETTINGS_MODULE']
-    #os.environ['SECRET_KEY_RESERVED'] = environ['SECRET_KEY_RESERVED']
+    os.environ['DJANGO_SETTINGS_MODULE'] = environ['DJANGO_SETTINGS_MODULE']
+    os.environ['SECRET_KEY_RESERVED'] = environ['SECRET_KEY_RESERVED']
 
     try:
         return _application(environ, start_response)

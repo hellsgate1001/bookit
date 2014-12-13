@@ -25,7 +25,8 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(error_msg)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_PATH = Path(__file__).ancestor(3)
+#BASE_PATH = Path(__file__).ancestor(3)
+BASE_PATH = BASE_DIR
 
 
 # Quick-start development settings - unsuitable for production
@@ -85,10 +86,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-MEDIA_ROOT = BASE_PATH.child('media')
+MEDIA_ROOT = '/var/projects/reserved/media' #BASE_PATH.child('media')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = BASE_PATH.child('static')
+STATIC_ROOT = '/var/projects/reserved/static' #BASE_PATH.child('static')
 STATIC_URL = '/static/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'

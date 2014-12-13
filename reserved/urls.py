@@ -9,7 +9,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'bookit.views.home', name='home'),
+    # url(r'^$', 'reserved.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', IndexView.as_view()),

@@ -4,8 +4,8 @@ from models import Booking
 from django.http import HttpResponse
 
 # posts/api.py
-from restless.dj import DjangoResource
-from restless.preparers import FieldsPreparer
+#from restless.dj import DjangoResource
+#from restless.preparers import FieldsPreparer
 from simple_rest import Resource
 from models import Company, Venue, Booking, Location
 from simple_rest.auth.decorators import login_required, admin_required

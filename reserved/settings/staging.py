@@ -9,7 +9,7 @@ DATABASES = {
 }
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_env_variable('SECRET_KEY_BOOKIT')
+SECRET_KEY = get_env_variable('SECRET_KEY_RESERVED')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
